@@ -47,24 +47,24 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipes
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
-			<li ><a href="/sisnoc/equipe_armazenamento">Analistas Storage <span class="badge"></span></a></li>
-			<li ><a href="/sisnoc/equipe_app">Analistas Aplicações <span class="badge"></span></a></li>
-			<li ><a href="/sisnoc/equipe_Bd">Analistas Banco de Dados<span class="badge"></span></a></li>
-            <li><a href="/sisnoc/equipe_corp">Analistas Serviços Corporativos <span class="badge"></span></a></li>
-            <li><a href="/sisnoc/equipe_rede">Analistas Redes <span class="badge"></span></a></li>
-            <li><a href="/sisnoc/equipe_monit">Analistas Monitoração <span class="badge"></span></a></li>
-            <li><a href="/sisnoc/equipe_bkp">Analistas Backup <span class="badge"></span></a></li>
-            <li><a href="/sisnoc/equipe_SO">Analistas Sistemas Operacionais <span class="badge"></span></a></li>
-            <li><a href="/sisnoc/equipe_virt">Analistas Virtualização <span class="badge"></span></a></li>
-            <li><a href="/sisnoc/equipe_doc">Documentadores <span class="badge"></span></a></li>
-            <li><a href="/sisnoc/monitoradores">Monitoradores <span class="badge"></span></a></li>
-            <li><a href="/sisnoc/supervisor">Supervisores Datacenter <span class="badge"></span></a></li>
+			<li ><a href="/chamados/equipe_armazenamento">Analistas Storage <span class="badge"></span></a></li>
+			<li ><a href="/chamados/equipe_app">Analistas Aplicações <span class="badge"></span></a></li>
+			<li ><a href="/chamados/equipe_Bd">Analistas Banco de Dados<span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_corp">Analistas Serviços Corporativos <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_rede">Analistas Redes <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_monit">Analistas Monitoração <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_bkp">Analistas Backup <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_SO">Analistas Sistemas Operacionais <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_virt">Analistas Virtualização <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_doc">Documentadores <span class="badge"></span></a></li>
+            <li><a href="/chamados/monitoradores">Monitoradores <span class="badge"></span></a></li>
+            <li><a href="/chamados/supervisor">Supervisores Datacenter <span class="badge"></span></a></li>
           </ul>
         </li>
         <li><a href="#">Problemas <span class="badge"></span></a></li>
         <li><a href="#">GMUD</a></li>
         <li><a href="#">Relatórios</a></li>
-        <li><a href="/sisnoc/pendencias">Pendências</a></li>
+        <li><a href="/chamados/pendencias">Pendências</a></li>
       </ul>
     </div>
   </div>

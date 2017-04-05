@@ -1,0 +1,64 @@
+.logotipo {
+	padding: 10px;
+	margin-right:20px;
+}
+
+.logotipo img {
+	height: 30px;
+}
+
+.perfil{
+	padding: 10px;
+	width: 300px; /*Pra caber a foto do avatar melhor, sendo que depois usou a classe img-responsive para melhorar deverdade.*/
+}
+
+.perfil li:first-child {
+	font-size: 1.3em; /* 1.3 vezes o tamanho da fonte do pai dele */
+	font-weight: bold;
+	margin-bottom: 2px; /* Aqui foi diminuido para melhorar o espaçamento entre os links e o avatar*/
+}
+
+/* Essa "midia cary" vai ajeitar essa dropdown quando o display é reduzido, tipo em celular*/
+
+
+.cabecalho h1 {
+	margin:0;
+	font-size: 3em;
+}
+
+.busca {
+	margin-top: 12px;
+}
+
+.dados-os {
+	margin-top: 30px;
+}
+
+.paginacao .pagination{
+	margin:0;
+}
+
+@media (max-width: 767px){
+	.perfil{
+		color: #FFF;
+	}
+/* Aqui esse perfil.a vai pegar os links pra dar a mesma cor*/
+	.perfil a{
+		color: #9d9d9d;
+		display: block;
+		padding: 5px 0;
+	}
+/* Esse hover é um seletor para quando o mouse for colocado em cima, no caso ficará branco*/
+	.perfil a:hover {
+		text-decoration: none;
+		color: #FFF;		
+	}
+
+	.paginacao {
+		text-align: center;
+	}
+
+	.paginacao .pagination{
+		margin-top: 20px;
+	}
+}

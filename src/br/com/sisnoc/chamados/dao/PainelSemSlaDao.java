@@ -8,30 +8,27 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import br.com.sisnoc.chamados.dao.util.ChamadosDao;
+import br.com.sisnoc.chamados.dao.util.SemSlaDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
-import br.com.sisnoc.chamados.negocio.CalculaSla;
 import br.com.sisnoc.chamados.negocio.Popula;
 
-@Primary
+
+
 @Repository
-@ChamadosDao
-public class PainelChamadosDao {
-	
+@SemSlaDao
+public class PainelSemSlaDao {
+
 	private  final Connection connection;
 
-	
+
 	@Autowired
-	public PainelChamadosDao(@Qualifier("datasourceSQL") DataSource datasource) {
+	public PainelSemSlaDao(@Qualifier("datasourceSQL")DataSource datasource) {
 		try {
 			this.connection = datasource.getConnection();
 		} catch (SQLException e) {
@@ -39,17 +36,16 @@ public class PainelChamadosDao {
 		}
 	}
 	
-
-
-	
-	public List<Chamado> listaPainelChamados(String equipe, String status,String tipo) throws ParseException {
+	public List<Chamado> listaPainelSemSla(String equipe, String status,String categoria) throws ParseException {
 		try {
 			
 			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
 			String sql_listaChamados = "";
 			
-			// tipo = "R";
+			String tipo = "R";
 			
+			// categoria = "INFRA.Ordem de Servico";
+			// categoria = "INFRA.Tarefas Internas";
 			
 			if(status.equals("aberto")){
 
@@ -60,12 +56,7 @@ public class PainelChamadosDao {
 						+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
 						+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
 						+"cat.persid = req.category "
-					+"where "
-						+"cat.sym like 'INFRA%' "
-						+"and cat.sym not like 'INFRA.Ordem de Servico' "
-						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
-						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-						+"and cat.sym not like 'Infra.Tarefas Internas' "
+					+"where cat.sym like '"+categoria+"' "
 						+"and req.type in('"+tipo+"') "
 						+"and stat.code = 'OP' ";
 
@@ -79,12 +70,7 @@ public class PainelChamadosDao {
 									+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
 									+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
 									+"cat.persid = req.category "
-								+"where "
-									+"cat.sym like 'INFRA%' "
-									+"and cat.sym not like 'INFRA.Ordem de Servico' "
-									+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
-									+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-									+"and cat.sym not like 'Infra.Tarefas Internas' "
+								+"where cat.sym like '"+categoria+"' "
 									+"and req.type in('"+tipo+"') "
 									//+"and req.ref_num = 65799"
 									+"and stat.code in('WIP','PRBAPP') ";
@@ -97,13 +83,8 @@ public class PainelChamadosDao {
 									+"from "
 										+"call_req req WITH(NOLOCK) "
 										+"join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
-										+"join prob_ctg cat1 WITH(NOLOCK) on cat1.persid = req.category "
-									+"where "
-										+"cat1.sym like 'INFRA%' "
-										+"and cat1.sym not like 'INFRA.Ordem de Servico' "
-										+"and cat1.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
-										+"and cat1.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-										+"and cat1.sym not like 'Infra.Tarefas Internas' "
+										+"join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
+									+"where cat.sym like '"+categoria+"' "
 										+"and req.type in('"+tipo+"') "
 										+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') ";			
 				
@@ -116,14 +97,9 @@ public class PainelChamadosDao {
 										+"from "
 											+"call_req req WITH(NOLOCK) "
 											+"join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
-											+"join prob_ctg cat2 WITH(NOLOCK) on cat2.persid = req.category "
+											+"join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
 											+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
-										+"where "
-											+"cat2.sym like 'INFRA%' "
-											+"and cat2.sym not like 'INFRA.Ordem de Servico' "
-											+"and cat2.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
-											+"and cat2.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-											+"and cat2.sym not like 'Infra.Tarefas Internas' "
+										+"where cat.sym like '"+categoria+"' "
 											+"and req.type in('"+tipo+"') "
 											+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 											+"and vwg.last_name = '"+equipe+"'";	
@@ -138,14 +114,9 @@ public class PainelChamadosDao {
 										+"from "
 											+"call_req req WITH(NOLOCK) "
 											+"join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
-											+"join prob_ctg cat3 WITH(NOLOCK) on cat3.persid = req.category "
+											+"join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
 											+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
-										+"where "
-											+"cat3.sym like 'INFRA%' "
-											+"and cat3.sym not like 'INFRA.Ordem de Servico' "
-											+"and cat3.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
-											+"and cat3.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-											+"and cat3.sym not like 'Infra.Tarefas Internas' "
+										+"where cat.sym like '"+categoria+"' "
 											+"and req.type in('"+tipo+"') "
 											+"and stat.code in('WIP','PRBAPP') "
 											+"and vwg.last_name = '"+equipe+"'";	
@@ -184,21 +155,20 @@ public class PainelChamadosDao {
 									+"vwg.last_name as equipe,"
 									+"ctg.sym as grupo,"
 									+"req.summary as titulo, "
-									+"log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time,"
-									+"DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch,"
-									+ "log.type as status "
+									
+									+ "stat.sym as status "
 								+"from "
 									+"call_req req WITH(NOLOCK) "
 									+"join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
 									+"join prob_ctg ctg WITH(NOLOCK) on ctg.persid = req.category "
 									+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
 									+"left join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
-									+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
+									
 								+"where "
-									+"log.type in ('INIT','SLADELAY','SLARESUME','RE') "
+									
 									//+"and req.id in  (470837) "
-									+"and req.id in  ("+ lista + ") "
-									+ "order by req.id, log.time_stamp";
+									+" req.id in  ("+ lista + ") "
+									+" order by req.id ";
 			
 			stmt = connection
 					.prepareStatement(sql_listaLog);
@@ -221,8 +191,7 @@ public class PainelChamadosDao {
 					chamados.setChamado(popula.populaChamados(rs_listalog));
 					chamados.setTitulo(popula.populaTitulo(rs_listalog));
 					chamados.setStatus(popula.populaStatus(rs_listalog));
-					chamados.setTime(popula.populaTime(rs_listalog));
-					chamados.setEpoch(popula.populaEpoch(rs_listalog));
+					
 					chamados.setGrupo(popula.populaGrupo(rs_listalog));
 					chamados.setTipo(tipo);
 //					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
@@ -242,7 +211,7 @@ public class PainelChamadosDao {
 				if(ListaChamados.isEmpty()){
 					return null;
 				} else {
-					return CalculaSla.SlaMec(ListaChamados);
+					return ListaChamados;
 				}
 
 			

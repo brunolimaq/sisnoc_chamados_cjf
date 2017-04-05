@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/listaChamados/**").hasRole("ACESSO_LISTA_CHAMADOS")
+//				.antMatchers("/listaChamados/**").hasAuthority("ADMINISTRACAO_GERAL")
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
@@ -56,10 +56,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
-//
 
 }

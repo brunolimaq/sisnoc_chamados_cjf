@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <title>AlgaWorks</title>
+  <title>SISNOC</title>
 
   	<link rel="stylesheet" type="text/css" href="resources/layout/stylesheets/vendors.min.css"/>
 	<link rel="stylesheet" type="text/css" href="resources/layout/stylesheets/algaworks.min.css"/>
@@ -25,7 +25,8 @@
 
 <form th:action="@{/login}" method="POST">
 	<div class="aw-simple-panel">
-		<img alt="AlgaWorks" src="resources/images/logo-gray.png"/>
+<!-- 		<img alt="AlgaWorks" src="resources/images/logo-gray.png"/> -->
+		<h1>SISNOC</h1>
 		
 		<div class="aw-simple-panel__message">
 			Por favor, faça o login.

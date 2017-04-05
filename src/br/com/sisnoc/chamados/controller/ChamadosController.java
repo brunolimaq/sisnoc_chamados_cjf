@@ -29,7 +29,18 @@ public class ChamadosController {
 
 	
 	@RequestMapping("/")
-	public ModelAndView principal(){
+	public ModelAndView principal(Model model) throws ParseException{
+		
+		String equipe = "";
+		String status = "";
+		
+		model.addAttribute("chamadosPainelChamados", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
+	    model.addAttribute("chamadosPainelIncidentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
+		
+		status = "aberto";
+		model.addAttribute("chamadosPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
+		model.addAttribute("incidentesPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
+
 		ModelAndView mv = new ModelAndView("chamados/index");
 		return mv;
 	}
@@ -52,19 +63,19 @@ public class ChamadosController {
 		return "chamados/chamados";
 	}
 	
-//	@RequestMapping("/pendencias")
-//	public ModelAndView listaPendencias(Model model) throws ParseException{
-//		String equipe = "todas";
-//		String status = "";
-//		
-//		ModelAndView mv = new ModelAndView("chamados/pendencias");
-//		
-//		model.addAttribute("chamadosPendentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
-//		model.addAttribute("incidentesPendentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
-//		
-//		
-//		return mv;
-//	}
+	@RequestMapping("/pendencias")
+	public ModelAndView listaPendencias(Model model) throws ParseException{
+		String equipe = "todas";
+		String status = "";
+		
+		ModelAndView mv = new ModelAndView("chamados/pendencias");
+		
+		model.addAttribute("chamadosPendentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
+		model.addAttribute("incidentesPendentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
+		
+		
+		return mv;
+	}
 
 
 	

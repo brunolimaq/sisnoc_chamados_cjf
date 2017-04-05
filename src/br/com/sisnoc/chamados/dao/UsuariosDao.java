@@ -41,15 +41,14 @@ public class UsuariosDao {
 	public Optional<Usuario> validaLogin(String loginUsuario) throws SQLException{
 
 
-//		String sql_login = "SELECT * from usuario where loginUsuario = '"+loginUsuario+"'";
-		
+	
 		String sql_login = "select " 
 		+" u.loginUsuario, "
 		+" u.senhaUsuario, "
 		+" u.emailUsuario, "
 		+" u.nomeUsuario, "
 		+" GROUP_CONCAT(distinctrow e.nomeEquipe) as equipe, " 
-		+" GROUP_CONCAT(distinctrow p.nomePermissao) as permisao "
+		+" GROUP_CONCAT(distinctrow p.nomePermissao) as permissao "
 		+" from  "
 		+" usuario u " 
 		+" join usuario_equipe ue on ue.usuario_idUsuario = u.idUsuario "
@@ -70,8 +69,8 @@ public class UsuariosDao {
 			
 			usuario.setNome(rs.getString("loginUsuario"));
 			usuario.setSenhaUsuario(rs.getString("senhaUsuario"));
-			usuario.setGrupo(rs.getString("equipe"));
-			System.out.println("chegou no while");
+			usuario.setNomeEquipe(rs.getString("equipe"));
+			usuario.setPermissao(rs.getString("permissao"));
 				
 		}
 		
@@ -83,6 +82,47 @@ public class UsuariosDao {
 
 		
 	}
+	
+//	public List<String> permissoes(String loginUsuario) throws SQLException {
+//		
+//		List<String> listaPermissoes = new ArrayList<String>();
+//
+//		String sql_login = "select " 
+//		+" u.loginUsuario, "
+//		+" u.senhaUsuario, "
+//		+" u.emailUsuario, "
+//		+" u.nomeUsuario, "
+//		+" GROUP_CONCAT(distinctrow e.nomeEquipe) as equipe, " 
+//		+" GROUP_CONCAT(distinctrow p.nomePermissao) as permissao "
+//		+" from  "
+//		+" usuario u " 
+//		+" join usuario_equipe ue on ue.usuario_idUsuario = u.idUsuario "
+//		+" join equipe e on ue.equipe_idequipe = e.idEquipe "
+//		+" join usuario_permissao up on u.idUsuario = up.usuario_idUsuario "
+//		+" join permissao p  on p.idPermissao = up.permissao_idPermissao "
+//		+" where u.loginUsuario = '"+loginUsuario+"' ";
+//
+//
+//				PreparedStatement stmt = connection
+//				.prepareStatement(sql_login);
+//		ResultSet rs = stmt.executeQuery();
+//		
+//		Usuario usuario = new Usuario();
+//
+//		while (rs.next()){
+//			
+//			usuario.setPermissao(rs.getString("permissao"));
+//			listaPermissoes.add(usuario.getPermissao());
+//				
+//		}
+//		
+//		
+//		
+//		stmt.close();
+//		
+//		return listaPermissoes;
+//	}
+
 	
 	public void cadastro() throws SQLException {
 
@@ -108,5 +148,7 @@ public class UsuariosDao {
 	public Connection getConnection() {
 		return connection;
 	}
+
+
 
 }

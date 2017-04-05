@@ -25,7 +25,7 @@ public class UsuariosController {
 		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username;
 		if (usuarioLogado  instanceof UsuarioSistema ) {
-		   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getGrupo();
+		   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
 		} else {
 		   username = usuarioLogado .toString();
 		}

@@ -1,0 +1,23 @@
+body {
+	min-height: 100vh; /* Esse vh significa "view height" e o 100 é tipo em porcentagem. A altura mínima da tela vai ser 100% */
+	background-color: #CCC;
+	background-image: url('https://unsplash.it/g/1500/800?random'); /* Esse "unsplash" é um serviço. O "g" deixa as fotos preto e branco. 1500/800 é a resolução. e "random" é para gerar uma nova foto a cada reload.*/
+}
+
+.login-form{
+	margin-top: 50vh; /*Para centralizar verticalmente, mas vai ficar muito em baixo. Resolve com a proprieade "transform"*/
+	padding: 20px 30px;
+	background-color: rgba(0,0,0, .9);
+	color: #FFF;
+
+	transform: translateY(-50%); /* Vai traduzir a posiçao vertical do elemento pra metade do tamanho que ele tiver.*/
+}
+
+.login-form h1{
+	margin: 0 0 5px; /*Quando tem 3 valores o primeiro fica pra cima, o segundo para direita e esquerda e o terceiro pra baixo*/
+}
+
+.login-form h2{
+	margin:0 0 30px;
+	font-size: 1em; /*Esse "1em" vai pegar o tamanho da fonte do pai*/
+}
