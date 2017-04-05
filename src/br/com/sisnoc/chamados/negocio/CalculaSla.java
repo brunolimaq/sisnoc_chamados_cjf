@@ -568,6 +568,7 @@ public class CalculaSla {
 			validado.setSla("Violado");
 		} else {
 			validado.setSla(acumuladoParaHoraLegivel(sla));
+			validado.setSla2(sla);
 		}
 		
 		//System.out.println(validado);
