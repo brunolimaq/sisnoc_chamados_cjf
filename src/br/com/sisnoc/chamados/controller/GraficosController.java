@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.sisnoc.chamados.modelo.Grafico;
+import br.com.sisnoc.chamados.negocio.GraficosPessoal;
 import br.com.sisnoc.chamados.service.GraficoService;
 
 @Controller
@@ -17,11 +18,14 @@ public class GraficosController {
 
 	
 	private final GraficoService graficoService;
-
+	
+	private final GraficosPessoal metasPessoal;
+	
 	@Autowired
-	public GraficosController(GraficoService graficoService) {
+	public GraficosController(GraficoService graficoService,GraficosPessoal metasPessoal) {
 		super();
 		this.graficoService = graficoService;
+		this.metasPessoal = metasPessoal;
                 
 	}
 	
@@ -47,7 +51,12 @@ public class GraficosController {
 	@RequestMapping(value = "/metasIndividual", produces = "application/json")
 	public  @ResponseBody Grafico metasIndividual() throws ParseException{
 		
-		return graficoService.getGraficoMetaIndividual();
+		
+		System.out.println("chamando metas");
+		metasPessoal.calcMetas();
+		System.out.println(metasPessoal);
+		
+		return graficoService.getGraficoMetaIndividual(metasPessoal);
 	}
 	
 	

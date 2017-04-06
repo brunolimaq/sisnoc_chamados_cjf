@@ -5,17 +5,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
-import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
+
 import br.com.sisnoc.chamados.modelo.Grafico;
+import br.com.sisnoc.chamados.negocio.GraficosPessoal;
 
 @Service
 public class GraficoServiceImpl implements GraficoService {
 
-	@Autowired
-	PainelPessoalMetasDao metasDao;
+	
+	
 	
 	@Override
 	public Grafico getGraficoTeste() {
@@ -42,25 +43,27 @@ public class GraficoServiceImpl implements GraficoService {
 		return grafico;	}
 
 	@Override
-	public Grafico getGraficoMetaIndividual() throws ParseException {
+	public Grafico getGraficoMetaIndividual(GraficosPessoal metasPessoal){
 		
+		//GraficosPessoal metasPessoal = new GraficosPessoal();
 
 		Grafico grafico = new Grafico();
-
-		metasDao.listaPainelPessoalMetas();
+		
+		//metasPessoal.calcMetas();
+		
 		
 			
 			List<Integer> listaMetaDuasHoras = new ArrayList<Integer>();
-			listaMetaDuasHoras.add(metasDao.getMeta2h());
+			listaMetaDuasHoras.add(metasPessoal.getMeta2h());
 
 			List<Integer> listaMetaQuatroHoras = new ArrayList<Integer>();
-			listaMetaQuatroHoras.add(metasDao.getMeta4h());
+			listaMetaQuatroHoras.add(metasPessoal.getMeta4h());
 
 			List<Integer> listaViolados = new ArrayList<Integer>();
-			listaViolados.add(metasDao.getViolados());
+			listaViolados.add(metasPessoal.getViolados());
 
 			List<Integer> listaChamadosMes = new ArrayList<Integer>();
-			listaChamadosMes.add(metasDao.getChamadosMes());
+			listaChamadosMes.add(metasPessoal.getRequisicoesMes());
 
 			
 			HashMap<String, List<Integer>> dados = new HashMap<String, List<Integer>>();

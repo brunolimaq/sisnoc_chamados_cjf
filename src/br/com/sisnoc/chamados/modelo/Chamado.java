@@ -45,6 +45,28 @@ public class Chamado {
 	private String titulo;
 	private String status;
 	private String grupo;
+	private Integer reaberto;
+	private String statusReal;
+
+
+	public String getStatusReal() {
+		return statusReal;
+	}
+
+
+	public void setStatusReal(String statusReal) {
+		this.statusReal = statusReal;
+	}
+
+
+	public Integer getReaberto() {
+		return reaberto;
+	}
+
+
+	public void setReaberto(Integer reaberto) {
+		this.reaberto = reaberto;
+	}
 
 
 	//Counts
