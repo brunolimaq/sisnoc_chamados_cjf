@@ -12,13 +12,17 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
+import br.com.sisnoc.chamados.dao.util.MetasDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.negocio.CalculaSla;
 import br.com.sisnoc.chamados.negocio.Popula;
+import br.com.sisnoc.chamados.security.UsuarioSistema;
 
 @Repository
+@MetasDao
 public class PainelPessoalMetasDao {
 
 private  final Connection connection;
@@ -33,15 +37,30 @@ private  final Connection connection;
 		}
 	}
 	
-	public List<Chamado> listaPainelPessoalMetas(String equipe, String status,String tipo) throws ParseException {
+	
+	
+	private int meta2h;
+	private int meta4h;
+	private int violados;
+
+	
+	public Integer listaPainelPessoalMetas() throws ParseException {
 		try {
 			
 			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
 			String sql_listaChamados = "";
 			
 			// tipo = "R";
+			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username;
+			if (usuarioLogado  instanceof UsuarioSistema ) {
+			   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+			} else {
+			   username = usuarioLogado.toString();
+			}
+
+			System.out.println(username);
 			
-			String usuario = "bruno.queiroz";
 			
 
 				sql_listaChamados = "select "
@@ -58,34 +77,37 @@ private  final Connection connection;
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
-						+"and stat.code in (RE) "
-						+"and usu.userid = '"+usuario+"'"
-						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
+						+"and stat.code in ('RE','CL') "
+						+"and usu.userid = '"+username+"' "
+						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),'03/01/2017',101)) ";
+
+				
+//				+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
 
 			PreparedStatement stmt = connection
 					.prepareStatement(sql_listaChamados);
 			ResultSet rs_listaChamados = stmt.executeQuery();
 			
 			String lista = "\'\'";
-
+			
+			int count2 = 0;
 			while (rs_listaChamados.next()){
 
 				lista = lista +",\'" + rs_listaChamados.getString("ID") + "\'";
+				count2++;
+				
 			}
+			System.out.println(count2);
 			
 			rs_listaChamados.close();
 			
-			//System.out.println(lista);
-			// 65497
-			// 65529
-			// 65536
-			// 65538
 			String sql_listaLog = "select "
 									+"req.id as ID, "
 									+"req.ref_num as chamados, "
 									+"usu.first_name as responsavel,"
 									+"vwg.last_name as equipe,"
 									+"ctg.sym as grupo,"
+									+"req.type as tipo, "
 									+"req.summary as titulo, "
 									+"log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time,"
 									+"DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch,"
@@ -99,7 +121,6 @@ private  final Connection connection;
 									+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
 								+"where "
 									+"log.type in ('INIT','SLADELAY','SLARESUME','RE') "
-									//+"and req.id in  (470837) "
 									+"and req.id in  ("+ lista + ") "
 									+ "order by req.id, log.time_stamp";
 			
@@ -127,13 +148,7 @@ private  final Connection connection;
 					chamados.setTime(popula.populaTime(rs_listalog));
 					chamados.setEpoch(popula.populaEpoch(rs_listalog));
 					chamados.setGrupo(popula.populaGrupo(rs_listalog));
-					chamados.setTipo(tipo);
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
+					chamados.setTipo(popula.populaTipo(rs_listalog));
 					ListaChamados.add(chamados);
 					count++;
 				}
@@ -166,9 +181,12 @@ private  final Connection connection;
 						
 					} 
 					
-					int meta2h = (countMeta2h*100)/countTotal;
-					int meta4h = (countMeta4h*100)/countTotal;
-					return null;
+					this.setMeta2h((countMeta2h*100)/countTotal);
+					this.setMeta4h((countMeta4h*100)/countTotal);
+					this.setViolados(countViolados);
+					
+					System.out.println(this.getViolados());
+					return 1;
 				}
 
 			
@@ -179,6 +197,30 @@ private  final Connection connection;
 	
 	public Connection getConnection() {
 		return connection;
+	}
+
+	public int getMeta2h() {
+		return meta2h;
+	}
+
+	public void setMeta2h(int meta2h) {
+		this.meta2h = meta2h;
+	}
+
+	public int getMeta4h() {
+		return meta4h;
+	}
+
+	public void setMeta4h(int meta4h) {
+		this.meta4h = meta4h;
+	}
+
+	public int getViolados() {
+		return violados;
+	}
+
+	public void setViolados(int violados) {
+		this.violados = violados;
 	}
 	
 }
