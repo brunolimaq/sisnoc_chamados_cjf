@@ -192,7 +192,8 @@ var gaugeSLA4 = {
 		
 			}];
  		    var chart = new Highcharts.Chart(gaugeSLA2);
- 		    
+
+
  		   gaugeSLA4.series = [{
  			  data: [data.dados.meta4],
  		      dataLabels: {
@@ -203,6 +204,12 @@ var gaugeSLA4 = {
 
  			}];
  			    var chart = new Highcharts.Chart(gaugeSLA4);
+ 			    
+ 		   var violados = data.dados.violados;
+ 		   $("#violados").text(violados);
+ 		   var chamadosMes = data.dados.chamadosMes;
+ 		   $("#chamadosMes").text(chamadosMes);
+
 		});
 });
   
@@ -334,9 +341,27 @@ var gaugeSLA4 = {
                    	<a href="#chamados" class="list-group-item active "  id="painel_chamados_titulo">
 						<strong>Meus índices</strong>
 					 </a>
-					 
+						<div class="row">
+					  		<br/>
+					 		<div class="col-sm-2">
+								 <div class="panel panel-default">
+								  <div class="panel-heading">Violados</div>
+								  <div class="panel-body">
+								    <h1 id="violados"></h1>
+								  </div>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								 <div class="panel panel-default">
+								  <div class="panel-heading">Requisições Mês</div>
+								  <div class="panel-body">
+								    <h1 id="chamadosMes">0</h1>
+								  </div>
+								</div>
+							</div>
+							
+						</div>					 
 					 <div class="row">
-					 	<br/>
 					 	<div class="col-md-2">
 							<div id="gauge-sla2" style="width: 200px; height: 100px;" ></div>
 					 	</div>

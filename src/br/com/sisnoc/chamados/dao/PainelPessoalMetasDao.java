@@ -42,6 +42,8 @@ private  final Connection connection;
 	private int meta2h;
 	private int meta4h;
 	private int violados;
+	private int chamadosMes;
+
 
 	
 	public Integer listaPainelPessoalMetas() throws ParseException {
@@ -79,10 +81,11 @@ private  final Connection connection;
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and stat.code in ('RE','CL') "
 						+"and usu.userid = '"+username+"' "
-						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),'03/01/2017',101)) ";
+						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
+
+//						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),'03/01/2017',101)) ";
 
 				
-//				+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
 
 			PreparedStatement stmt = connection
 					.prepareStatement(sql_listaChamados);
@@ -90,14 +93,17 @@ private  final Connection connection;
 			
 			String lista = "\'\'";
 			
-			int count2 = 0;
+			int countChamadosMes = 0;
 			while (rs_listaChamados.next()){
 
 				lista = lista +",\'" + rs_listaChamados.getString("ID") + "\'";
-				count2++;
-				
+				countChamadosMes++;
 			}
-			System.out.println(count2);
+			
+			
+			
+			
+			System.out.println(getChamadosMes());
 			
 			rs_listaChamados.close();
 			
@@ -184,6 +190,7 @@ private  final Connection connection;
 					this.setMeta2h((countMeta2h*100)/countTotal);
 					this.setMeta4h((countMeta4h*100)/countTotal);
 					this.setViolados(countViolados);
+					this.setChamadosMes(countChamadosMes);
 					
 					System.out.println(this.getViolados());
 					return 1;
@@ -221,6 +228,14 @@ private  final Connection connection;
 
 	public void setViolados(int violados) {
 		this.violados = violados;
+	}
+
+	public int getChamadosMes() {
+		return chamadosMes;
+	}
+
+	public void setChamadosMes(int chamadosMes) {
+		this.chamadosMes = chamadosMes;
 	}
 	
 }

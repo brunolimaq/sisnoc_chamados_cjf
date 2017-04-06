@@ -56,12 +56,19 @@ public class GraficoServiceImpl implements GraficoService {
 			List<Integer> listaMetaQuatroHoras = new ArrayList<Integer>();
 			listaMetaQuatroHoras.add(metasDao.getMeta4h());
 
-			
+			List<Integer> listaViolados = new ArrayList<Integer>();
+			listaViolados.add(metasDao.getViolados());
+
+			List<Integer> listaChamadosMes = new ArrayList<Integer>();
+			listaChamadosMes.add(metasDao.getChamadosMes());
+
 			
 			HashMap<String, List<Integer>> dados = new HashMap<String, List<Integer>>();
 			
 			dados.put("meta2", listaMetaDuasHoras);
 			dados.put("meta4", listaMetaQuatroHoras);
+			dados.put("violados", listaViolados);
+			dados.put("chamadosMes", listaChamadosMes);
 			grafico.setDados(dados);
 			grafico.setNome("Meta 2/hs");
 			

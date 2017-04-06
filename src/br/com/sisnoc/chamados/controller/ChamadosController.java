@@ -41,6 +41,7 @@ public class ChamadosController {
 		model.addAttribute("chamadosPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
 		model.addAttribute("incidentesPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
 
+		
 		ModelAndView mv = new ModelAndView("chamados/index");
 		return mv;
 	}
