@@ -1,6 +1,8 @@
 package br.com.sisnoc.chamados.controller;
 
 
+import java.text.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,16 +31,23 @@ public class GraficosController {
 		return "chamados/graficos";
 	}
 	
+	@RequestMapping("/2")
+	public String graficos2(){
+		
+		return "chamados/graficos2";
+	}
+
+	
 	@RequestMapping(value = "/teste", produces = "application/json")
 	public  @ResponseBody Grafico chamadosTotal(){
 		
-		return graficoService.getGraficoTeste();
+		return graficoService.getGraficoChamadosPessoa();
 	}
 	
-	@RequestMapping(value = "/metasIndividualDuasHoras", produces = "application/json")
-	public  @ResponseBody Grafico metasIndividualDuashoras(){
+	@RequestMapping(value = "/metasIndividual", produces = "application/json")
+	public  @ResponseBody Grafico metasIndividual() throws ParseException{
 		
-		return graficoService.getGraficoMetaIndividualDuasHoras();
+		return graficoService.getGraficoMetaIndividual();
 	}
 	
 	

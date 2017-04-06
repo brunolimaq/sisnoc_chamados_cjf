@@ -21,161 +21,12 @@
 	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 	<link rel="stylesheet" href="resources/css/index.css">
 	<link rel="stylesheet" type="text/css" href="resources/css/sisnoc.css" />
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
-
-<script src="https://code.highcharts.com/stock/highstock.js"></script>
-<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-    
+	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-more.js"></script>
-
-<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-
-    <script type="text/javascript">
-   
-    
-    var gaugeOptions = {
-
-    	    chart: {
-    	        type: 'solidgauge'
-    	    },
-
-    	    title: null,
-
-    	    pane: {
-    	        center: ['50%', '85%'],
-    	        size: '140%',
-    	        startAngle: -90,
-    	        endAngle: 90,
-    	        background: {
-    	            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
-    	            innerRadius: '60%',
-    	            outerRadius: '100%',
-    	            shape: 'arc'
-    	        }
-    	    },
-
-    	    tooltip: {
-    	        enabled: false
-    	    },
-
-    	    // the value axis
-    	    yAxis: {
-    	        stops: [
-    	            [0.1, '#55BF3B'], // green
-    	            [0.5, '#DDDF0D'], // yellow
-    	            [0.9, '#DF5353'] // red
-    	        ],
-    	        lineWidth: 0,
-    	        minorTickInterval: null,
-    	        tickAmount: 2,
-    	        title: {
-    	            y: -70
-    	        },
-    	        labels: {
-    	            y: 16
-    	        }
-    	    },
-
-    	    plotOptions: {
-    	        solidgauge: {
-    	            dataLabels: {
-    	                y: 5,
-    	                borderWidth: 0,
-    	                useHTML: true
-    	            }
-    	        }
-    	    }
-    	};
-
-    	// The speed gauge
-    	var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
-    	    yAxis: {
-    	        min: 0,
-    	        max: 200,
-    	        title: {
-    	            text: 'Speed'
-    	        }
-    	    },
-
-    	    credits: {
-    	        enabled: false
-    	    },
-
-    	    series: [{
-    	        name: 'Speed',
-    	        data: [80],
-    	        dataLabels: {
-    	            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-    	                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
-    	                   '<span style="font-size:12px;color:silver">km/h</span></div>'
-    	        },
-    	        tooltip: {
-    	            valueSuffix: ' km/h'
-    	        }
-    	    }]
-
-    	}));
-
-    	// The RPM gauge
-    	var chartRpm = Highcharts.chart('container-rpm', Highcharts.merge(gaugeOptions, {
-    	    yAxis: {
-    	        min: 0,
-    	        max: 5,
-    	        title: {
-    	            text: 'RPM'
-    	        }
-    	    },
-
-    	    series: [{
-    	        name: 'RPM',
-    	        data: [1],
-    	        dataLabels: {
-    	            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-    	                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
-    	                   '<span style="font-size:12px;color:silver">* 1000 / min</span></div>'
-    	        },
-    	        tooltip: {
-    	            valueSuffix: ' revolutions/min'
-    	        }
-    	    }]
-
-    	}));
-
-    	// Bring life to the dials
-    	setInterval(function () {
-    	    // Speed
-    	    var point,
-    	        newVal,
-    	        inc;
-
-    	    if (chartSpeed) {
-    	        point = chartSpeed.series[0].points[0];
-    	        inc = Math.round((Math.random() - 0.5) * 100);
-    	        newVal = point.y + inc;
-
-    	        if (newVal < 0 || newVal > 200) {
-    	            newVal = point.y - inc;
-    	        }
-
-    	        point.update(newVal);
-    	    }
-
-    	    // RPM
-    	    if (chartRpm) {
-    	        point = chartRpm.series[0].points[0];
-    	        inc = Math.random() - 0.5;
-    	        newVal = point.y + inc;
-
-    	        if (newVal < 0 || newVal > 5) {
-    	            newVal = point.y - inc;
-    	        }
-
-    	        point.update(newVal);
-    	    }
-    	}, 2000);
-</script>
+	<script src="https://code.highcharts.com/highcharts-more.js"></script>
+	<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+	
 
 	
 	
@@ -188,45 +39,212 @@
   <![endif]-->
   
   
+  <script type="text/javascript">
+  //Metas de 2 e 4 horas
+  
+  $( document ).ready(function() {
+	
+		var gaugeSLA2 = {
+			
+			    chart: {
+			        type: 'solidgauge',
+                    renderTo: 'gauge-sla2'
+
+			    },
+			
+			    title: null,
+			
+			    pane: {
+			        center: ['50%', '85%'],
+			        size: '140%',
+			        startAngle: -90,
+			        endAngle: 90,
+			        background: {
+			            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+			            innerRadius: '60%',
+			            outerRadius: '100%',
+			            shape: 'arc'
+			        }
+			    },
+			
+			    tooltip: {
+			        enabled: false
+
+			    },
+			
+			    // the value axis
+			    yAxis: {
+			        stops: [
+			            [0.8, '#DF5353'], // red
+			            [0.84, '#DF5353'], // red
+			            [0.85, '#DDDF0D'], // yellow
+			            [0.89, '#DDDF0D'], // yellow
+			            [0.9, '#55BF3B'] // green
+			        ],
+			        lineWidth: 0,
+			        minorTickInterval: null,
+			        tickAmount: 2,
+			        title: {
+			            y: -35,
+			            text: 'Meta 2 horas'
+			        },
+			        labels: {
+			            y: 16
+			        },
+			        min: 0,
+			        max: 100,
+
+			    },
+			
+			    plotOptions: {
+			        solidgauge: {
+			            dataLabels: {
+			                y: 5,
+			                borderWidth: 0,
+			                useHTML: true
+			            }
+			        }
+			    },
+			    credits: {
+			        enabled: false
+			    },
+			
+			    series: [{}]
+			};
+			
+var gaugeSLA4 = {
+		
+	    chart: {
+	        type: 'solidgauge',
+            renderTo: 'gauge-sla4'
+
+	    },
+	
+	    title: null,
+	
+	    pane: {
+	        center: ['50%', '85%'],
+	        size: '140%',
+	        startAngle: -90,
+	        endAngle: 90,
+	        background: {
+	            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+	            innerRadius: '60%',
+	            outerRadius: '100%',
+	            shape: 'arc'
+	        }
+	    },
+	
+	    tooltip: {
+	        enabled: false
+
+	    },
+	
+	    // the value axis
+	    yAxis: {
+	        stops: [
+	            [0.8, '#DF5353'], // red
+	            [0.85, '#DDDF0D'], // yellow
+	            [0.9, '#55BF3B'] // green
+	        ],
+	        lineWidth: 0,
+	        minorTickInterval: null,
+	        tickAmount: 2,
+	        title: {
+	            y: -35,
+	            text: 'Meta 4 horas'
+	        },
+	        labels: {
+	            y: 16
+	        },
+	        min: 0,
+	        max: 100,
+
+	    },
+	
+	    plotOptions: {
+	        solidgauge: {
+	            dataLabels: {
+	                y: 5,
+	                borderWidth: 0,
+	                useHTML: true
+	            }
+	        }
+	    },
+	    credits: {
+	        enabled: false
+	    },
+	
+	    series: [{}]
+	};
+
+
+
+	$.getJSON("http://localhost:8080/chamados/graficos/metasIndividual", function(data) {
+	  
+		gaugeSLA2.series = [{
+			  data: [data.dados.meta2],
+		      dataLabels: {
+		          format: '<div style="text-align:center"><span style="font-size:15px;color:' +
+		              ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+		                 '<span style="font-size:7px;color:silver">% mês</span></div>'
+		      }
+		
+			}];
+ 		    var chart = new Highcharts.Chart(gaugeSLA2);
+ 		    
+ 		   gaugeSLA4.series = [{
+ 			  data: [data.dados.meta4],
+ 		      dataLabels: {
+ 		          format: '<div style="text-align:center"><span style="font-size:15px;color:' +
+ 		              ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+ 		                 '<span style="font-size:7px;color:silver">% mês</span></div>'
+ 		      }
+
+ 			}];
+ 			    var chart = new Highcharts.Chart(gaugeSLA4);
+		});
+});
+  
+  
+  </script>
+  
 </head>
 
-<body class="aw-layout-simple-page">
-	<nav class="navbar navbar-inverse navbar-static-top"> <!-- "navbar" é a barra de navegação e "inverse" deixará preta. "static-top" deixará no top. -->
-		<div class="container"> <!-- Um container dentro da barra de navegação--> 
-			<div class="navbar-header"> <!-- Cabeçalho da barra de navegação -->
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu">
-					<span class="icon-bar"></span> <!-- Esses 3 span váo criar aquelas 3 barrinhas pra clicar em cima e expandir a barra -->
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span> 
-				</button> <!-- Esse botão vai fazer a barra de navegação expandir qnd tiver em tela menor, foi chamado pelo id do menu lá na class="collapse navbar-collpase"-->
-     			 <a class="navbar-brand" href="/chamados/listaChamados">Sisnoc Algar</a>
-			</div>
-			<div class="collapse navbar-collapse" id="menu"> <!-- Essa div é para ativar a responsividade da barra de navegação para quando diminui a tela de exibição -->
-				<ul class="nav navbar-nav">
-			          <li class="dropdown">
-			          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipes
-			          <span class="caret"></span></a>
-			          <ul class="dropdown-menu">
-						<li ><a href="/chamados/equipe_armazenamento">Analistas Storage <span class="badge"></span></a></li>
-						<li ><a href="/chamados/equipe_app">Analistas Aplicações <span class="badge"></span></a></li>
-						<li ><a href="/chamados/equipe_Bd">Analistas Banco de Dados<span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_corp">Analistas Serviços Corporativos <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_rede">Analistas Redes <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_monit">Analistas Monitoração <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_bkp">Analistas Backup <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_SO">Analistas Sistemas Operacionais <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_virt">Analistas Virtualização <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_doc">Documentadores <span class="badge"></span></a></li>
-			            <li><a href="/chamados/monitoradores">Monitoradores <span class="badge"></span></a></li>
-			            <li><a href="/chamados/supervisor">Supervisores Datacenter <span class="badge"></span></a></li>
-			          </ul>
-			        </li>					
-       				 <li><a href="#">Problemas</a></li>
-					<li><a href="#">GMUD</a></li>
-					<li><a href="#">Relatórios</a></li>
-					<li><a href="/chamados/pendencias">Pendências</a></li>	
-				</ul>
-				<ul class="nav navbar-nav navbar-right"> <!-- Via fazer  o menu a direita pra acessar minha conta. -->
+<body>
+	
+
+  <nav  class="navbar navbar-inverse  navbar-fixed-top">
+<div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/sisnoc/listaChamados">Sisnoc Algar</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+          <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipes
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+			<li ><a href="/chamados/equipe_armazenamento">Analistas Storage <span class="badge"></span></a></li>
+			<li ><a href="/chamados/equipe_app">Analistas Aplicações <span class="badge"></span></a></li>
+			<li ><a href="/chamados/equipe_Bd">Analistas Banco de Dados<span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_corp">Analistas Serviços Corporativos <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_rede">Analistas Redes <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_monit">Analistas Monitoração <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_bkp">Analistas Backup <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_SO">Analistas Sistemas Operacionais <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_virt">Analistas Virtualização <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_doc">Documentadores <span class="badge"></span></a></li>
+            <li><a href="/chamados/monitoradores">Monitoradores <span class="badge"></span></a></li>
+            <li><a href="/chamados/supervisor">Supervisores Datacenter <span class="badge"></span></a></li>
+          </ul>
+        </li>
+        <li><a href="#">Problemas <span class="badge"></span></a></li>
+        <li><a href="#">GMUD</a></li>
+        <li><a href="#">Relatórios</a></li>
+        <li><a href="/chamados/pendencias">Pendências</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right"> <!-- Via fazer  o menu a direita pra acessar minha conta. -->
 					<li>
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <!-- Botão que vai abrir o dropdown -->
 							Minha Conta
@@ -244,11 +262,13 @@
 							</ul>
 						</div>
 					</li>
-				</ul>
-			</div>
-		</div>	
-	</nav>
-	
+		</ul>
+      
+    </div>
+  </div>
+</nav>
+<br/>
+<br/>
 	
 	
 	
@@ -314,11 +334,16 @@
                    	<a href="#chamados" class="list-group-item active "  id="painel_chamados_titulo">
 						<strong>Meus índices</strong>
 					 </a>
-<div style="width: 600px; height: 400px; margin: 0 auto">
-    <div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
-    <div id="container-rpm" style="width: 300px; height: 200px; float: left"></div>
-</div>
-					
+					 
+					 <div class="row">
+					 	<br/>
+					 	<div class="col-md-2">
+							<div id="gauge-sla2" style="width: 200px; height: 100px;" ></div>
+					 	</div>
+					 	<div class="col-md-2">
+							<div id="gauge-sla4" style="width: 200px; height: 100px;"></div>
+					 	</div>
+					 </div>
                    </div>
                </div> <!-- fim DIV col-md4 do Incidentes ROW -->
                

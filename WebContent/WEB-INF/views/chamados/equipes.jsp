@@ -66,6 +66,26 @@
         <li><a href="#">Relatórios</a></li>
         <li><a href="/chamados/pendencias">Pendências</a></li>
       </ul>
+      <ul class="nav navbar-nav navbar-right"> <!-- Via fazer  o menu a direita pra acessar minha conta. -->
+					<li>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <!-- Botão que vai abrir o dropdown -->
+							Minha Conta
+							<span class="caret"></span> <!-- Coloca a 'setinha'para baixo de quando tem uma dropdown -->
+						</a>
+						<div class="dropdown-menu perfil"> <!-- Vai ser as opções da dropdown -->
+							<div class="col-sm-4 hidden-xs"> <!-- Esse hidden-xs quer dizer que o avatar vai ficar escondido quando for em display de celular-->
+								<img class="img-responsive img-rounded" src="http://api.adorable.io/avatars/100/watchuru.png"> <!-- Isso vai criar um avatar aleatorio nessa dropdown a primeira classe vai tornar responsiva e a segunda estiliza o formato-->
+								
+							</div>
+							<ul class="list-unstyled col-sm-8"> <!-- essa classe tira o estilo dos itens, a bolinha no caso-->
+								<li><sec:authentication property="principal.username"/></li>
+								<li><a href="">Alterar Perfil</a></li>
+								<li><a href="/chamados/logout">Sair</a></li>
+							</ul>
+						</div>
+					</li>
+		</ul>
+      
     </div>
   </div>
 </nav>

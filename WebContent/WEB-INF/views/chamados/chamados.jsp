@@ -39,44 +39,38 @@
 </head>
 
 <body>
-<br>
 
-	<nav class="navbar navbar-inverse navbar-static-top"> <!-- "navbar" é a barra de navegação e "inverse" deixará preta. "static-top" deixará no top. -->
-		<div class="container"> <!-- Um container dentro da barra de navegação--> 
-			<div class="navbar-header"> <!-- Cabeçalho da barra de navegação -->
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu">
-					<span class="icon-bar"></span> <!-- Esses 3 span váo criar aquelas 3 barrinhas pra clicar em cima e expandir a barra -->
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span> 
-				</button> <!-- Esse botão vai fazer a barra de navegação expandir qnd tiver em tela menor, foi chamado pelo id do menu lá na class="collapse navbar-collpase"-->
-     			 <a class="navbar-brand" href="/chamados/listaChamados">Sisnoc Algar</a>
-			</div>
-			<div class="collapse navbar-collapse" id="menu"> <!-- Essa div é para ativar a responsividade da barra de navegação para quando diminui a tela de exibição -->
-				<ul class="nav navbar-nav">
-			          <li class="dropdown">
-			          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipes
-			          <span class="caret"></span></a>
-			          <ul class="dropdown-menu">
-						<li ><a href="/chamados/equipe_armazenamento">Analistas Storage <span class="badge"></span></a></li>
-						<li ><a href="/chamados/equipe_app">Analistas Aplicações <span class="badge"></span></a></li>
-						<li ><a href="/chamados/equipe_Bd">Analistas Banco de Dados<span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_corp">Analistas Serviços Corporativos <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_rede">Analistas Redes <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_monit">Analistas Monitoração <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_bkp">Analistas Backup <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_SO">Analistas Sistemas Operacionais <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_virt">Analistas Virtualização <span class="badge"></span></a></li>
-			            <li><a href="/chamados/equipe_doc">Documentadores <span class="badge"></span></a></li>
-			            <li><a href="/chamados/monitoradores">Monitoradores <span class="badge"></span></a></li>
-			            <li><a href="/chamados/supervisor">Supervisores Datacenter <span class="badge"></span></a></li>
-			          </ul>
-			        </li>					
-       				 <li><a href="#">Problemas</a></li>
-					<li><a href="#">GMUD</a></li>
-					<li><a href="#">Relatórios</a></li>
-					<li><a href="/chamados/pendencias">Pendências</a></li>	
-				</ul>
-				<ul class="nav navbar-nav navbar-right"> <!-- Via fazer  o menu a direita pra acessar minha conta. -->
+  <nav  class="navbar navbar-inverse  navbar-fixed-top">
+<div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/sisnoc/listaChamados">Sisnoc Algar</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+          <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipes
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+			<li ><a href="/chamados/equipe_armazenamento">Analistas Storage <span class="badge"></span></a></li>
+			<li ><a href="/chamados/equipe_app">Analistas Aplicações <span class="badge"></span></a></li>
+			<li ><a href="/chamados/equipe_Bd">Analistas Banco de Dados<span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_corp">Analistas Serviços Corporativos <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_rede">Analistas Redes <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_monit">Analistas Monitoração <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_bkp">Analistas Backup <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_SO">Analistas Sistemas Operacionais <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_virt">Analistas Virtualização <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_doc">Documentadores <span class="badge"></span></a></li>
+            <li><a href="/chamados/monitoradores">Monitoradores <span class="badge"></span></a></li>
+            <li><a href="/chamados/supervisor">Supervisores Datacenter <span class="badge"></span></a></li>
+          </ul>
+        </li>
+        <li><a href="#">Problemas <span class="badge"></span></a></li>
+        <li><a href="#">GMUD</a></li>
+        <li><a href="#">Relatórios</a></li>
+        <li><a href="/chamados/pendencias">Pendências</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right"> <!-- Via fazer  o menu a direita pra acessar minha conta. -->
 					<li>
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <!-- Botão que vai abrir o dropdown -->
 							Minha Conta
@@ -94,10 +88,13 @@
 							</ul>
 						</div>
 					</li>
-				</ul>
-			</div>
-		</div>	
-	</nav>
+		</ul>
+      
+    </div>
+  </div>
+</nav>
+<br/>
+<br/>
 
 <div class="panel panel-primary">
 	<div class="panel-body">

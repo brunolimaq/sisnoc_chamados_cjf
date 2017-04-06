@@ -49,4 +49,9 @@ public class Popula {
 		
 		return rs.getInt("epoch");
 	}
+
+	public String populaTipo(ResultSet rs) throws SQLException, ParseException {
+		return rs.getString("tipo");
+
+	}
 }

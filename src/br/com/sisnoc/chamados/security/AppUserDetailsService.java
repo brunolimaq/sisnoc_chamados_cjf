@@ -30,7 +30,6 @@ public class AppUserDetailsService implements UserDetailsService {
 	
 	public UserDetails loadUserByUsername(String loginUsuario) throws UsernameNotFoundException {
 		
-			System.out.println("antes execptio ");
 			
 			Optional<Usuario> usuarioOptional = null;
 			try {
