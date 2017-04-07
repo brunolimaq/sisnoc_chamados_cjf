@@ -437,19 +437,26 @@ var gaugeSLA4 = {
 								    <h1 id="requisicoesMes">0</h1>
 								  </div>
 								</div>
+								<div class="panel panel-default">
+								  <div class="panel-heading">Requisições Mês</div>
+								  <div class="panel-body">
+								    <h1 id="requisicoesMes">0</h1>
+								  </div>
+								</div>
+								
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-8">
 								<div id="graficoPizza" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 							</div>
 							
-						</div>					 
-					 <div class="row">
-					 	<div class="col-md-2">
-							<div id="gauge-sla2" style="width: 200px; height: 100px;" ></div>
-					 	</div>
-					 	<div class="col-md-2">
-							<div id="gauge-sla4" style="width: 200px; height: 100px;"></div>
-					 	</div>
+					 
+						 	<div class="col-md-2">
+								<div id="gauge-sla2" style="width: 200px; height: 100px;" ></div>
+						 	</div>
+						 	<div class="col-md-2">
+								<div id="gauge-sla4" style="width: 200px; height: 100px;"></div>
+						 	</div>
+						 </div>
 					 </div>
                    </div>
                </div> <!-- fim DIV col-md4 do Incidentes ROW -->
