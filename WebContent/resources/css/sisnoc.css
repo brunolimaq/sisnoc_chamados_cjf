@@ -1,3 +1,12 @@
+.letras {
+	font-size: 2vw;
+}
+.paineis_indices {
+	padding:0;
+	margin: 0;
+	
+}
+
 .navbar-default {
   background-color: #EAE6E6;
   border-color: #e7e7e7;
@@ -106,7 +115,7 @@ width: 400px;
 height: 300px;
 }
 
-/*Customizações dos Alertas*/
+/*Customizaï¿½ï¿½es dos Alertas*/
 
 .maior24{
 	

@@ -85,7 +85,7 @@
 			        minorTickInterval: null,
 			        tickAmount: 2,
 			        title: {
-			            y: -35,
+			            y: -80,
 			            text: 'Meta 2 horas'
 			        },
 			        labels: {
@@ -151,7 +151,7 @@ var gaugeSLA4 = {
 	        minorTickInterval: null,
 	        tickAmount: 2,
 	        title: {
-	            y: -35,
+	            y: -80,
 	            text: 'Meta 4 horas'
 	        },
 	        labels: {
@@ -187,7 +187,7 @@ var gaugeSLA4 = {
 		      dataLabels: {
 		          format: '<div style="text-align:center"><span style="font-size:15px;color:' +
 		              ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
-		                 '<span style="font-size:7px;color:silver">% mês</span></div>'
+		                 '<span style="color:silver">% mês</span></div>'
 		      }
 		
 			}];
@@ -281,8 +281,9 @@ var gaugeSLA4 = {
   				    sliced: true,
   				    selected: true
   				},
-  	            {name: 'Incidentes', y: incidentes},
-  	            {name: 'Reaberto', y: reabertos}
+  	            {name: 'Reaberto', y: reabertos},
+  	            {name: 'Incidentes', y: incidentes, color: 'red'}
+
   	        ]
   	    }];
   			   var chart = new Highcharts.Chart(graficoPizza);
@@ -422,40 +423,54 @@ var gaugeSLA4 = {
 					 </a>
 						<div class="row">
 					  		<br/>
+					  		<div class="col-md-7">
+								<div id="graficoPizza" style="min-width: 310px; height: 400px; max-width: 600px; "></div>
+							</div>
+					  		
 					 		<div class="col-sm-2">
-								 <div class="panel panel-default">
+					 			<br/><br/>
+					 			<br/><br/>
+								 <div class="panel panel-default" >
 								  <div class="panel-heading">Violados</div>
-								  <div class="panel-body">
-								    <h1 id="violados"></h1>
+								  <div class="panel-body paineis_indices" >
+								    <label class="letras" id="violados">0</label>
+								  </div>
+								</div>
+								<div class="panel panel-default">
+								  <div class="panel-heading">Pendências</div>
+								  <div class="panel-body paineis_indices">
+								    <label class="letras" id="violados">5</label>
 								  </div>
 								</div>
 							</div>
 							<div class="col-sm-2">
+								<br/><br/>
+						 		<br/><br/>
 								 <div class="panel panel-default">
 								  <div class="panel-heading">Requisições Mês</div>
-								  <div class="panel-body">
-								    <h1 id="requisicoesMes">0</h1>
+								  <div class="panel-body paineis_indices">
+								    <label class="letras" id="requisicoesMes">0</label>
 								  </div>
 								</div>
 								<div class="panel panel-default">
-								  <div class="panel-heading">Requisições Mês</div>
-								  <div class="panel-body">
-								    <h1 id="requisicoesMes">0</h1>
+								  <div class="panel-heading">Chamados Reaberto</div>
+								  <div class="panel-body paineis_indices">
+								    <label class="letras" id="requisicoesMes">3</label>
 								  </div>
+								  
 								</div>
 								
 							</div>
-							<div class="col-md-8">
-								<div id="graficoPizza" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-							</div>
 							
 					 
-						 	<div class="col-md-2">
-								<div id="gauge-sla2" style="width: 200px; height: 100px;" ></div>
-						 	</div>
-						 	<div class="col-md-2">
-								<div id="gauge-sla4" style="width: 200px; height: 100px;"></div>
-						 	</div>
+						 	<div class="col-md-offset-1 col-md-5">
+						 		<div id="gauge-sla2" style="width: 400px; height: 200px;" ></div>
+					 	 	</div>
+						 	<div class="col-md-5">
+								<div id="gauge-sla4" style="width: 400px; height: 200px;"></div>
+							</div>
+					
+						 	
 						 </div>
 					 </div>
                    </div>

@@ -4,5 +4,4 @@ public interface GraficosPessoalService {
 
 	
 	public void calcMetas();
-	
 }
