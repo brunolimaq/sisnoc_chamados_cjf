@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -52,7 +51,7 @@ private  final Connection connection;
 			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
 			String sql_listaChamados = "";
 			
-			System.out.println("teste1");
+			
 			
 			// tipo = "R";
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -62,9 +61,9 @@ private  final Connection connection;
 			} else {
 			   username = usuarioLogado.toString();
 			}
-			System.out.println("teste2");
 			
-			System.out.println(username);
+			
+			//System.out.println(username);
 			
 			
 
@@ -180,6 +179,88 @@ private  final Connection connection;
 			throw new RuntimeException(e);
 		}
 	}
+	
+	
+public int listaPainelPessoalReabertos() throws ParseException {
+		
+		
+		
+		
+		
+		try {
+			
+			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
+			String sql_listaChamados = "";
+			
+			
+			
+			// tipo = "R";
+			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username;
+			if (usuarioLogado  instanceof UsuarioSistema ) {
+			   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+			} else {
+			   username = usuarioLogado.toString();
+			}
+		
+			
+			
+			
+			
+
+				sql_listaChamados = "select "
+						+"req.ref_num as chamado, "
+						+"req.id as ID , "
+						+"count(cast(log.action_desc as varchar)) reaberturas "
+					+"from "
+						+"call_req req WITH(NOLOCK) "
+						+ "join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
+						+ "join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
+						+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+						+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
+					+"where "
+						+"cat.sym like 'INFRA%' "
+						+"and cat.sym not like 'INFRA.Ordem de Servico' "
+						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+						+"and cat.sym not like 'Infra.Tarefas Internas' "
+						+"and stat.code in ('RE','CL') "
+						+"and usu.userid = '"+username+"' "
+						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
+						+ "and log.action_desc like 'registrar texto da solução' "
+						+ "group by req.ref_num ,req.id ";
+
+//						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),'03/01/2017',101)) ";
+
+				//registrar texto da solução
+
+			PreparedStatement stmt = connection
+					.prepareStatement(sql_listaChamados);
+			ResultSet rs_listaChamados = stmt.executeQuery();
+			
+			
+			int countReabertos = 0;
+			
+			while (rs_listaChamados.next()){
+
+				if(Integer.parseInt(rs_listaChamados.getString("reaberturas"))>1){
+					countReabertos++;
+				}
+				
+			}
+			
+			
+			rs_listaChamados.close();
+			stmt.close();
+			
+			return countReabertos;
+			
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	
 	public Connection getConnection() {
 		return connection;

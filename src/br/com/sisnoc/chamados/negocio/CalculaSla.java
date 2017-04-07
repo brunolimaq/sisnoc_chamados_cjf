@@ -31,7 +31,7 @@ public class CalculaSla {
 		Integer tempoAcumulado = 0;
 		Integer slaInicial = 0;
 		Integer slaFinal = 0;
-		Integer countReaberto = 0;
+		
 		Chamado ultimoLog = new Chamado();
 		
 		
@@ -80,7 +80,7 @@ public class CalculaSla {
 //			System.out.println("Final: "+slaFinal);
 			
 			if(num_chamado.equals("")){
-				countReaberto = 0;
+				
 				num_chamado = logChamado.getChamado();
 				tempoInicial = logChamado.getTime();
 				ultimoLog = logChamado;
@@ -88,10 +88,7 @@ public class CalculaSla {
 			
 			if (!num_chamado.equals(logChamado.getChamado())){
 				
-				if (countReaberto > 1){
-					ultimoLog.setReaberto(1);
-					}
-					countReaberto = 0;
+				
 				
 				if(ultimoLog.getStatus().equals("resume")){
 					//int epoch = (int) (System.currentTimeMillis()/1000);
@@ -119,9 +116,7 @@ public class CalculaSla {
 			}else if (num_chamado.equals(logChamado.getChamado())){
 				tempoParada = logChamado.getTime();
 				
-				if(logChamado.getStatusReal().equals("RE")){
-					countReaberto++;
-					}
+				
 				
 				if(logChamado.getStatus().equals("resume")){
 					
