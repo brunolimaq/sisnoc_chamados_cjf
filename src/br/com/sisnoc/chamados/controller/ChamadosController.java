@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.sisnoc.chamados.dao.PainelChamadosDao;
+import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
 import br.com.sisnoc.chamados.dao.UsuariosDao;
 
 
@@ -26,6 +27,8 @@ public class ChamadosController {
 	@Autowired
 	private PainelChamadosDao daoChamados;
 	
+	@Autowired
+	private PainelPessoalMetasDao metasDao;
 
 	
 	@RequestMapping("/")
@@ -34,12 +37,15 @@ public class ChamadosController {
 		String equipe = "";
 		String status = "";
 		
-		model.addAttribute("chamadosPainelChamados", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
+		//model.addAttribute("chamadosPainelChamados", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
 	    model.addAttribute("chamadosPainelIncidentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
 		
 		status = "aberto";
 		model.addAttribute("chamadosPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
 		model.addAttribute("incidentesPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
+
+		model.addAttribute("chamadosPainelChamados", ((PainelPessoalMetasDao) metasDao).listaPainelPessoalMetas());
+
 
 		
 		ModelAndView mv = new ModelAndView("chamados/index");

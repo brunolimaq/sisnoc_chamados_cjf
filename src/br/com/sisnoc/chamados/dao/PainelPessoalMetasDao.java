@@ -39,18 +39,20 @@ private  final Connection connection;
 	
 	
 	
-	private int meta2h;
-	private int meta4h;
-	private int violados;
-	private int chamadosMes;
-
 
 	
-	public Integer listaPainelPessoalMetas() throws ParseException {
+	public ArrayList<Chamado> listaPainelPessoalMetas() throws ParseException {
+		
+		
+		
+		
+		
 		try {
 			
 			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
 			String sql_listaChamados = "";
+			
+			System.out.println("teste1");
 			
 			// tipo = "R";
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -60,7 +62,8 @@ private  final Connection connection;
 			} else {
 			   username = usuarioLogado.toString();
 			}
-
+			System.out.println("teste2");
+			
 			System.out.println(username);
 			
 			
@@ -93,17 +96,17 @@ private  final Connection connection;
 			
 			String lista = "\'\'";
 			
-			int countChamadosMes = 0;
+			
 			while (rs_listaChamados.next()){
 
 				lista = lista +",\'" + rs_listaChamados.getString("ID") + "\'";
-				countChamadosMes++;
+				
 			}
 			
 			
 			
 			
-			System.out.println(getChamadosMes());
+		
 			
 			rs_listaChamados.close();
 			
@@ -167,33 +170,9 @@ private  final Connection connection;
 					return null;
 				} else {
 					
-					int countTotal = 0;
-					int countMeta2h = 0;
-					int countMeta4h = 0;
-					int countViolados = 0;
+					return CalculaSla.SlaMec(ListaChamados);
+				
 					
-					for (Chamado chamado : CalculaSla.SlaMec(ListaChamados)) {
-						
-						countTotal++;
-						if(chamado.getSla().equals("Violado")){
-							countViolados++;
-						}
-						if(chamado.getSla2() <= 7200){
-							countMeta2h++;
-						}
-						if(chamado.getSla2() <= 14400){
-							countMeta4h++;
-						}
-						
-					} 
-					
-					this.setMeta2h((countMeta2h*100)/countTotal);
-					this.setMeta4h((countMeta4h*100)/countTotal);
-					this.setViolados(countViolados);
-					this.setChamadosMes(countChamadosMes);
-					
-					System.out.println(this.getViolados());
-					return 1;
 				}
 
 			
@@ -206,36 +185,6 @@ private  final Connection connection;
 		return connection;
 	}
 
-	public int getMeta2h() {
-		return meta2h;
-	}
 
-	public void setMeta2h(int meta2h) {
-		this.meta2h = meta2h;
-	}
-
-	public int getMeta4h() {
-		return meta4h;
-	}
-
-	public void setMeta4h(int meta4h) {
-		this.meta4h = meta4h;
-	}
-
-	public int getViolados() {
-		return violados;
-	}
-
-	public void setViolados(int violados) {
-		this.violados = violados;
-	}
-
-	public int getChamadosMes() {
-		return chamadosMes;
-	}
-
-	public void setChamadosMes(int chamadosMes) {
-		this.chamadosMes = chamadosMes;
-	}
 	
 }
