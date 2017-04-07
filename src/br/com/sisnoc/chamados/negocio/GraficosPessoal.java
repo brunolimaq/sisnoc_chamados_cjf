@@ -75,10 +75,10 @@ public class GraficosPessoal implements GraficosPessoalService {
 				if(chamado.getSla2() <= 14400){
 				countMeta4h++;
 				}
-				if(chamado.getTipo() == "I"){
+				if(chamado.getTipo().equals("I")){
 				countIncidentes++;
 				}
-				if(chamado.getTipo() == "R"){
+				if(chamado.getTipo().equals("R")){
 				countChamados++;
 				}
 				if (chamado.getReaberto() == 1){

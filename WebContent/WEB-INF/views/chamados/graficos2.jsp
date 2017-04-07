@@ -56,8 +56,9 @@ $( document ).ready(function() {    
 	});
 
 	// Build the chart
-	Highcharts.chart('container', {
+	var graficoPizza = {
 	    chart: {
+            renderTo: 'graficoPizza',
 	        plotBackgroundColor: null,
 	        plotBorderWidth: null,
 	        plotShadow: false,
@@ -82,23 +83,33 @@ $( document ).ready(function() {    
 	            }
 	        }
 	    },
-	    series: [{
-	        name: 'Quantidade',
-	        data: [
-	            { name: 'Chamados', y: 56.33 },
-	            {
-	                name: 'Tarefas Internas',
-	                y: 0.2,
-	                sliced: true,
-	                selected: true
-	            },
-	            { name: 'RDM', y: 10.38 },
-	            { name: 'Problemas', y: 4.77 }, { name: 'Tarefas Internas', y: 0.91 },
-	            { name: 'Incidentes', y: 24.9 }
-	        ]
-	    }]
-	});
+	    credits: {
+	        enabled: false
+	    },
+	    series: [{ }]
+	};
 	
+	
+	$.getJSON("http://localhost:8080/chamados/graficos/teste", function(data) {
+		 
+		var chamados = data.dados.chamados.pop();
+		$('#teste').text(teste)
+		graficoPizza.series = [{
+	        name: 'Brands',
+	        data: [
+				{
+				    name: 'Chrome',
+				    y: 10,
+				    sliced: true,
+				    selected: true
+				},
+	            {name: 'Microsoft Internet Explorer', y: teste},
+	            {name: 'Firefox', y: 40}
+	        ]
+	    }];
+			   var chart = new Highcharts.Chart(graficoPizza);
+		});
+
 	
 	
 
@@ -112,9 +123,9 @@ $( document ).ready(function() {    
 <body>
 
 
-<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+<div id="graficoPizza" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
-
+<h1 id="teste"></h1>
 </body>
 
 </html>

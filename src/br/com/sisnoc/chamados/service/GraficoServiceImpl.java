@@ -1,10 +1,11 @@
 package br.com.sisnoc.chamados.service;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -22,34 +23,32 @@ public class GraficoServiceImpl implements GraficoService {
 	public Grafico getGraficoTeste() {
 		
 		
-		Grafico grafico = new Grafico();
+//		Grafico grafico = new Grafico();
+//		
+//		
+//		List<Double> lista = new ArrayList<Double>();
+//		lista.add(1050.0);
+//		
+//		List<Double> lista2 = new ArrayList<Double>();
+//		lista2.add(5054.0);
+//		
+//		
+//		Map<String, List<Double>> dados = new HashMap<String, List<Double>>();
+//		
+//		grafico.setNome("Teste");
+//		dados.put("chamados", lista);
+//		dados.put("incidentes", lista2);
+//		grafico.setDados(dados);
 		
 		
-		List<Integer> lista = new ArrayList<Integer>();
-		lista.add(1050);
-		
-		List<Integer> lista2 = new ArrayList<Integer>();
-		lista2.add(5054);
-		
-		
-		HashMap<String, List<Integer>> dados = new HashMap<String, List<Integer>>();
-		
-		grafico.setNome("Teste");
-		dados.put("chamados", lista);
-		dados.put("incidentes", lista2);
-		grafico.setDados(dados);
-		
-		
-		return grafico;	}
+		return null;	}
 
 	@Override
 	public Grafico getGraficoMetaIndividual(GraficosPessoal metasPessoal){
 		
-		//GraficosPessoal metasPessoal = new GraficosPessoal();
 
-		Grafico grafico = new Grafico();
-		
-		//metasPessoal.calcMetas();
+
+			Grafico grafico = new Grafico();
 		
 		
 			
@@ -62,8 +61,17 @@ public class GraficoServiceImpl implements GraficoService {
 			List<Integer> listaViolados = new ArrayList<Integer>();
 			listaViolados.add(metasPessoal.getViolados());
 
+			List<Integer> listaRequiscoesMes = new ArrayList<Integer>();
+			listaRequiscoesMes.add(metasPessoal.getRequisicoesMes());
+
 			List<Integer> listaChamadosMes = new ArrayList<Integer>();
-			listaChamadosMes.add(metasPessoal.getRequisicoesMes());
+			listaChamadosMes.add(metasPessoal.getChamadosMes());
+
+			List<Integer> listaIncidentes = new ArrayList<Integer>();
+			listaIncidentes.add(metasPessoal.getIncidentesMes());
+
+			List<Integer> listaReabertosMes = new ArrayList<Integer>();
+			listaReabertosMes.add(metasPessoal.getReabertosMes());
 
 			
 			HashMap<String, List<Integer>> dados = new HashMap<String, List<Integer>>();
@@ -71,11 +79,16 @@ public class GraficoServiceImpl implements GraficoService {
 			dados.put("meta2", listaMetaDuasHoras);
 			dados.put("meta4", listaMetaQuatroHoras);
 			dados.put("violados", listaViolados);
+			dados.put("requisicoesMes", listaRequiscoesMes);
 			dados.put("chamadosMes", listaChamadosMes);
+			dados.put("incidentesMes", listaIncidentes);
+			dados.put("reabertosMes", listaReabertosMes);
 			grafico.setDados(dados);
 			grafico.setNome("Meta 2/hs");
 			
-
+			System.out.println(listaChamadosMes);
+			System.out.println(listaIncidentes);
+			System.out.println(listaReabertosMes);
 		
 		
 		return grafico;
@@ -83,40 +96,42 @@ public class GraficoServiceImpl implements GraficoService {
 
 	@Override
 	public Grafico getGraficoChamadosPessoa() {
-		Grafico grafico = new Grafico();
-		
-		List<Integer> listaChamados = new ArrayList<Integer>();
-		listaChamados.add(50);
-		
-		List<Integer> listaIncidentes = new ArrayList<Integer>();
-		listaIncidentes.add(30);
-		
-		List<Integer> listaTarefasInternas = new ArrayList<Integer>();
-		listaTarefasInternas.add(10);
-		
-		List<Integer> listaProblemas = new ArrayList<Integer>();
-		listaProblemas.add(2);
-		
-		List<Integer> listaRDM = new ArrayList<Integer>();
-		listaRDM.add(8);
-		
-		
-				
-		
-		HashMap<String, List<Integer>> dados = new HashMap<String, List<Integer>>();
-		
-		dados.put("chamados", listaChamados);
-		dados.put("incidentes", listaIncidentes);
-		dados.put("tarefasInternas", listaTarefasInternas);
-		dados.put("problemas", listaProblemas);
-		dados.put("rdm", listaProblemas);
-		
-		grafico.setDados(dados);
-		grafico.setNome("Quantidade");
+//		
+//		Grafico grafico = new Grafico();
+//		
+//		List<BigDecimal> listaChamados = new ArrayList<BigDecimal>();
+//		listaChamados.add();
+//		
+//		List<BigDecimal> listaIncidentes = new ArrayList<BigDecimal>();
+//		listaIncidentes.add(30.0);
+//		
+//		List<BigDecimal> listaTarefasInternas = new ArrayList<BigDecimal>();
+//		listaTarefasInternas.add(10.0);
+//		
+//		List<BigDecimal> listaProblemas = new ArrayList<BigDecimal>();
+//		listaProblemas.add(2.0);
+//		
+//		List<BigDecimal> listaRDM = new ArrayList<BigDecimal>();
+//		listaRDM.add(8.0);
+//		
+//		
+//				
+//		
+//		HashMap<String, List<Integer>> dados = new HashMap<String, List<Integer>>();
+//		
+//		
+//		dados.put("chamados", chamados);
+//		dados.put("incidentes", listaIncidentes);
+//		dados.put("tarefasInternas", listaTarefasInternas);
+//		dados.put("problemas", listaProblemas);
+//		dados.put("rdm", listaProblemas);
+//		
+//		grafico.setDados(dados);
+//		grafico.setNome("Quantidade");
 
 		
 		
-		return grafico;
+		return null;
 	}
 	
 	

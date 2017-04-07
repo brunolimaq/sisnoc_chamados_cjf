@@ -207,12 +207,91 @@ var gaugeSLA4 = {
  			    
  		   var violados = data.dados.violados;
  		   $("#violados").text(violados);
- 		   var chamadosMes = data.dados.chamadosMes;
- 		   $("#chamadosMes").text(chamadosMes);
+ 		   var requisicoesMes = data.dados.requisicoesMes;
+ 		   $("#requisicoesMes").text(requisicoesMes);
 
 		});
 });
   
+  
+
+  $( document ).ready(function() {    
+
+
+  	Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+  	    return {
+  	        radialGradient: {
+  	            cx: 0.5,
+  	            cy: 0.3,
+  	            r: 0.7
+  	        },
+  	        stops: [
+  	            [0, color],
+  	            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+  	        ]
+  	    };
+  	});
+
+  	// Build the chart
+  	var graficoPizza = {
+  	    chart: {
+              renderTo: 'graficoPizza',
+  	        plotBackgroundColor: null,
+  	        plotBorderWidth: null,
+  	        plotShadow: false,
+  	        type: 'pie'
+  	    },
+  	    tooltip: {
+  	        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+  	    },
+  	    title: { 
+  	    text: '.'},
+  	    plotOptions: {
+  	        pie: {
+  	            allowPointSelect: true,
+  	            cursor: 'pointer',
+  	            dataLabels: {
+  	                enabled: true,
+  	                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+  	                style: {
+  	                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+  	                },
+  	                connectorColor: 'silver'
+  	            }
+  	        }
+  	    },
+  	    credits: {
+  	        enabled: false
+  	    },
+  	    series: [{ }]
+  	};
+  	
+  	
+  	$.getJSON("http://localhost:8080/chamados/graficos/metasIndividual", function(data) {
+  		 
+  		var chamados = data.dados.chamadosMes.pop();
+  		var incidentes = data.dados.incidentesMes.pop();
+  		var reabertos = data.dados.reabertosMes.pop();
+  		graficoPizza.series = [{
+  	        name: 'Brands',
+  	        data: [
+  				{
+  				    name: 'Chamados',
+  				    y: chamados,
+  				    sliced: true,
+  				    selected: true
+  				},
+  	            {name: 'Incidentes', y: incidentes},
+  	            {name: 'Reaberto', y: reabertos}
+  	        ]
+  	    }];
+  			   var chart = new Highcharts.Chart(graficoPizza);
+  		});
+
+  	
+  	
+
+   }); 
   
   </script>
   
@@ -355,9 +434,12 @@ var gaugeSLA4 = {
 								 <div class="panel panel-default">
 								  <div class="panel-heading">Requisições Mês</div>
 								  <div class="panel-body">
-								    <h1 id="chamadosMes">0</h1>
+								    <h1 id="requisicoesMes">0</h1>
 								  </div>
 								</div>
+							</div>
+							<div class="col-md-2">
+								<div id="graficoPizza" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 							</div>
 							
 						</div>					 
