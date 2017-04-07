@@ -261,6 +261,78 @@ public int listaPainelPessoalReabertos() throws ParseException {
 			throw new RuntimeException(e);
 		}
 	}
+
+
+public int listaPainelPessoalPendentes() throws ParseException {
+	
+	
+	
+	
+	
+	try {
+		
+		
+		String sql_listaChamados = "";
+		
+		
+		
+		// tipo = "R";
+		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username;
+		if (usuarioLogado  instanceof UsuarioSistema ) {
+		   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+		} else {
+		   username = usuarioLogado.toString();
+		}
+	
+		
+		
+		
+		
+
+			sql_listaChamados = "select "
+					+"count(1) as pendentes  "
+					
+				+"from "
+					+"call_req req WITH(NOLOCK) "
+					+ "join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
+					+ "join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
+					+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+				+"where "
+					+"cat.sym like 'INFRA%' "
+					+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
+					+"and usu.userid = '"+username+"'  ";
+
+//					+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),'03/01/2017',101)) ";
+
+			//registrar texto da solução
+
+		PreparedStatement stmt = connection
+				.prepareStatement(sql_listaChamados);
+		ResultSet rs_listaChamados = stmt.executeQuery();
+		
+		
+		int countPendentes = 0;
+		
+		while (rs_listaChamados.next()){
+
+			
+				countPendentes++;
+			
+			
+		}
+		
+		
+		rs_listaChamados.close();
+		stmt.close();
+		
+		return countPendentes;
+		
+		
+	} catch (SQLException e) {
+		throw new RuntimeException(e);
+	}
+}
 	
 	
 	public Connection getConnection() {

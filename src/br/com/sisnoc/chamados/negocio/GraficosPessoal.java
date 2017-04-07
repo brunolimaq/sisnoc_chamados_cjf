@@ -23,6 +23,7 @@ public class GraficosPessoal implements GraficosPessoalService {
 	private int requisicoesMes;
 
 	private int pendencias;
+
 	private int reabertosMes;
 	private int metaReabertos;
 	
@@ -58,6 +59,7 @@ public class GraficosPessoal implements GraficosPessoalService {
 			try {
 				chamados = metasDao.listaPainelPessoalMetas();
 				this.setReabertosMes(metasDao.listaPainelPessoalReabertos());
+				this.setPendencias(metasDao.listaPainelPessoalPendentes());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -161,5 +163,12 @@ public class GraficosPessoal implements GraficosPessoalService {
 	public void setChamadosMes(int chamadosMes) {
 		this.chamadosMes = chamadosMes;
 	}
-	
+	public int getPendencias() {
+		return pendencias;
+	}
+
+
+	public void setPendencias(int pendencias) {
+		this.pendencias = pendencias;
+	}
 }

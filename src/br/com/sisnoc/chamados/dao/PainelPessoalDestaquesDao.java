@@ -12,10 +12,12 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.negocio.CalculaSla;
 import br.com.sisnoc.chamados.negocio.Popula;
+import br.com.sisnoc.chamados.security.UsuarioSistema;
 
 public class PainelPessoalDestaquesDao {
 
@@ -39,8 +41,13 @@ private  final Connection connection;
 			String sql_listaChamados = "";
 			
 			// tipo = "R";
-			
-			String usuario = "bruno.queiroz";
+			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username;
+			if (usuarioLogado  instanceof UsuarioSistema ) {
+			   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+			} else {
+			   username = usuarioLogado.toString();
+			}
 			
 
 				sql_listaChamados = "select "
@@ -58,7 +65,7 @@ private  final Connection connection;
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and stat.code in ('OP','WIP','PRBAPP') "
-						+"and usu.userid = '"+usuario+"'";
+						+"and usu.userid = '"+username+"'";
 
 			
 			
