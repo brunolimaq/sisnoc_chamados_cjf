@@ -13,12 +13,17 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Repository;
 
+import br.com.sisnoc.chamados.dao.util.DestaquesDao;
+import br.com.sisnoc.chamados.dao.util.MetasDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.negocio.CalculaSla;
 import br.com.sisnoc.chamados.negocio.Popula;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
 
+@Repository
+@DestaquesDao
 public class PainelPessoalDestaquesDao {
 
 	
@@ -34,7 +39,7 @@ private  final Connection connection;
 		}
 	}
 	
-	public List<Chamado> listaPainelPessoalDestaques(String equipe, String status,String tipo) throws ParseException {
+	public List<Chamado> listaPainelPessoalDestaques() throws ParseException {
 		try {
 			
 			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
@@ -99,6 +104,7 @@ private  final Connection connection;
 									+"usu.first_name as responsavel,"
 									+"vwg.last_name as equipe,"
 									+"ctg.sym as grupo,"
+									+"req.type as tipo, "
 									+"req.summary as titulo, "
 									+"log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time,"
 									+"DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch,"
@@ -140,7 +146,8 @@ private  final Connection connection;
 					chamados.setTime(popula.populaTime(rs_listalog));
 					chamados.setEpoch(popula.populaEpoch(rs_listalog));
 					chamados.setGrupo(popula.populaGrupo(rs_listalog));
-					chamados.setTipo(tipo);
+					chamados.setTipo(popula.populaTipo(rs_listalog));
+					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
 //					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
 //					System.out.println(chamados.getChamado());
 //					System.out.println(chamados.getEpoch());

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.sisnoc.chamados.dao.PainelChamadosDao;
+import br.com.sisnoc.chamados.dao.PainelPessoalDestaquesDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
 import br.com.sisnoc.chamados.dao.UsuariosDao;
 
@@ -30,6 +31,8 @@ public class ChamadosController {
 	@Autowired
 	private PainelPessoalMetasDao metasDao;
 
+	@Autowired
+	private PainelPessoalDestaquesDao destaquesDao;
 	
 	@RequestMapping("/")
 	public ModelAndView principal(Model model) throws ParseException{
@@ -46,6 +49,7 @@ public class ChamadosController {
 
 		model.addAttribute("chamadosPainelChamados", ((PainelPessoalMetasDao) metasDao).listaPainelPessoalMetas());
 
+		model.addAttribute("chamadosPainelPessoal", ((PainelPessoalDestaquesDao) destaquesDao).listaPainelPessoalDestaques());
 
 		
 		ModelAndView mv = new ModelAndView("chamados/index");

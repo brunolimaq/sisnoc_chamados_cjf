@@ -316,9 +316,7 @@ public int listaPainelPessoalPendentes() throws ParseException {
 		
 		while (rs_listaChamados.next()){
 
-			
-				countPendentes++;
-			
+				countPendentes = Integer.parseInt(rs_listaChamados.getString("pendentes"));
 			
 		}
 		

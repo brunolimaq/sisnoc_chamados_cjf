@@ -26,17 +26,12 @@ public class Chamado {
 	private String meta_24;
 	private Integer epoch;
 	
-	public Integer getEpoch() {
-		return epoch;
-	}
+	private Integer countNocChamados;
+	private Integer countNocIncidentes;
+	private Integer countTotalNoc;
+	
 
 
-	public void setEpoch(Integer epoch) {
-		this.epoch = epoch;
-	}
-
-
-	//MEC
 	private String id;
 	private String wo;
 	private String responsavel;
@@ -47,6 +42,7 @@ public class Chamado {
 	private String grupo;
 	private Integer reaberto;
 	private String statusReal;
+	private String tipoLegivel;
 
 
 	public String getStatusReal() {
@@ -69,11 +65,6 @@ public class Chamado {
 	}
 
 
-	//Counts
-	private Integer countNocChamados;
-	private Integer countNocIncidentes;
-	private Integer countTotalNoc;
-	
 	public String getMeta_2() {
 		return meta_2;
 	}
@@ -135,7 +126,15 @@ public class Chamado {
 	}
 
 
-	
+	public Integer getEpoch() {
+		return epoch;
+	}
+
+
+	public void setEpoch(Integer epoch) {
+		this.epoch = epoch;
+	}
+
 
 
 
@@ -392,6 +391,16 @@ public class Chamado {
 
 	public void setGrupo(String grupo) {
 		this.grupo = grupo;
+	}
+
+
+	public String getTipoLegivel() {
+		return tipoLegivel;
+	}
+
+
+	public void setTipoLegivel(String tipoLegivel) {
+		this.tipoLegivel = tipoLegivel;
 	}
 
 

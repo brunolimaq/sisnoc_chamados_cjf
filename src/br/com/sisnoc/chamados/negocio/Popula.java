@@ -54,4 +54,18 @@ public class Popula {
 		return rs.getString("tipo");
 
 	}
+
+	public String populaTipoLegivel(ResultSet rs) throws SQLException, ParseException {
+		
+		String tipo = rs.getString("tipo");
+		
+		if (tipo.equals("R")){
+			return "Chamado";
+		} else if (tipo.equals("I")){
+			return "Incidente";
+		} else {
+			return "Não tratado";
+		}
+		
+	}
 }

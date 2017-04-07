@@ -73,6 +73,9 @@ public class GraficoServiceImpl implements GraficoService {
 			List<Integer> listaReabertosMes = new ArrayList<Integer>();
 			listaReabertosMes.add(metasPessoal.getReabertosMes());
 
+			List<Integer> listaPendencias = new ArrayList<Integer>();
+			listaPendencias.add(metasPessoal.getPendencias());
+
 			
 			HashMap<String, List<Integer>> dados = new HashMap<String, List<Integer>>();
 			
@@ -83,6 +86,7 @@ public class GraficoServiceImpl implements GraficoService {
 			dados.put("chamadosMes", listaChamadosMes);
 			dados.put("incidentesMes", listaIncidentes);
 			dados.put("reabertosMes", listaReabertosMes);
+			dados.put("pendencias", listaPendencias);
 			grafico.setDados(dados);
 			grafico.setNome("Meta 2/hs");
 			

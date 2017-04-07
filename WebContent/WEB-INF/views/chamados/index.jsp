@@ -209,6 +209,11 @@ var gaugeSLA4 = {
  		   $("#violados").text(violados);
  		   var requisicoesMes = data.dados.requisicoesMes;
  		   $("#requisicoesMes").text(requisicoesMes);
+ 		   var reabertosMes = data.dados.reabertosMes;
+		   $("#reabertosMes").text(reabertosMes);
+ 		   var pendencias = data.dados.pendencias;
+		   $("#pendencias").text(pendencias);
+
 
 		});
 });
@@ -271,7 +276,6 @@ var gaugeSLA4 = {
   		 
   		var chamados = data.dados.chamadosMes.pop();
   		var incidentes = data.dados.incidentesMes.pop();
-  		var reabertos = data.dados.reabertosMes.pop();
   		graficoPizza.series = [{
   	        name: 'Brands',
   	        data: [
@@ -281,7 +285,6 @@ var gaugeSLA4 = {
   				    sliced: true,
   				    selected: true
   				},
-  	            {name: 'Reaberto', y: reabertos},
   	            {name: 'Incidentes', y: incidentes, color: 'red'}
 
   	        ]
@@ -331,18 +334,18 @@ var gaugeSLA4 = {
         <li><a href="#">Relatórios</a></li>
         <li><a href="/chamados/pendencias">Pendências</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right"> <!-- Via fazer  o menu a direita pra acessar minha conta. -->
+      <ul class="nav navbar-nav navbar-right"> 
 					<li>
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <!-- Botão que vai abrir o dropdown -->
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
 							Minha Conta
-							<span class="caret"></span> <!-- Coloca a 'setinha'para baixo de quando tem uma dropdown -->
+							<span class="caret"></span> 
 						</a>
-						<div class="dropdown-menu perfil"> <!-- Vai ser as opções da dropdown -->
-							<div class="col-sm-4 hidden-xs"> <!-- Esse hidden-xs quer dizer que o avatar vai ficar escondido quando for em display de celular-->
-								<img class="img-responsive img-rounded" src="http://api.adorable.io/avatars/100/watchuru.png"> <!-- Isso vai criar um avatar aleatorio nessa dropdown a primeira classe vai tornar responsiva e a segunda estiliza o formato-->
+						<div class="dropdown-menu perfil">
+							<div class="col-sm-4 hidden-xs">
+								<img class="img-responsive img-rounded" src="http://api.adorable.io/avatars/100/watchuru.png"> 
 								
 							</div>
-							<ul class="list-unstyled col-sm-8"> <!-- essa classe tira o estilo dos itens, a bolinha no caso-->
+							<ul class="list-unstyled col-sm-8"> 
 								<li><sec:authentication property="principal.username"/></li>
 								<li><a href="">Alterar Perfil</a></li>
 								<li><a href="/chamados/logout">Sair</a></li>
@@ -368,17 +371,17 @@ var gaugeSLA4 = {
 					<a href="#chamados" class="list-group-item active" id="painel_noc_titulo">
 						<strong>Meus chamados em andamento</strong>
 					</a>
-					<c:if test="${empty incidentesPainelNoc}">
+					<c:if test="${empty chamadosPainelPessoal}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
 
   					</c:if>
-  					<c:if test="${!empty incidentesPainelNoc}">
+  					<c:if test="${!empty chamadosPainelPessoal}">
 		
 					
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr class="painel_noc">
-									<td><center><strong>Equipe</strong></center></td>
+									<td><center><strong>Categoria</strong></center></td>
 									<td><center><strong>Chamado</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
 									<td><center><strong>SLA</strong></center></td>
@@ -387,22 +390,22 @@ var gaugeSLA4 = {
 							</thead>
 							<tbody>
 		  						                   
-							<c:forEach items="${incidentesPainelNoc}" var="incidentesPainelNoc">
+							<c:forEach items="${chamadosPainelPessoal}" var="chamadosPainelPessoal">
 								
-									<tr class="${incidentesPainelNoc.alerta}" >
-										<td>${incidentesPainelNoc.equipe}</td>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${incidentesPainelNoc.id}" target="_blank" >${incidentesPainelNoc.chamado}</a></td>
-										<td>${incidentesPainelNoc.titulo}</td>
-										<td>${incidentesPainelNoc.sla}</td>
+									<tr class="${chamadosPainelPessoal.alerta}" >
+										<td>${chamadosPainelPessoal.tipoLegivel}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelPessoal.id}" target="_blank" >${chamadosPainelPessoal.chamado}</a></td>
+										<td>${chamadosPainelPessoal.titulo}</td>
+										<td>${chamadosPainelPessoal.sla}</td>
 										<td  width="15%" height="70%" style="padding:3px" >
 										<div class="progress" style="height:30px" align="center">
-										  <div class="progress-bar ${incidentesPainelNoc.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+										  <div class="progress-bar ${chamadosPainelPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
 										    <span >15m</span>
 										  </div>
-										  <div class="progress-bar ${incidentesPainelNoc.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+										  <div class="progress-bar ${chamadosPainelPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
 										    <span>45m</span>
 										  </div>
-										  <div class="progress-bar ${incidentesPainelNoc.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+										  <div class="progress-bar ${chamadosPainelPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
 										    <span>1h</span>
 										  </div>
 										</div>
@@ -439,7 +442,7 @@ var gaugeSLA4 = {
 								<div class="panel panel-default">
 								  <div class="panel-heading">Pendências</div>
 								  <div class="panel-body paineis_indices">
-								    <label class="letras" id="violados">5</label>
+								    <label class="letras" id="pendencias">0</label>
 								  </div>
 								</div>
 							</div>
@@ -455,7 +458,7 @@ var gaugeSLA4 = {
 								<div class="panel panel-default">
 								  <div class="panel-heading">Chamados Reaberto</div>
 								  <div class="panel-body paineis_indices">
-								    <label class="letras" id="requisicoesMes">3</label>
+								    <label class="letras" id="reabertosMes">0</label>
 								  </div>
 								  
 								</div>
