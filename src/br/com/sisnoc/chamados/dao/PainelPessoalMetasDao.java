@@ -189,7 +189,7 @@ public int listaPainelPessoalReabertos() throws ParseException {
 		
 		try {
 			
-			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
+			
 			String sql_listaChamados = "";
 			
 			
