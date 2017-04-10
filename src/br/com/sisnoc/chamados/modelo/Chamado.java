@@ -30,6 +30,7 @@ public class Chamado {
 	private Integer countNocIncidentes;
 	private Integer countTotalNoc;
 	
+	
 
 
 	private String id;
@@ -43,7 +44,7 @@ public class Chamado {
 	private Integer reaberto;
 	private String statusReal;
 	private String tipoLegivel;
-
+	private String statusDescricao;
 
 	public String getStatusReal() {
 		return statusReal;
@@ -401,6 +402,16 @@ public class Chamado {
 
 	public void setTipoLegivel(String tipoLegivel) {
 		this.tipoLegivel = tipoLegivel;
+	}
+
+
+	public String getStatusDescricao() {
+		return statusDescricao;
+	}
+
+
+	public void setStatusDescricao(String statusDescricao) {
+		this.statusDescricao = statusDescricao;
 	}
 
 

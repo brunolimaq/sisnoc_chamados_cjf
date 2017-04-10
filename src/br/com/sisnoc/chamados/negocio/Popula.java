@@ -68,4 +68,8 @@ public class Popula {
 		}
 		
 	}
+
+	public String populaStatusDescricao(ResultSet rs) throws SQLException, ParseException {
+		return rs.getString("statusDescricao");
+	}
 }

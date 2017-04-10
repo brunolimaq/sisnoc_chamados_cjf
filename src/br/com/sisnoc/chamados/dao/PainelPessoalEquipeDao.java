@@ -114,6 +114,7 @@ private  final Connection connection;
 									+"req.summary as titulo, "
 									+"log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time, "
 									+"DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch, "
+									+ "stat.sym as statusDescricao, "
 									+ "log.type as status "
 								+"from "
 									+"call_req req WITH(NOLOCK) "
@@ -154,6 +155,8 @@ private  final Connection connection;
 					chamados.setGrupo(popula.populaGrupo(rs_listalog));
 					chamados.setTipo(popula.populaTipo(rs_listalog));
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
+					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
+					
 //					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
 //					System.out.println(chamados.getChamado());
 //					System.out.println(chamados.getEpoch());

@@ -85,7 +85,7 @@
 			        minorTickInterval: null,
 			        tickAmount: 2,
 			        title: {
-			            y: -80,
+			            y: -50,
 			            text: 'Meta 2 horas'
 			        },
 			        labels: {
@@ -151,7 +151,7 @@ var gaugeSLA4 = {
 	        minorTickInterval: null,
 	        tickAmount: 2,
 	        title: {
-	            y: -80,
+	            y: -50,
 	            text: 'Meta 4 horas'
 	        },
 	        labels: {
@@ -185,9 +185,9 @@ var gaugeSLA4 = {
 		gaugeSLA2.series = [{
 			  data: [data.dados.meta2],
 		      dataLabels: {
-		          format: '<div style="text-align:center"><span style="font-size:15px;color:' +
+		          format: '<div style="text-align:center"><span style="font-size:18px;color:' +
 		              ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
-		                 '<span style="color:silver">% mês</span></div>'
+		                 '<span style="font-size:9px;color:silver">% mês</span></div>'
 		      }
 		
 			}];
@@ -197,9 +197,9 @@ var gaugeSLA4 = {
  		   gaugeSLA4.series = [{
  			  data: [data.dados.meta4],
  		      dataLabels: {
- 		          format: '<div style="text-align:center"><span style="font-size:15px;color:' +
+ 		          format: '<div style="text-align:center"><span style="font-size:18px;color:' +
  		              ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
- 		                 '<span style="font-size:7px;color:silver">% mês</span></div>'
+ 		                 '<span style="font-size:9px;color:silver">% mês</span></div>'
  		      }
 
  			}];
@@ -384,6 +384,7 @@ var gaugeSLA4 = {
 									<td><center><strong>Categoria</strong></center></td>
 									<td><center><strong>Chamado</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Status</strong></center></td>
 									<td><center><strong>SLA</strong></center></td>
 									<td><center><strong>META</strong></center></td>
 								</tr>
@@ -396,20 +397,56 @@ var gaugeSLA4 = {
 										<td>${chamadosPainelPessoal.tipoLegivel}</td>
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelPessoal.id}" target="_blank" >${chamadosPainelPessoal.chamado}</a></td>
 										<td>${chamadosPainelPessoal.titulo}</td>
+										<td>${chamadosPainelPessoal.statusDescricao}</td>
 										<td>${chamadosPainelPessoal.sla}</td>
-										<td  width="15%" height="70%" style="padding:3px" >
-										<div class="progress" style="height:30px" align="center">
-										  <div class="progress-bar ${chamadosPainelPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-										    <span >15m</span>
-										  </div>
-										  <div class="progress-bar ${chamadosPainelPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-										    <span>45m</span>
-										  </div>
-										  <div class="progress-bar ${chamadosPainelPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-										    <span>1h</span>
-										  </div>
-										</div>
-										</td>
+																
+										<c:if test="${chamadosPainelPessoal.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
+												<td  width="15%" height="70%" style="padding:3px" >
+												<div class="progress" style="height:30px" align="center">
+												  <div class="progress-bar ${chamadosPainelPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+												    <span >15m</span>
+												  </div>
+												  <div class="progress-bar ${chamadosPainelPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+												    <span>30m</span>
+												  </div>
+												  <div class="progress-bar ${chamadosPainelPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+												    <span>1h</span>
+												  </div>
+												</div>
+												</td>
+											</c:if>
+											<c:if test="${chamadosPainelPessoal.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum'}">	
+												<td  width="15%" height="70%" style="padding:3px" >
+												<div class="progress" style="height:30px" align="center">
+												  <div class="progress-bar ${chamadosPainelPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+												    <span >45m</span>
+												  </div>
+												  <div class="progress-bar ${chamadosPainelPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+												    <span>1h30m</span>
+												  </div>
+												  <div class="progress-bar ${chamadosPainelPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+												    <span>2h</span>
+												  </div>
+												</div>
+												</td>
+											</c:if>
+											<c:if test="${chamadosPainelPessoal.grupo != 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum'}">	
+												<c:if test="${chamadosPainelPessoal.grupo != 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
+													<td  width="15%" height="70%" style="padding:3px" >
+													<div class="progress" style="height:30px" align="center">
+													  <div class="progress-bar ${chamadosPainelPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+													    <span >2h</span>
+													  </div>
+													  <div class="progress-bar ${chamadosPainelPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+													    <span>4h</span>
+													  </div>
+													  <div class="progress-bar ${chamadosPainelPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+													    <span>6h</span>
+													  </div>
+													</div>
+													</td>
+												</c:if>
+											</c:if>
 									</tr>
 								
 							</c:forEach>
@@ -426,13 +463,11 @@ var gaugeSLA4 = {
 					 </a>
 						<div class="row">
 					  		<br/>
-					  		<div class="col-md-7">
+					  		<div class="col-md-6">
 								<div id="graficoPizza" style="min-width: 300px; height: 300px; max-width: 450px; "></div>
 							</div>
 					  		
-					 		<div class="col-sm-2">
-					 			<br/><br/>
-					 			<br/><br/>
+					 		<div class="col-sm-3">
 								 <div class="panel panel-default" >
 								  <div class="panel-heading">Violados</div>
 								  <div class="panel-body paineis_indices" >
@@ -445,10 +480,9 @@ var gaugeSLA4 = {
 								    <label class="letras" id="pendencias">0</label>
 								  </div>
 								</div>
+						 		<div id="gauge-sla2" style="width: 200px; height: 134px;" ></div>
 							</div>
-							<div class="col-sm-2">
-								<br/><br/>
-						 		<br/><br/>
+							<div class="col-sm-3">
 								 <div class="panel panel-default">
 								  <div class="panel-heading">Requisições Mês</div>
 								  <div class="panel-body paineis_indices">
@@ -460,18 +494,17 @@ var gaugeSLA4 = {
 								  <div class="panel-body paineis_indices">
 								    <label class="letras" id="reabertosMes">0</label>
 								  </div>
-								  
 								</div>
-								
+								<div id="gauge-sla4" style="width: 200px; height: 134px;"></div>
 							</div>
 							
 					 
-						 	<div class="col-md-offset-1 col-md-5">
-						 		<div id="gauge-sla2" style="width: 400px; height: 200px;" ></div>
-					 	 	</div>
-						 	<div class="col-md-5">
-								<div id="gauge-sla4" style="width: 400px; height: 200px;"></div>
-							</div>
+<!-- 						 	<div class="col-md-offset-6 col-md-3"> -->
+<!-- 						 		<div id="gauge-sla2" style="width: 300px; height: 134px;" ></div> -->
+<!-- 					 	 	</div> -->
+<!-- 						 	<div class="col-md-3"> -->
+<!-- 								<div id="gauge-sla4" style="width: 300px; height: 134px;"></div> -->
+<!-- 							</div> -->
 					
 						 	
 						 </div>
@@ -480,6 +513,7 @@ var gaugeSLA4 = {
                </div> <!-- fim DIV col-md4 do Incidentes ROW -->
                
                </div>
+		<div class="panel-body">
 	
 		<div class="row">
            	<div class="col-md-6 clearfix">
@@ -499,6 +533,7 @@ var gaugeSLA4 = {
 									<td><center><strong>Equipe</strong></center></td>
 									<td><center><strong>Chamado</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Status</strong></center></td>
 									<td><center><strong>SLA</strong></center></td>
 									<td><center><strong>Meta</strong></center></td>
 								</tr>
@@ -510,6 +545,7 @@ var gaugeSLA4 = {
 										<td>${chamadosPainelEquipe.equipe}</td>
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelEquipe.id}" target="_blank" >${chamadosPainelEquipe.chamado}</a></td>
 										<td>${chamadosPainelEquipe.titulo}</td>
+										<td>${chamadosPainelEquipe.statusDescricao}</td>
 										<td>${chamadosPainelEquipe.sla}
 										</td>
 										
@@ -532,13 +568,13 @@ var gaugeSLA4 = {
 												<td  width="15%" height="70%" style="padding:3px" >
 												<div class="progress" style="height:30px" align="center">
 												  <div class="progress-bar ${chamadosPainelEquipe.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-												    <span >15m</span>
+												    <span >45m</span>
 												  </div>
 												  <div class="progress-bar ${chamadosPainelEquipe.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-												    <span>30m</span>
+												    <span>1h30m</span>
 												  </div>
 												  <div class="progress-bar ${chamadosPainelEquipe.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-												    <span>1</span>
+												    <span>2h</span>
 												  </div>
 												</div>
 												</td>
@@ -548,13 +584,13 @@ var gaugeSLA4 = {
 													<td  width="15%" height="70%" style="padding:3px" >
 													<div class="progress" style="height:30px" align="center">
 													  <div class="progress-bar ${chamadosPainelEquipe.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-													    <span >2</span>
+													    <span >2h</span>
 													  </div>
 													  <div class="progress-bar ${chamadosPainelEquipe.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-													    <span>6</span>
+													    <span>4h</span>
 													  </div>
 													  <div class="progress-bar ${chamadosPainelEquipe.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-													    <span>24</span>
+													    <span>6h</span>
 													  </div>
 													</div>
 													</td>
