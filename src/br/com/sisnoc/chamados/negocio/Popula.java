@@ -72,4 +72,20 @@ public class Popula {
 	public String populaStatusDescricao(ResultSet rs) throws SQLException, ParseException {
 		return rs.getString("statusDescricao");
 	}
+
+	public String populaRdm(ResultSet rs) throws SQLException, ParseException {
+		// TODO Auto-generated method stub
+		return rs.getString("mudanca");
+	}
+
+	public String populaAgendamento(ResultSet rs) throws SQLException, ParseException{
+		// TODO Auto-generated method stub
+		return rs.getString("agendamento");
+	}
+	
+	
+	
+	
+	
+	
 }
