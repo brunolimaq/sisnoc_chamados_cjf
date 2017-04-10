@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.com.sisnoc.chamados.dao.PainelChamadosDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalDestaquesDao;
+import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
 import br.com.sisnoc.chamados.dao.UsuariosDao;
 
@@ -34,23 +35,17 @@ public class ChamadosController {
 	@Autowired
 	private PainelPessoalDestaquesDao destaquesDao;
 	
+	@Autowired
+	private PainelPessoalEquipeDao equipeDao;
+	
+	
 	@RequestMapping("/")
 	public ModelAndView principal(Model model) throws ParseException{
-		
-		String equipe = "";
-		String status = "";
-		
-		//model.addAttribute("chamadosPainelChamados", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
-	    model.addAttribute("chamadosPainelIncidentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
-		
-		status = "aberto";
-		model.addAttribute("chamadosPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
-		model.addAttribute("incidentesPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
-
 		model.addAttribute("chamadosPainelChamados", ((PainelPessoalMetasDao) metasDao).listaPainelPessoalMetas());
 
 		model.addAttribute("chamadosPainelPessoal", ((PainelPessoalDestaquesDao) destaquesDao).listaPainelPessoalDestaques());
 
+		model.addAttribute("chamadosPainelEquipe", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoDestaques());
 		
 		ModelAndView mv = new ModelAndView("chamados/index");
 		return mv;
@@ -68,9 +63,6 @@ public class ChamadosController {
 		model.addAttribute("chamadosPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
 		model.addAttribute("incidentesPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
 		
-//		model.addAttribute("chamadosPainelIncidentes", daoIncidentes.listaPainelIncidentes(equipe, status));
-//		model.addAttribute("chamadosPainelNoc", daoChamadoNoc.listaPainelNoc());
-//		model.addAttribute("incidentesPainelNoc", daoIncidenteNoc.listaPainelNoc());
 		return "chamados/chamados";
 	}
 	

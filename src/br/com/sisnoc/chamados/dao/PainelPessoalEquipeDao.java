@@ -38,7 +38,7 @@ private  final Connection connection;
 		}
 	}
 	
-	public List<Chamado> listaPainelPessoalDestaques() throws ParseException {
+	public List<Chamado> listaPainelGrupoDestaques() throws ParseException {
 		try {
 			
 			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
@@ -71,7 +71,8 @@ private  final Connection connection;
 						+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
 						+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
 						+"cat.persid = req.category "
-						+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+						+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+						+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
 					+"where "
 						+"cat.sym like 'INFRA%' "
 						+"and cat.sym not like 'INFRA.Ordem de Servico' "
@@ -79,15 +80,15 @@ private  final Connection connection;
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and stat.code in ('OP','WIP','PRBAPP') "
-						+"and usu.userid != '"+username+"'"
-						+"and vwg.last_name = ("+ equipe + ") ";
+						+"and usu.userid != '"+username+"' "
+						+"and vwg.last_name in ("+ listaEquipe + ") ";
 
 			
 			
 				
 				
 			
-			
+			System.out.println(sql_listaChamados);
 			
 			 
 			PreparedStatement stmt = connection
@@ -103,21 +104,16 @@ private  final Connection connection;
 			
 			rs_listaChamados.close();
 			
-			//System.out.println(lista);
-			// 65497
-			// 65529
-			// 65536
-			// 65538
 			String sql_listaLog = "select "
 									+"req.id as ID, "
 									+"req.ref_num as chamados, "
 									+"usu.first_name as responsavel,"
-									+"vwg.last_name as equipe,"
-									+"ctg.sym as grupo,"
+									+"vwg.last_name as equipe, "
+									+"ctg.sym as grupo, "
 									+"req.type as tipo, "
 									+"req.summary as titulo, "
-									+"log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time,"
-									+"DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch,"
+									+"log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time, "
+									+"DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch, "
 									+ "log.type as status "
 								+"from "
 									+"call_req req WITH(NOLOCK) "
