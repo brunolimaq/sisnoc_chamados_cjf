@@ -57,20 +57,21 @@ private  final Connection connection;
 					
 		
 			sql_listaRDM = "select " 
-									+"chg.id as ID , "
-									+"chg_ref_num as mudanca, " 
-									+"summary as titulo, " 
-									+"dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(SS,sched_start_date,'19700101')) agendamento, " 
-									+"chgstat.sym statusDescricao, " 
-									+"ca_contact.first_name nome, " 
-									+"ca_contact.userid username, " 
-									+"vwg.last_name as grupo "
-									+"from chg WITH (NOLOCK) " 
-									+"join chgstat WITH (NOLOCK) on chg.status = chgstat.code " 
-									+"join ca_contact WITH (NOLOCK)  on ca_contact.contact_uuid = chg.assignee " 
-									+"join View_Group vwg WITH (NOLOCK)  on chg.group_id = vwg.contact_uuid " 
-									+"and ca_contact.userid = '"+username+"'"; 
-									
+						+"chg.id as ID , "
+						+"chg_ref_num as mudanca, " 
+						+"summary as titulo, " 
+						+"dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(SS,sched_start_date,'19700101')) agendamento, " 
+						+"chgstat.sym statusDescricao, " 
+						+"ca_contact.first_name nome, " 
+						+"ca_contact.userid username, " 
+						+"vwg.last_name as grupo "
+						+"from chg WITH (NOLOCK) " 
+						+"join chgstat WITH (NOLOCK) on chg.status = chgstat.code " 
+						+"join ca_contact WITH (NOLOCK)  on ca_contact.contact_uuid = chg.assignee " 
+						+"join View_Group vwg WITH (NOLOCK)  on chg.group_id = vwg.contact_uuid "
+						+ "where chgstat.code in ('IMPL', 'APR','APP','RFC') " 
+						+"and ca_contact.userid = '"+username+"'"; 
+						
 			PreparedStatement stmt = connection
 					.prepareStatement(sql_listaRDM);				
 			
@@ -91,11 +92,14 @@ private  final Connection connection;
 					
 					Mudanca mudancas = new Mudanca();
 					
+				
 					mudancas.setMudanca(popula.populaRdm(rs_listaChamado));
+					mudancas.setId(popula.populaID(rs_listaChamado));
 					mudancas.setResumo(popula.populaTitulo(rs_listaChamado));
 					mudancas.setAgendamento(popula.populaAgendamento(rs_listaChamado));
 					mudancas.setStatusDescricao(popula.populaStatusDescricao(rs_listaChamado));
 					
+					System.out.println("mudancas" + mudancas.getMudanca());
 					ListaRDM.add(mudancas);
 					count++;
 				}

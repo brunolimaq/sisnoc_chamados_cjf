@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.sisnoc.chamados.dao.PainelChamadosDao;
-import br.com.sisnoc.chamados.dao.PainelPessoalDestaquesDao;
+import br.com.sisnoc.chamados.dao.PainelPessoalRequisicoesDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
+import br.com.sisnoc.chamados.dao.PainelPessoalRdmDao;
 import br.com.sisnoc.chamados.dao.UsuariosDao;
 
 
@@ -33,19 +34,23 @@ public class ChamadosController {
 	private PainelPessoalMetasDao metasDao;
 
 	@Autowired
-	private PainelPessoalDestaquesDao destaquesDao;
+	private PainelPessoalRequisicoesDao destaquesDao;
 	
 	@Autowired
 	private PainelPessoalEquipeDao equipeDao;
 	
+	@Autowired
+	private PainelPessoalRdmDao rdmDao;
 	
 	@RequestMapping("/")
 	public ModelAndView principal(Model model) throws ParseException{
-		model.addAttribute("chamadosPainelChamados", ((PainelPessoalMetasDao) metasDao).listaPainelPessoalMetas());
+//		model.addAttribute("chamadosPainelChamados", ((PainelPessoalMetasDao) metasDao).listaPainelPessoalMetas());
 
-		model.addAttribute("chamadosPainelPessoal", ((PainelPessoalDestaquesDao) destaquesDao).listaPainelPessoalDestaques());
+		model.addAttribute("chamadosPainelPessoal", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelPessoalDestaques());
 
 		model.addAttribute("chamadosPainelEquipe", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoDestaques());
+		
+		model.addAttribute("chamadosRDMPessoal", ((PainelPessoalRdmDao) rdmDao).listaPainelPessoalRdm());
 		
 		ModelAndView mv = new ModelAndView("chamados/index");
 		return mv;
@@ -68,18 +73,27 @@ public class ChamadosController {
 	
 	@RequestMapping("/pendencias")
 	public ModelAndView listaPendencias(Model model) throws ParseException{
-		String equipe = "todas";
-		String status = "";
+		
+		model.addAttribute("chamadosPainelPessoalPendencias", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelPessoalPendencias());
+
 		
 		ModelAndView mv = new ModelAndView("chamados/pendencias");
-		
-		model.addAttribute("chamadosPendentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
-		model.addAttribute("incidentesPendentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
-		
-		
 		return mv;
 	}
 
+//	@RequestMapping("/pendencias")
+//	public ModelAndView listaPendencias(Model model) throws ParseException{
+//		String equipe = "todas";
+//		String status = "";
+//		
+//		ModelAndView mv = new ModelAndView("chamados/pendencias");
+//		
+//		model.addAttribute("chamadosPendentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
+//		model.addAttribute("incidentesPendentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
+//		
+//		
+//		return mv;
+//	}
 
 	
 	

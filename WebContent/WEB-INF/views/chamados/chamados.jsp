@@ -40,61 +40,8 @@
 
 <body>
 
-  <nav  class="navbar navbar-inverse  navbar-fixed-top">
-<div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/sisnoc/listaChamados">Sisnoc Algar</a>
-    </div>
-    <div>
-      <ul class="nav navbar-nav">
-          <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipes
-          <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-			<li ><a href="/chamados/equipe_armazenamento">Analistas Storage <span class="badge"></span></a></li>
-			<li ><a href="/chamados/equipe_app">Analistas Aplicações <span class="badge"></span></a></li>
-			<li ><a href="/chamados/equipe_Bd">Analistas Banco de Dados<span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_corp">Analistas Serviços Corporativos <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_rede">Analistas Redes <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_monit">Analistas Monitoração <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_bkp">Analistas Backup <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_SO">Analistas Sistemas Operacionais <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_virt">Analistas Virtualização <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_doc">Documentadores <span class="badge"></span></a></li>
-            <li><a href="/chamados/monitoradores">Monitoradores <span class="badge"></span></a></li>
-            <li><a href="/chamados/supervisor">Supervisores Datacenter <span class="badge"></span></a></li>
-          </ul>
-        </li>
-        <li><a href="#">Problemas <span class="badge"></span></a></li>
-        <li><a href="#">GMUD</a></li>
-        <li><a href="#">Relatórios</a></li>
-        <li><a href="/chamados/pendencias">Pendências</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right"> <!-- Via fazer  o menu a direita pra acessar minha conta. -->
-					<li>
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <!-- Botão que vai abrir o dropdown -->
-							Minha Conta
-							<span class="caret"></span> <!-- Coloca a 'setinha'para baixo de quando tem uma dropdown -->
-						</a>
-						<div class="dropdown-menu perfil"> <!-- Vai ser as opções da dropdown -->
-							<div class="col-sm-4 hidden-xs"> <!-- Esse hidden-xs quer dizer que o avatar vai ficar escondido quando for em display de celular-->
-								<img class="img-responsive img-rounded" src="http://api.adorable.io/avatars/100/watchuru.png"> <!-- Isso vai criar um avatar aleatorio nessa dropdown a primeira classe vai tornar responsiva e a segunda estiliza o formato-->
-								
-							</div>
-							<ul class="list-unstyled col-sm-8"> <!-- essa classe tira o estilo dos itens, a bolinha no caso-->
-								<li><sec:authentication property="principal.username"/></li>
-								<li><a href="">Alterar Perfil</a></li>
-								<li><a href="/chamados/logout">Sair</a></li>
-							</ul>
-						</div>
-					</li>
-		</ul>
-      
-    </div>
-  </div>
-</nav>
-<br/>
-<br/>
+<c:import url="menu.jsp"></c:import>
+
 
 <div class="panel panel-primary">
 	<div class="panel-body">
@@ -255,13 +202,13 @@
 												<td  width="15%" height="70%" style="padding:3px" >
 												<div class="progress" style="height:30px" align="center">
 												  <div class="progress-bar ${chamadosPainelNoc.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-												    <span >15m</span>
+												    <span >45m</span>
 												  </div>
 												  <div class="progress-bar ${chamadosPainelNoc.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-												    <span>30m</span>
+												    <span>1h30m</span>
 												  </div>
 												  <div class="progress-bar ${chamadosPainelNoc.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-												    <span>1</span>
+												    <span>2h</span>
 												  </div>
 												</div>
 												</td>
@@ -271,13 +218,13 @@
 													<td  width="15%" height="70%" style="padding:3px" >
 													<div class="progress" style="height:30px" align="center">
 													  <div class="progress-bar ${chamadosPainelNoc.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-													    <span >2</span>
+													    <span >2h</span>
 													  </div>
 													  <div class="progress-bar ${chamadosPainelNoc.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-													    <span>6</span>
+													    <span>4h</span>
 													  </div>
 													  <div class="progress-bar ${chamadosPainelNoc.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-													    <span>24</span>
+													    <span>6h</span>
 													  </div>
 													</div>
 													</td>

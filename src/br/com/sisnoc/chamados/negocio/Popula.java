@@ -63,7 +63,9 @@ public class Popula {
 			return "Chamado";
 		} else if (tipo.equals("I")){
 			return "Incidente";
-		} else {
+		} else if (tipo.equals("P")){
+			return "Problema";
+		}else {
 			return "Não tratado";
 		}
 		

@@ -41,8 +41,11 @@
   
   <script type="text/javascript">
   //Metas de 2 e 4 horas
-  
+
   $( document ).ready(function() {
+	  
+
+	  
 	
 		var gaugeSLA2 = {
 			
@@ -180,7 +183,7 @@ var gaugeSLA4 = {
 
 
 
-	$.getJSON("http://localhost:8080/chamados/graficos/metasIndividual", function(data) {
+	$.getJSON($("#input-urlRaiz").val()+"graficos/metasIndividual", function(data) {
 	  
 		gaugeSLA2.series = [{
 			  data: [data.dados.meta2],
@@ -220,7 +223,8 @@ var gaugeSLA4 = {
   
   
 
-  $( document ).ready(function() {    
+  $( document ).ready(function() {   
+	 
 
 
   	Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
@@ -270,12 +274,14 @@ var gaugeSLA4 = {
   	    },
   	    series: [{ }]
   	};
-  	
-  	
-  	$.getJSON("http://localhost:8080/chamados/graficos/metasIndividual", function(data) {
+
+ 
+  	$.getJSON($("#input-urlRaiz").val()+"graficos/metasIndividual", function(data) {
   		 
   		var chamados = data.dados.chamadosMes.pop();
   		var incidentes = data.dados.incidentesMes.pop();
+
+  		
   		graficoPizza.series = [{
   	        name: 'Brands',
   	        data: [
@@ -292,7 +298,7 @@ var gaugeSLA4 = {
   			   var chart = new Highcharts.Chart(graficoPizza);
   		});
 
-  	
+
   	
 
    }); 
@@ -302,65 +308,8 @@ var gaugeSLA4 = {
 </head>
 
 <body>
-	
 
-  <nav  class="navbar navbar-inverse  navbar-fixed-top">
-<div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/sisnoc/listaChamados">Sisnoc Algar</a>
-    </div>
-    <div>
-      <ul class="nav navbar-nav">
-          <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipes
-          <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-			<li ><a href="/chamados/equipe_armazenamento">Analistas Storage <span class="badge"></span></a></li>
-			<li ><a href="/chamados/equipe_app">Analistas Aplicações <span class="badge"></span></a></li>
-			<li ><a href="/chamados/equipe_Bd">Analistas Banco de Dados<span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_corp">Analistas Serviços Corporativos <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_rede">Analistas Redes <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_monit">Analistas Monitoração <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_bkp">Analistas Backup <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_SO">Analistas Sistemas Operacionais <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_virt">Analistas Virtualização <span class="badge"></span></a></li>
-            <li><a href="/chamados/equipe_doc">Documentadores <span class="badge"></span></a></li>
-            <li><a href="/chamados/monitoradores">Monitoradores <span class="badge"></span></a></li>
-            <li><a href="/chamados/supervisor">Supervisores Datacenter <span class="badge"></span></a></li>
-          </ul>
-        </li>
-        <li><a href="#">Problemas <span class="badge"></span></a></li>
-        <li><a href="#">GMUD</a></li>
-        <li><a href="#">Relatórios</a></li>
-        <li><a href="/chamados/pendencias">Pendências</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right"> 
-					<li>
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
-							Minha Conta
-							<span class="caret"></span> 
-						</a>
-						<div class="dropdown-menu perfil">
-							<div class="col-sm-4 hidden-xs">
-								<img class="img-responsive img-rounded" src="http://api.adorable.io/avatars/100/watchuru.png"> 
-								
-							</div>
-							<ul class="list-unstyled col-sm-8"> 
-								<li><sec:authentication property="principal.username"/></li>
-								<li><a href="">Alterar Perfil</a></li>
-								<li><a href="/chamados/logout">Sair</a></li>
-							</ul>
-						</div>
-					</li>
-		</ul>
-      
-    </div>
-  </div>
-</nav>
-<br/>
-<br/>
-	
-	
+<c:import url="menu.jsp"></c:import>
 	
 <div class="panel panel-primary">
 	<div class="panel-body">
@@ -376,8 +325,7 @@ var gaugeSLA4 = {
 
   					</c:if>
   					<c:if test="${!empty chamadosPainelPessoal}">
-		
-					
+  					
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr class="painel_noc">
@@ -610,82 +558,31 @@ var gaugeSLA4 = {
 				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
-						<strong>GMUD's do dia</strong>
+						<strong>Minhas RDM's</strong>
 					 </a>
-					<c:if test="${empty chamadosPainelChamados}">
+					<c:if test="${empty chamadosRDMPessoal}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
 
   					</c:if>
-  					<c:if test="${!empty chamadosPainelChamados}">
+  					<c:if test="${!empty chamadosRDMPessoal}">
 					 
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr class="painel_chamados">
-									<td><center><strong>Equipe</strong></center></td>
-									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Número</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
-									<td><center><strong>SLA</strong></center></td>
-									<td><center><strong>Meta</strong></center></td>
-									
+									<td><center><strong>Status</strong></center></td>
+									<td><center><strong>Agendamento</strong></center></td>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${chamadosPainelChamados}" var="chamadosPainelChamados">	
-									<tr  class="${chamadosPainelChamados.alerta}">
-										<td>${chamadosPainelChamados.equipe}</td>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelChamados.id}" target="_blank" >${chamadosPainelChamados.chamado}</a></td>
-										<td>${chamadosPainelChamados.titulo}</td>
-										<td>${chamadosPainelChamados.sla}
-										</td>
-										
-										<c:if test="${chamadosPainelChamados.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
-												<td  width="15%" height="70%" style="padding:3px" >
-												<div class="progress" style="height:30px" align="center">
-												  <div class="progress-bar ${chamadosPainelChamados.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-												    <span >15m</span>
-												  </div>
-												  <div class="progress-bar ${chamadosPainelChamados.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-												    <span>30m</span>
-												  </div>
-												  <div class="progress-bar ${chamadosPainelChamados.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-												    <span>1h</span>
-												  </div>
-												</div>
-												</td>
-											</c:if>
-											<c:if test="${chamadosPainelChamados.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum'}">	
-												<td  width="15%" height="70%" style="padding:3px" >
-												<div class="progress" style="height:30px" align="center">
-												  <div class="progress-bar ${chamadosPainelChamados.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-												    <span >45m</span>
-												  </div>
-												  <div class="progress-bar ${chamadosPainelChamados.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-												    <span>1h30m</span>
-												  </div>
-												  <div class="progress-bar ${chamadosPainelChamados.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-												    <span>2h</span>
-												  </div>
-												</div>
-												</td>
-											</c:if>
-											<c:if test="${chamadosPainelChamados.grupo != 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum'}">	
-												<c:if test="${chamadosPainelChamados.grupo != 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
-													<td  width="15%" height="70%" style="padding:3px" >
-													<div class="progress" style="height:30px" align="center">
-													  <div class="progress-bar ${chamadosPainelChamados.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-													    <span >2h</span>
-													  </div>
-													  <div class="progress-bar ${chamadosPainelChamados.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-													    <span>4h</span>
-													  </div>
-													  <div class="progress-bar ${chamadosPainelChamados.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-													    <span>6h</span>
-													  </div>
-													</div>
-													</td>
-												</c:if>
-											</c:if>
-											
+								<c:forEach items="${chamadosRDMPessoal}" var="chamadosRDMPessoal">	
+									<tr>
+<%-- 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosRDMPessoal.id}" target="_blank" >${chamadosRDMPessoal.mudanca}</a></td> --%>
+										<td>${chamadosRDMPessoal.mudanca}</td>
+										<td>${chamadosRDMPessoal.resumo}</td>
+										<td>${chamadosRDMPessoal.statusDescricao}</td>
+										<td>${chamadosRDMPessoal.agendamento}</td>
 									</tr>
 									
 								</c:forEach>
@@ -703,6 +600,7 @@ var gaugeSLA4 = {
                
                </div><!-- fim DIV dos Paineis NOC, Chamados e Incidentes -->
            </div> <!-- fim DIV Painel Geral -->
+<jsp:include page="footer.jsp"></jsp:include>
 
 	<script src="resources/js/jquery-2.2.4.min.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
