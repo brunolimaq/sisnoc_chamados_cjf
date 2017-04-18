@@ -347,6 +347,24 @@ var gaugeSLA4 = {
 										<td>${chamadosPainelPessoal.titulo}</td>
 										<td>${chamadosPainelPessoal.statusDescricao}</td>
 										<td>${chamadosPainelPessoal.sla}</td>
+										
+										<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Incidente'}">	
+										<td  width="15%" height="70%" style="padding:3px" >
+										<div class="progress" style="height:30px" align="center">
+										  <div class="progress-bar ${chamadosPainelPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+										    <span >15m</span>
+										  </div>
+										  <div class="progress-bar ${chamadosPainelPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+										    <span>45m</span>
+										  </div>
+										  <div class="progress-bar ${chamadosPainelPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+										    <span>1h</span>
+										  </div>
+										</div>
+										</td>
+										</c:if>
+										<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Chamado'}">
+										
 																
 										<c:if test="${chamadosPainelPessoal.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
 												<td  width="15%" height="70%" style="padding:3px" >
@@ -394,6 +412,8 @@ var gaugeSLA4 = {
 													</div>
 													</td>
 												</c:if>
+											</c:if>
+											
 											</c:if>
 									</tr>
 								
@@ -558,7 +578,7 @@ var gaugeSLA4 = {
 				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
-						<strong>Minhas RDM's</strong>
+						<strong>RDM's do meu(s) grupos</strong>
 					 </a>
 					<c:if test="${empty chamadosRDMPessoal}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
@@ -570,6 +590,7 @@ var gaugeSLA4 = {
 							<thead>
 								<tr class="painel_chamados">
 									<td><center><strong>Número</strong></center></td>
+									<td><center><strong>Responsável</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
 									<td><center><strong>Status</strong></center></td>
 									<td><center><strong>Agendamento</strong></center></td>
@@ -578,8 +599,8 @@ var gaugeSLA4 = {
 							<tbody>
 								<c:forEach items="${chamadosRDMPessoal}" var="chamadosRDMPessoal">	
 									<tr>
-<%-- 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosRDMPessoal.id}" target="_blank" >${chamadosRDMPessoal.mudanca}</a></td> --%>
-										<td>${chamadosRDMPessoal.mudanca}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMPessoal.id}" target="_blank" >${chamadosRDMPessoal.mudanca}</a></td>
+										<td>${chamadosRDMPessoal.responsavel}</td>
 										<td>${chamadosRDMPessoal.resumo}</td>
 										<td>${chamadosRDMPessoal.statusDescricao}</td>
 										<td>${chamadosRDMPessoal.agendamento}</td>

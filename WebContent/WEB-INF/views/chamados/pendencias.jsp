@@ -61,6 +61,7 @@
 									<td><center><strong>Categoria</strong></center></td>
 									<td><center><strong>Chamado</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Status</strong></center></td>
 									<td><center><strong>SLA</strong></center></td>
 									<td><center><strong>Meta</strong></center></td>
 									
@@ -72,6 +73,7 @@
 										<td>${chamadosPainelPessoalPendencias.tipoLegivel}</td>
 										<td>${chamadosPainelPessoalPendencias.chamado}</td>
 										<td>${chamadosPainelPessoalPendencias.titulo}</td>
+										<td>${chamadosPainelPessoalPendencias.statusDescricao}</td>
 										<td>${chamadosPainelPessoalPendencias.sla}
 										
 										<c:if test="${chamadosPainelPessoalPendencias.tipoLegivel == 'Incidente'}">	

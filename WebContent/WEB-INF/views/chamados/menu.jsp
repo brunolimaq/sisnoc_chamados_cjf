@@ -10,6 +10,7 @@
       <ul class="nav navbar-nav">
         <li><a href="/chamados/">Painel</a></li>
         <li><a href="/chamados/pendencias">Pendências</a></li>
+        <li><a href="/chamados/gmud">GMUD</a></li>
 <!--         <li><a href="#">Problemas <span class="badge"></span></a></li> -->
 <!--         <li><a href="#">GMUD</a></li> -->
 <!--         <li><a href="#">Relatórios</a></li> -->
@@ -48,7 +49,7 @@
 							</div>
 							<ul class="list-unstyled col-sm-8"> 
 								<li><sec:authentication property="principal.username"/></li>
-								<li><a href="">Alterar Perfil</a></li>
+								<li><a href="/chamados/perfil">Alterar Perfil</a></li>
 								<li><a href="/chamados/logout">Sair</a></li>
 							</ul>
 						</div>

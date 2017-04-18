@@ -1,3 +1,62 @@
+/* RDM */
+
+#painel_rdm_planejamento{
+color: #FFFFFF;
+background-color: #0288D1;
+border-color: #0288D1;
+}
+#painel_rdm_validacao{
+color: #FFFFFF;
+background-color: #A52A2A	;
+border-color: #A52A2A	;
+}
+#painel_rdm_aprovada{
+color: #FFFFFF	;
+background-color: #1e803c;
+border-color: #1e803c;
+}
+#painel_rdm_finalizada{
+color: #FFFFFF	;
+background-color: #232323;
+border-color: #232323;
+}
+
+#painel_rdm_execucao{
+color: #FFFFFF	;
+background-color: #ff7d20;
+border-color: #ff7d20;
+}
+
+
+.painel_rdm_planejamento {
+color: #FFFFFF;
+background-color: #4FC3F7;
+border-color: #4FC3F7;
+}
+.painel_rdm_validacao {
+color: #FFFFFF;
+background-color: #d26e6e;
+border-color: #d26e6e;
+}
+
+.painel_rdm_aprovada {
+color: #FFFFFF;
+background-color: #5dad79;
+border-color: #5dad79;
+}
+.painel_rdm_finalizada {
+color: #FFFFFF;
+background-color: #828282;
+border-color: #828282;
+}
+
+.painel_rdm_execucao {
+color: #FFFFFF;
+background-color: #ffab55;
+border-color: #ffab55;
+}
+
+
 /* Gauges */
 
 #gauge-sla2 {

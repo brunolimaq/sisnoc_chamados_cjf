@@ -25,14 +25,14 @@ import br.com.sisnoc.chamados.security.UsuarioSistema;
 
 @Repository
 @RDMDao
-public class PainelPessoalRdmDao {
+public class PainelPessoalRdmGeral {
 
 
 private  final Connection connection;
 
 	
 	@Autowired
-	public PainelPessoalRdmDao(@Qualifier("datasourceSQL") DataSource datasource) {
+	public PainelPessoalRdmGeral(@Qualifier("datasourceSQL") DataSource datasource) {
 		try {
 			this.connection = datasource.getConnection();
 		} catch (SQLException e) {
@@ -40,17 +40,17 @@ private  final Connection connection;
 		}
 	}
 	
-	public List<Mudanca> listaPainelPessoalRdm() throws ParseException {
+	public List<Mudanca> listaPainelPessoalRdmGeral(String rdmPainel) throws ParseException {
 		try {
 			
 			ArrayList<Mudanca> ListaRDM = new ArrayList<Mudanca>();
 			String sql_listaRDM = "";
 			
-			// tipo = "R";
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username;
 			String equipe = "";
-			String user_exclusao = "''";
+			String rdm = rdmPainel;
+			
 			if (usuarioLogado  instanceof UsuarioSistema ) {
 				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
 				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
@@ -66,21 +66,19 @@ private  final Connection connection;
 				listaEquipe = listaEquipe +",\'" + eqp + "\'";
 			}
 
-		
-			if (username.equals("bruno.queiroz") || username.equals("walison.morales")){
-				
-				user_exclusao = "'antonio.junior'";
-			}
+			//APR - Aprovada
+			//IMPL - Exeução
+			//RFC - Em Planejamento
+			//APP - Em validação
+			// Outros Null
 			
-			if (username.equals("antonio.junior")){
+			if (rdmPainel.equals("")){
 				
-				user_exclusao = "'bruno.queiroz','walison.morales'";
-			}
-			sql_listaRDM = "select " 
+				sql_listaRDM = "select top 10" 
 						+"chg.id as ID , "
 						+"chg_ref_num as mudanca, " 
 						+"summary as titulo, "
-						+ "ca_contact.first_name as responsavel, " 
+						+ "ca_contact.first_name as responsavel, "
 						+"dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(SS,sched_start_date,'19700101')) agendamento, " 
 						+"chgstat.sym statusDescricao, " 
 						+"ca_contact.first_name nome, " 
@@ -90,11 +88,28 @@ private  final Connection connection;
 						+"join chgstat WITH (NOLOCK) on chg.status = chgstat.code " 
 						+"join ca_contact WITH (NOLOCK)  on ca_contact.contact_uuid = chg.assignee " 
 						+"join View_Group vwg WITH (NOLOCK)  on chg.group_id = vwg.contact_uuid "
-						+ "where chgstat.code in ('IMPL', 'APR','APP','RFC') "
-						+"and ca_contact.userid  not in ("+user_exclusao+") "
-						+"and vwg.last_name in ("+ listaEquipe + ") "
+						+ "where chgstat.code not in ('APR', 'IMPL', 'RFC', 'APP') "
+						+"order by 5 DESC";
+			}else {
+				
+			
+			sql_listaRDM = "select " 
+						+"chg.id as ID , "
+						+"chg_ref_num as mudanca, " 
+						+"summary as titulo, "
+						+ "ca_contact.first_name as responsavel, "
+						+"dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(SS,sched_start_date,'19700101')) agendamento, " 
+						+"chgstat.sym statusDescricao, " 
+						+"ca_contact.first_name nome, " 
+						+"ca_contact.userid username, " 
+						+"vwg.last_name as grupo "
+						+"from chg WITH (NOLOCK) " 
+						+"join chgstat WITH (NOLOCK) on chg.status = chgstat.code " 
+						+"join ca_contact WITH (NOLOCK)  on ca_contact.contact_uuid = chg.assignee " 
+						+"join View_Group vwg WITH (NOLOCK)  on chg.group_id = vwg.contact_uuid "
+						+ "where chgstat.code in ("+ "'" + rdm + "'"+ ") "
 						+"order by 6,5";
-
+			}
 						
 			PreparedStatement stmt = connection
 					.prepareStatement(sql_listaRDM);				

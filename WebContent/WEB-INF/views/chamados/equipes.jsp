@@ -43,14 +43,14 @@
 
 
 <div class="panel panel-primary">
-        <div class="panel-heading"><h3 id="chamados"><center><strong>Chamados em andamento - ${equipe}</strong></center></h3></div>
+        <div class="panel-heading"><h3 id="chamados"><center><strong>Requisições dos(as) ${equipe}</strong></center></h3></div>
 	<div class="panel-body">
 		<div class="row">
 
 				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
-						<strong>Chamados </strong>
+						<strong>Chamados em andamento </strong>
 					 </a>
 					<c:if test="${empty chamadosEquipeAndamento}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
@@ -135,7 +135,7 @@
                				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
-						<strong>Incidentes </strong>
+						<strong>Incidentes em andamento</strong>
 					 </a>
 					<c:if test="${empty incidenteEquipeAndamento}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
@@ -184,21 +184,15 @@
                </div> <!-- fim DIV col-md4 do Chamados ROW -->
                
                
-              </div> <!-- row -->
-              </div><!-- painel body -->
-              </div><!-- painel -->
 
 
 
-<div class="panel panel-primary">
-        <div class="panel-heading"><h3 id="chamados"><center><strong>Chamados Pendêntes - ${equipe}</strong></center></h3></div>
-	<div class="panel-body">
 		<div class="row">
 
 				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
-						<strong>Chamados </strong>
+						<strong>Chamados Pendentes </strong>
 					 </a>
 					<c:if test="${empty chamadosEquipePendente}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
@@ -287,7 +281,7 @@
                				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
-						<strong>Incidentes </strong>
+						<strong>Incidentes Pendentes </strong>
 					 </a>
 					<c:if test="${empty incidenteEquipePendente}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
@@ -336,19 +330,10 @@
                </div> <!-- fim DIV col-md4 do Chamados ROW -->
                
                
-              </div> <!-- row -->
-              </div><!-- painel body -->
-              </div><!-- painel -->
-
-<div class="panel panel-primary">
-        <div class="panel-heading"><h3 id="chamados"><center><strong>OS e Tarefas Internas em Andamento - ${equipe}</strong></center></h3></div>
-	<div class="panel-body">
-		<div class="row">
-
 				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
-						<strong>OS </strong>
+						<strong>Ordem de Serviço em andamento </strong>
 					 </a>
 					<c:if test="${empty osEquipeAndamento}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
@@ -386,7 +371,7 @@
                				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
-						<strong>Tarefas Internas </strong>
+						<strong>Tarefas Internas em andamento </strong>
 					 </a>
 					<c:if test="${empty tarefaEquipeAndamento}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
@@ -421,19 +406,11 @@
                </div> <!-- fim DIV col-md4 do Chamados ROW -->
                
                
-              </div> <!-- row -->
-              </div><!-- painel body -->
-              </div><!-- painel -->
-
-<div class="panel panel-primary">
-        <div class="panel-heading"><h3 id="chamados"><center><strong>OS e Tarefas Internas Pendêntes - ${equipe}</strong></center></h3></div>
-	<div class="panel-body">
-		<div class="row">
 
 				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
-						<strong>OS </strong>
+						<strong>Ordem de serviço pendentes </strong>
 					 </a>
 					<c:if test="${empty osEquipePendente}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
@@ -471,7 +448,7 @@
                				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
-						<strong>Tarefas Internas</strong>
+						<strong>Tarefas Internas pendentes</strong>
 					 </a>
 					<c:if test="${empty tarefaEquipePendente}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>

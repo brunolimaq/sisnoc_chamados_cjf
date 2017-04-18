@@ -143,6 +143,24 @@ public class UsuariosDao {
 		
 		
 	}
+	
+	public void alterarSenha(String senha, String usuario) throws SQLException {
+
+		
+
+		String sql_cadastro = "UPDATE usuario SET senhaUsuario = '"+senha+"' where loginUsuario = '"+usuario+"'";
+		
+		System.out.println(sql_cadastro);
+		PreparedStatement stmt = connection
+				.prepareStatement(sql_cadastro);
+		stmt.executeUpdate();
+		
+		stmt.close();
+		
+		
+		
+	}
+
 
 
 	public Connection getConnection() {

@@ -17,6 +17,7 @@ import br.com.sisnoc.chamados.dao.PainelPessoalRequisicoesDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalRdmDao;
+import br.com.sisnoc.chamados.dao.PainelPessoalRdmGeral;
 import br.com.sisnoc.chamados.dao.UsuariosDao;
 
 
@@ -41,6 +42,9 @@ public class ChamadosController {
 	
 	@Autowired
 	private PainelPessoalRdmDao rdmDao;
+	
+	@Autowired
+	private PainelPessoalRdmGeral rdmGeral;
 	
 	@RequestMapping("/")
 	public ModelAndView principal(Model model) throws ParseException{
@@ -78,6 +82,31 @@ public class ChamadosController {
 
 		
 		ModelAndView mv = new ModelAndView("chamados/pendencias");
+		return mv;
+	}
+
+	
+	@RequestMapping("/gmud")
+	public ModelAndView gmud(Model model) throws ParseException{
+		//APR - Aprovada
+		//IMPL - Exeução
+		//RFC - Em Planejamento
+		//APP - Em validação
+
+		String rdmPainelAprovada = "APR";
+		String rdmPainelExecucao = "IMPL";
+		String rdmPainelPlanejamento = "RFC";
+		String rdmPainelValidacao = "APP";
+		String rdmPainelOutros = "";
+		
+		model.addAttribute("chamadosRDMGeralAprovada", ((PainelPessoalRdmGeral) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelAprovada));
+		model.addAttribute("chamadosRDMGeralPlanejamento", ((PainelPessoalRdmGeral) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelPlanejamento));
+		model.addAttribute("chamadosRDMGeralValidacao", ((PainelPessoalRdmGeral) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelValidacao));
+
+		model.addAttribute("chamadosRDMGeralExecucao", ((PainelPessoalRdmGeral) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelExecucao));
+		model.addAttribute("chamadosRDMGeralOutros", ((PainelPessoalRdmGeral) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelOutros));
+		
+		ModelAndView mv = new ModelAndView("chamados/gmud");
 		return mv;
 	}
 

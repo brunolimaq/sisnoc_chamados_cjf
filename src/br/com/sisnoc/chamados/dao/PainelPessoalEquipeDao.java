@@ -48,6 +48,8 @@ private  final Connection connection;
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username;
 			String equipe = "";
+			String user_exclusao = "''";
+
 			if (usuarioLogado  instanceof UsuarioSistema ) {
 			   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
 			   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
@@ -62,6 +64,17 @@ private  final Connection connection;
 			for (String eqp : splitEquipe) {
 				listaEquipe = listaEquipe +",\'" + eqp + "\'";
 			}
+			
+			if (username.equals("bruno.queiroz") || username.equals("walison.morales")){
+				
+				user_exclusao = "'antonio.junior'";
+			}
+			
+			if (username.equals("antonio.junior")){
+				
+				user_exclusao = "'bruno.queiroz','walison.morales'";
+			}
+
 			
 
 				sql_listaChamados = "select "
@@ -81,6 +94,7 @@ private  final Connection connection;
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and stat.code in ('OP','WIP','PRBAPP') "
 						+"and usu.userid != '"+username+"' "
+						+"and usu.userid not in ("+user_exclusao+") "
 						+"and vwg.last_name in ("+ listaEquipe + ") ";
 
 			

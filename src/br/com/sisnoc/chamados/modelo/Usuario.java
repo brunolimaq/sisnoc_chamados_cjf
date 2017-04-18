@@ -17,6 +17,7 @@ public class Usuario {
 	private String nome;
 	private String loginUsuario;
 	private String senhaUsuario;
+	private String senhaUsuarioValidacao;
 	private String nomeEquipe;
 	private String grupo;
 	private Collection<? extends GrantedAuthority> permissao;
@@ -81,6 +82,12 @@ public class Usuario {
 	}
 	public void setAuthority(Set<SimpleGrantedAuthority> authority) {
 		this.authority = authority;
+	}
+	public String getSenhaUsuarioValidacao() {
+		return senhaUsuarioValidacao;
+	}
+	public void setSenhaUsuarioValidacao(String senhaUsuarioValidacao) {
+		this.senhaUsuarioValidacao = senhaUsuarioValidacao;
 	}
 
 }

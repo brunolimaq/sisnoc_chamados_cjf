@@ -151,7 +151,7 @@ private  final Connection connection;
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
 					
-					System.out.println(chamados.getStatusDescricao() + " statusDescricao");
+//					System.out.println(chamados.getStatusDescricao() + " statusDescricao");
 
 //					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
 //					System.out.println(chamados.getChamado());
@@ -250,7 +250,7 @@ private  final Connection connection;
 									+"log.type in ('INIT','SLADELAY','SLARESUME','RE') "
 									//+"and req.id in  (470837) "
 									+"and req.id in  ("+ lista + ") "
-									+ "order by req.id, log.time_stamp";
+									+ "order by req.type, stat.sym";
 			
 			stmt = connection
 					.prepareStatement(sql_listaLog);
@@ -280,7 +280,7 @@ private  final Connection connection;
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
 					
-					System.out.println(chamados.getStatusDescricao() + " statusDescricao");
+//					System.out.println(chamados.getStatusDescricao() + " statusDescricao");
 
 //					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
 //					System.out.println(chamados.getChamado());
