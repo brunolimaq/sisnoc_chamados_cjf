@@ -340,9 +340,15 @@ var gaugeSLA4 = {
 							<tbody>
 		  						                   
 							<c:forEach items="${chamadosPainelPessoal}" var="chamadosPainelPessoal">
-								
+										
 									<tr class="${chamadosPainelPessoal.alerta}" >
+									<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Incidente'}">	
+										<td id="painel_incidente_titulo">${chamadosPainelPessoal.tipoLegivel}</td>
+									</c:if>
+									<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Chamado'}">	
 										<td>${chamadosPainelPessoal.tipoLegivel}</td>
+									</c:if>		
+											
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelPessoal.id}" target="_blank" >${chamadosPainelPessoal.chamado}</a></td>
 										<td>${chamadosPainelPessoal.titulo}</td>
 										<td>${chamadosPainelPessoal.statusDescricao}</td>

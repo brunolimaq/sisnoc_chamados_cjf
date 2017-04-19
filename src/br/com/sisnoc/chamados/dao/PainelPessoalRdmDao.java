@@ -72,10 +72,6 @@ private  final Connection connection;
 				user_exclusao = "'antonio.junior'";
 			}
 			
-			if (username.equals("antonio.junior")){
-				
-				user_exclusao = "'bruno.queiroz','walison.morales'";
-			}
 			sql_listaRDM = "select " 
 						+"chg.id as ID , "
 						+"chg_ref_num as mudanca, " 

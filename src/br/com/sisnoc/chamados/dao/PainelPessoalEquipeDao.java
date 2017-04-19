@@ -70,12 +70,6 @@ private  final Connection connection;
 				user_exclusao = "'antonio.junior'";
 			}
 			
-			if (username.equals("antonio.junior")){
-				
-				user_exclusao = "'bruno.queiroz','walison.morales'";
-			}
-
-			
 
 				sql_listaChamados = "select "
 						+"req.ref_num as chamado, "
