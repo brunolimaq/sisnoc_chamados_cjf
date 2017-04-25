@@ -73,7 +73,7 @@
 								<c:forEach items="${chamadosEquipeAndamento}" var="chamadosEquipeAndamento">	
 									<tr  class="${chamadosEquipeAndamento.alerta}">
 										<td>${chamadosEquipeAndamento.equipe}</td>
-										<td>${chamadosEquipeAndamento.chamado}</td>
+  									   <td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosEquipeAndamento.id}" target="_blank" >${chamadosEquipeAndamento.chamado}</a></td>
 										<td>${chamadosEquipeAndamento.titulo}</td>
 										<td>${chamadosEquipeAndamento.sla}
 										</td>
@@ -158,7 +158,7 @@
 								<c:forEach items="${incidenteEquipeAndamento}" var="incidenteEquipeAndamento">	
 									<tr  class="${incidenteEquipeAndamento.alerta}">
 										<td>${incidenteEquipeAndamento.equipe}</td>
-										<td>${incidenteEquipeAndamento.chamado}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${incidenteEquipeAndamento.id}" target="_blank" >${incidenteEquipeAndamento.chamado}</a></td>
 										<td>${incidenteEquipeAndamento.titulo}</td>
 										<td>${incidenteEquipeAndamento.sla}
 										</td>
@@ -215,12 +215,10 @@
 								<c:forEach items="${chamadosEquipePendente}" var="chamadosEquipePendente">	
 									<tr  class="${chamadosEquipePendente.alerta}">
 										<td>${chamadosEquipePendente.equipe}</td>
-										<td>${chamadosEquipePendente.chamado}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosEquipePendente.id}" target="_blank" >${chamadosEquipePendente.chamado}</a></td>
 										<td>${chamadosEquipePendente.titulo}</td>
 										<td>${chamadosEquipePendente.sla}
 										</td>
-										
-									
 										<c:if test="${chamadosEquipePendente.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
 												<td  width="15%" height="70%" style="padding:3px" >
 												<div class="progress" style="height:30px" align="center">
@@ -304,7 +302,7 @@
 								<c:forEach items="${incidenteEquipePendente}" var="incidenteEquipePendente">	
 									<tr  class="${incidenteEquipePendente.alerta}">
 										<td>${incidenteEquipePendente.equipe}</td>
-										<td>${incidenteEquipePendente.chamado}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${incidenteEquipePendente.id}" target="_blank" >${incidenteEquipePendente.chamado}</a></td>
 										<td>${incidenteEquipePendente.titulo}</td>
 										<td>${incidenteEquipePendente.sla}
 										</td>
@@ -355,7 +353,7 @@
 								<c:forEach items="${osEquipeAndamento}" var="osEquipeAndamento">	
 									<tr  class="${osEquipeAndamento.alerta}">
 										<td>${osEquipeAndamento.equipe}</td>
-										<td>${osEquipeAndamento.chamado}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${osEquipeAndamento.id}" target="_blank" >${osEquipeAndamento.chamado}</a></td>
 										<td>${osEquipeAndamento.titulo}</td>
 										
 											
@@ -393,7 +391,7 @@
 								<c:forEach items="${tarefaEquipeAndamento}" var="tarefaEquipeAndamento">	
 									<tr  class="${tarefaEquipeAndamento.alerta}">
 										<td>${tarefaEquipeAndamento.equipe}</td>
-										<td>${tarefaEquipeAndamento.chamado}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${osEquipePendente.id}" target="_blank" >${osEquipePendente.chamado}</a></td>
 										<td>${tarefaEquipeAndamento.titulo}</td>
 										
 										
@@ -432,7 +430,7 @@
 								<c:forEach items="${osEquipePendente}" var="osEquipePendente">	
 									<tr  class="${osEquipePendente.alerta}">
 										<td>${osEquipePendente.equipe}</td>
-										<td>${osEquipePendente.chamado}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${osEquipePendente.id}" target="_blank" >${osEquipePendente.chamado}</a></td>
 										<td>${osEquipePendente.titulo}</td>
 										
 											
@@ -470,7 +468,7 @@
 								<c:forEach items="${tarefaEquipePendente}" var="tarefaEquipePendente">	
 									<tr  class="${tarefaEquipePendente.alerta}">
 										<td>${tarefaEquipePendente.equipe}</td>
-										<td>${tarefaEquipePendente.chamado}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${tarefaEquipePendente.id}" target="_blank" >${tarefaEquipePendente.chamado}</a></td>
 										<td>${tarefaEquipePendente.titulo}</td>
 										
 										

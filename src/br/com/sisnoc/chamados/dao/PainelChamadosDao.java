@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.annotation.RequestScope;
 
 import br.com.sisnoc.chamados.dao.util.ChamadosDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
@@ -252,7 +253,7 @@ public class PainelChamadosDao {
 	}
 
 
-	public Connection getConnection() {
+	public Connection getConnection() throws SQLException {
 		return connection;
 	}
 }

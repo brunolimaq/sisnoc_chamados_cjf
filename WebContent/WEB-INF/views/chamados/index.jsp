@@ -304,6 +304,32 @@ var gaugeSLA4 = {
    }); 
   
   </script>
+  <script type="text/javascript"> 
+
+
+          function timedRefresh(timeoutPeriod) {
+             setTimeout("location.reload(true);", timeoutPeriod);
+         }
+          jQuery(document).ready(function () {
+              timedRefresh(15000);
+         });
+       
+  </script> 
+  
+  
+
+  <script> 
+  
+  $( document ).ready(function play() {   
+
+	   audio = document.getElementById('audio');
+	  	 audio.play();
+
+	   });
+  
+  
+  </script>
+  
   
 </head>
 
@@ -344,8 +370,12 @@ var gaugeSLA4 = {
 									<tr class="${chamadosPainelPessoal.alerta}" >
 									<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Incidente'}">	
 										<td id="painel_incidente_titulo">${chamadosPainelPessoal.tipoLegivel}</td>
+									<audio id="audio">
+   										<source src="resources/audio/alertaIC.mp3" type="audio/mp3" />
+									</audio>	
+										
 									</c:if>
-									<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Chamado'}">	
+									<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Chamado'}">
 										<td>${chamadosPainelPessoal.tipoLegivel}</td>
 									</c:if>		
 											
@@ -602,13 +632,21 @@ var gaugeSLA4 = {
 									<td><center><strong>Agendamento</strong></center></td>
 								</tr>
 							</thead>
+							
+					
+							
 							<tbody>
 								<c:forEach items="${chamadosRDMPessoal}" var="chamadosRDMPessoal">	
 									<tr>
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMPessoal.id}" target="_blank" >${chamadosRDMPessoal.mudanca}</a></td>
 										<td>${chamadosRDMPessoal.responsavel}</td>
 										<td>${chamadosRDMPessoal.resumo}</td>
-										<td>${chamadosRDMPessoal.statusDescricao}</td>
+										<c:if test="${chamadosRDMPessoal.statusDescricao == 'Em execução'}">	
+											<td id="painel_rdm_execucao">${chamadosRDMPessoal.statusDescricao}</td>
+										</c:if>
+										<c:if test="${chamadosRDMPessoal.statusDescricao != 'Em execução'}">	
+											<td>${chamadosRDMPessoal.statusDescricao}</td>
+										</c:if>
 										<td>${chamadosRDMPessoal.agendamento}</td>
 									</tr>
 									

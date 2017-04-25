@@ -34,6 +34,18 @@
        
  </script>
 
+  <script> 
+  
+  $( document ).ready(function play() {   
+
+	   audio = document.getElementById('audio');
+	  	 audio.play();
+
+	   });
+  
+  
+  </script>
+  
 
 
 </head>
@@ -57,8 +69,10 @@
 
   					</c:if>
   					<c:if test="${!empty incidentesPainelNoc}">
-		
-					
+
+						<audio id="audio">
+							<source src="resources/audio/alertaIC.mp3" type="audio/mp3" />
+						</audio>
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr class="painel_incidente">

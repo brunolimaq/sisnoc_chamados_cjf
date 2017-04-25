@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.annotation.RequestScope;
 
 import br.com.sisnoc.chamados.dao.util.SemSlaDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
@@ -22,6 +23,7 @@ import br.com.sisnoc.chamados.negocio.Popula;
 
 @Repository
 @SemSlaDao
+
 public class PainelSemSlaDao {
 
 	private  final Connection connection;
@@ -221,7 +223,7 @@ public class PainelSemSlaDao {
 	}
 
 
-	public Connection getConnection() {
+	public Connection getConnection() throws SQLException {
 		return connection;
 	}
 }

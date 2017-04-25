@@ -572,6 +572,7 @@ public class CalculaSla {
 			validado.setAlerta("SlaViolado"); //Fundo Preto letra branca
 			
 		}
+		
 		if (validado.getTipo().equals("P")){
 			validado.setSla("N/A");
 			validado.setAlerta("Problema");

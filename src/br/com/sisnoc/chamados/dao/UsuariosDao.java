@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.context.annotation.SessionScope;
 
 import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.modelo.Usuario;
@@ -32,6 +34,7 @@ public class UsuariosDao {
 	public UsuariosDao(@Qualifier("datasourceMySql") DataSource datasource) {
 		try {
 			this.connection = datasource.getConnection();
+				
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -160,12 +163,16 @@ public class UsuariosDao {
 		
 		
 	}
-
-
-
-	public Connection getConnection() {
-		return connection;
+	public Connection getConnection() throws SQLException {
+		
+		return connection; 
 	}
+
+
+
+
+
+
 
 
 

@@ -71,7 +71,7 @@
 								<c:forEach items="${chamadosPainelPessoalPendencias}" var="chamadosPainelPessoalPendencias">	
 									<tr  class="${chamadosPainelPessoalPendencias.alerta}">
 										<td>${chamadosPainelPessoalPendencias.tipoLegivel}</td>
-										<td>${chamadosPainelPessoalPendencias.chamado}</td>
+									   <td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelPessoalPendencias.id}" target="_blank" >${chamadosPainelPessoalPendencias.chamado}</a></td>
 										<td>${chamadosPainelPessoalPendencias.titulo}</td>
 										<td>${chamadosPainelPessoalPendencias.statusDescricao}</td>
 										<td>${chamadosPainelPessoalPendencias.sla}
