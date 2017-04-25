@@ -163,7 +163,7 @@ public class CalculaSla {
 
 	public static Integer calculaAcumulado(Integer slaIni, Integer slaFim, Long tempoInicial, Long tempoFinal, Integer slaMax, String tipo) {
 		
-		System.out.println(tipo);
+		//System.out.println(tipo);
 		if (tipo == "I" || tipo == "P") {
 				return (int) (tempoFinal - tempoInicial);
 		}
@@ -578,11 +578,11 @@ public class CalculaSla {
 			validado.setAlerta("Problema");
 		} else 	if (sla < 0){
 			validado.setSla("Violado");
-			validado.setSla2(sla);
+			validado.setSla2(tempoAcumulado);
 
 		} else {
 			validado.setSla(acumuladoParaHoraLegivel(sla));
-			validado.setSla2(sla);
+			validado.setSla2(tempoAcumulado);
 		}
 		
 		//System.out.println(validado);

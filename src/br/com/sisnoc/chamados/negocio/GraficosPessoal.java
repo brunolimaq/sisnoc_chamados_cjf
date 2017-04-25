@@ -89,6 +89,10 @@ public class GraficosPessoal implements GraficosPessoalService {
 				 
 				} 
 				 
+			System.out.println(countMeta2h);
+			System.out.println(countMeta4h);
+			System.out.println(countTotal);
+			
 				this.setMeta2h((countMeta2h*100)/countTotal);
 				this.setMeta4h((countMeta4h*100)/countTotal);
 				this.setMetaReabertos((this.getReabertosMes()*100)/countTotal);
@@ -97,7 +101,7 @@ public class GraficosPessoal implements GraficosPessoalService {
 				this.setChamadosMes(countChamados);
 				this.setIncidentesMes(countIncidentes);
 				
-		
+	
 		
 	}
 	public int getIncidentesMes() {
