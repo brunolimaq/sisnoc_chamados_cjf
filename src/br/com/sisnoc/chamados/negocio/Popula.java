@@ -86,6 +86,26 @@ public class Popula {
 	public String populResponsavel(ResultSet rs) throws SQLException, ParseException {
 		return rs.getString("responsavel");
 	}
+
+	public String populaDiasAtualizacao(ResultSet rs) throws SQLException, ParseException  {
+		
+		return rs.getString("diasatualizacao");
+	}
+
+	public String populaAtualizacao(ResultSet rs) throws SQLException, ParseException  {
+		
+		return rs.getString("atualizacao");
+	}
+
+	public String populaData_inicio(ResultSet rs) throws SQLException, ParseException  {
+		
+		return rs.getString("data_inicio");
+	}
+
+	public String populaData_retorno(ResultSet rs) throws SQLException, ParseException  {
+		
+		return rs.getString("data_retorno");
+	}
 	
 	
 	

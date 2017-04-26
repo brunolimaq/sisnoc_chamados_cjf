@@ -171,7 +171,7 @@ private  final Connection connection;
 				if(ListaChamados.isEmpty()){
 					return null;
 				} else {
-					return CalculaSla.SlaMec(ListaChamados);
+					return CalculaSla.SlaCjf(ListaChamados);
 				}
 
 			
@@ -208,10 +208,6 @@ private  final Connection connection;
 						+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 					+"where "
 						+"cat.sym like 'INFRA%' "
-						+"and cat.sym not like 'INFRA.Ordem de Servico' "
-						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
-						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 						+"and usu.userid = '"+username+"'";
 
@@ -300,7 +296,7 @@ private  final Connection connection;
 				if(ListaChamados.isEmpty()){
 					return null;
 				} else {
-					return CalculaSla.SlaMec(ListaChamados);
+					return CalculaSla.SlaCjf(ListaChamados);
 				}
 
 			

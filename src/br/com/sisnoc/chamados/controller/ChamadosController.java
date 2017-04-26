@@ -17,7 +17,7 @@ import br.com.sisnoc.chamados.dao.PainelPessoalRequisicoesDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalRdmDao;
-import br.com.sisnoc.chamados.dao.PainelPessoalRdmGeral;
+import br.com.sisnoc.chamados.dao.PainelGeralRdmDao;
 import br.com.sisnoc.chamados.dao.UsuariosDao;
 
 
@@ -44,7 +44,7 @@ public class ChamadosController {
 	private PainelPessoalRdmDao rdmDao;
 	
 	@Autowired
-	private PainelPessoalRdmGeral rdmGeral;
+	private PainelGeralRdmDao rdmGeral;
 	
 	@RequestMapping("/")
 	public ModelAndView principal(Model model) throws ParseException{
@@ -99,12 +99,12 @@ public class ChamadosController {
 		String rdmPainelValidacao = "APP";
 		String rdmPainelOutros = "";
 		
-		model.addAttribute("chamadosRDMGeralAprovada", ((PainelPessoalRdmGeral) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelAprovada));
-		model.addAttribute("chamadosRDMGeralPlanejamento", ((PainelPessoalRdmGeral) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelPlanejamento));
-		model.addAttribute("chamadosRDMGeralValidacao", ((PainelPessoalRdmGeral) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelValidacao));
+		model.addAttribute("chamadosRDMGeralAprovada", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelAprovada));
+		model.addAttribute("chamadosRDMGeralPlanejamento", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelPlanejamento));
+		model.addAttribute("chamadosRDMGeralValidacao", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelValidacao));
 
-		model.addAttribute("chamadosRDMGeralExecucao", ((PainelPessoalRdmGeral) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelExecucao));
-		model.addAttribute("chamadosRDMGeralOutros", ((PainelPessoalRdmGeral) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelOutros));
+		model.addAttribute("chamadosRDMGeralExecucao", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelExecucao));
+		model.addAttribute("chamadosRDMGeralOutros", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelOutros));
 		
 		ModelAndView mv = new ModelAndView("chamados/gmud");
 		return mv;

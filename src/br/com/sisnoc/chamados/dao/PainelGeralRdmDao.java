@@ -26,14 +26,14 @@ import br.com.sisnoc.chamados.security.UsuarioSistema;
 
 @Repository
 @RDMDao
-public class PainelPessoalRdmGeral {
+public class PainelGeralRdmDao {
 
 
 private  final Connection connection;
 
 	
 	@Autowired
-	public PainelPessoalRdmGeral(@Qualifier("datasourceSQL") DataSource datasource) {
+	public PainelGeralRdmDao(@Qualifier("datasourceSQL") DataSource datasource) {
 		try {
 			this.connection = datasource.getConnection();
 		} catch (SQLException e) {
@@ -140,7 +140,7 @@ private  final Connection connection;
 					mudancas.setStatusDescricao(popula.populaStatusDescricao(rs_listaChamado));
 					mudancas.setResponsavel(popula.populResponsavel(rs_listaChamado));
 					
-					System.out.println("mudancas" + mudancas.getMudanca());
+
 					ListaRDM.add(mudancas);
 					count++;
 				}

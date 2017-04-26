@@ -23,7 +23,7 @@ public class CalculaSla {
 		
 	}
 	
-	public static ArrayList<Chamado> SlaMec(ArrayList<Chamado> log){
+	public static ArrayList<Chamado> SlaCjf(ArrayList<Chamado> log){
 		
 		String num_chamado = "";
 		Integer tempoInicial = 0;
@@ -93,7 +93,7 @@ public class CalculaSla {
 				if(ultimoLog.getStatus().equals("resume")){
 					//int epoch = (int) (System.currentTimeMillis()/1000);
 					
-					tempoAcumulado =  tempoAcumulado + calculaAcumulado(slaInicial, slaFinal, (long)tempoInicial, (long) epoch, 28800, ultimoLog.getTipo());
+					tempoAcumulado =  tempoAcumulado + calculaAcumulado(slaInicial, slaFinal, (long)tempoInicial, (long) epoch, 28800, ultimoLog.getTipo(),ultimoLog.getGrupo());
 					//System.out.println("1");
 					ultimoLog.setSla(""+tempoAcumulado);
 					Chamado validado = new Chamado();
@@ -125,7 +125,7 @@ public class CalculaSla {
 					}
 										
 				} else if(logChamado.getStatus().equals("stop")){
-					tempoAcumulado = tempoAcumulado + calculaAcumulado(slaInicial, slaFinal, (long)tempoInicial, (long)tempoParada, 28800,logChamado.getTipo());
+					tempoAcumulado = tempoAcumulado + calculaAcumulado(slaInicial, slaFinal, (long)tempoInicial, (long)tempoParada, 28800,logChamado.getTipo(),logChamado.getGrupo());
 					//System.out.println("2");
 				}
 			}
@@ -136,7 +136,7 @@ public class CalculaSla {
 		if(ultimoLog.getStatus().equals("resume")){
 			Integer epoch = ultimoLog.getEpoch();
 			//int epoch = (int) (System.currentTimeMillis()/1000);
-			tempoAcumulado = tempoAcumulado + calculaAcumulado(slaInicial, slaFinal, (long)tempoInicial, (long) epoch, 28800, ultimoLog.getTipo());
+			tempoAcumulado = tempoAcumulado + calculaAcumulado(slaInicial, slaFinal, (long)tempoInicial, (long) epoch, 28800, ultimoLog.getTipo(),ultimoLog.getGrupo());
 			//System.out.println("3");
 			ultimoLog.setSla(""+tempoAcumulado);
 			Chamado validado = new Chamado();
@@ -161,11 +161,13 @@ public class CalculaSla {
 		return listaChamados;
 	}
 
-	public static Integer calculaAcumulado(Integer slaIni, Integer slaFim, Long tempoInicial, Long tempoFinal, Integer slaMax, String tipo) {
+	public static Integer calculaAcumulado(Integer slaIni, Integer slaFim, Long tempoInicial, Long tempoFinal, Integer slaMax, String tipo, String grupo) {
 		
 		//System.out.println(tipo);
-		if (tipo == "I" || tipo == "P") {
+		if (tipo == "I") {
 				return (int) (tempoFinal - tempoInicial);
+		}else if (tipo == "P" || grupo.equals("INFRA.Ordem de Servico")){
+				return 1;
 		}
 		
 		
@@ -573,9 +575,14 @@ public class CalculaSla {
 			
 		}
 		
-		if (validado.getTipo().equals("P")){
+		if (validado.getTipo().equals("P")  ){
 			validado.setSla("N/A");
-			validado.setAlerta("Problema");
+			validado.setAlerta("SemAlerta");
+			
+		} else if (validado.getGrupo().equals("INFRA.Ordem de Servico")){
+			validado.setSla("N/A");
+			validado.setAlerta("SemAlerta");
+			validado.setTipoLegivel("OS");			
 		} else 	if (sla < 0){
 			validado.setSla("Violado");
 			validado.setSla2(tempoAcumulado);

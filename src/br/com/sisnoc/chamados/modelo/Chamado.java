@@ -15,10 +15,9 @@ public class Chamado {
 	private String dataInicio;
 	private String dataAgendamento;
 	
-	private String atualizacao;
-	private String diasAtualizacao;
+
 	private String chamado_Pai;
-	private String data_retorno;
+
 	private Integer time;
 	private String meta_2;
 	private String meta_6;
@@ -30,7 +29,11 @@ public class Chamado {
 	private Integer countNocIncidentes;
 	private Integer countTotalNoc;
 	
-	
+	//OS
+	private String atualizacao;
+	private String diasAtualizacao;
+	private String data_inicio;
+	private String data_retorno;
 
 
 	private String id;
@@ -412,6 +415,16 @@ public class Chamado {
 
 	public void setStatusDescricao(String statusDescricao) {
 		this.statusDescricao = statusDescricao;
+	}
+
+
+	public String getData_inicio() {
+		return data_inicio;
+	}
+
+
+	public void setData_inicio(String data_inicio) {
+		this.data_inicio = data_inicio;
 	}
 
 

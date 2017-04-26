@@ -171,7 +171,7 @@ private  final Connection connection;
 					return null;
 				} else {
 					
-					return CalculaSla.SlaMec(ListaChamados);
+					return CalculaSla.SlaCjf(ListaChamados);
 				
 					
 				}

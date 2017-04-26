@@ -243,7 +243,7 @@ public class PainelChamadosDao {
 				if(ListaChamados.isEmpty()){
 					return null;
 				} else {
-					return CalculaSla.SlaMec(ListaChamados);
+					return CalculaSla.SlaCjf(ListaChamados);
 				}
 
 			

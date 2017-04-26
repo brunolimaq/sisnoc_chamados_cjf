@@ -79,7 +79,7 @@ private  final Connection connection;
 						+"summary as titulo, "
 						+ "ca_contact.first_name as responsavel, " 
 						+"dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(SS,sched_start_date,'19700101')) agendamento, " 
-						+"chgstat.sym statusDescricao, " 
+						+"replace(chgstat.sym,' (Mudança)','') statusDescricao, " 
 						+"ca_contact.first_name nome, " 
 						+"ca_contact.userid username, " 
 						+"vwg.last_name as grupo "
@@ -121,7 +121,7 @@ private  final Connection connection;
 					mudancas.setStatusDescricao(popula.populaStatusDescricao(rs_listaChamado));
 					mudancas.setResponsavel(popula.populResponsavel(rs_listaChamado));
 					
-					System.out.println("mudancas" + mudancas.getMudanca());
+					
 					ListaRDM.add(mudancas);
 					count++;
 				}

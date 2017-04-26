@@ -184,7 +184,7 @@ private  final Connection connection;
 				if(ListaChamados.isEmpty()){
 					return null;
 				} else {
-					return CalculaSla.SlaMec(ListaChamados);
+					return CalculaSla.SlaCjf(ListaChamados);
 				}
 
 			
