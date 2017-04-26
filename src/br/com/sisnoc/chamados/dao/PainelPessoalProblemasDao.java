@@ -16,19 +16,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import br.com.sisnoc.chamados.dao.util.OsDao;
+import br.com.sisnoc.chamados.dao.util.ProblemaDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
-import br.com.sisnoc.chamados.modelo.Mudanca;
 import br.com.sisnoc.chamados.negocio.Popula;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
 
 @Repository
-@OsDao
-public class PainelPessoalOsDao {
+@ProblemaDao
+public class PainelPessoalProblemasDao {
 
+	
 	private  final Connection connection;
 
 	@Autowired
-	public PainelPessoalOsDao(@Qualifier("datasourceSQL") DataSource datasource) {
+	public PainelPessoalProblemasDao(@Qualifier("datasourceSQL") DataSource datasource) {
 		try {
 			this.connection = datasource.getConnection();
 		} catch (SQLException e) {
@@ -36,10 +37,10 @@ public class PainelPessoalOsDao {
 		}
 	}
 	
-	public List<Chamado> listaPainelPessoalOs() throws ParseException {
+	public List<Chamado> listaPainelPessoalProblema() throws ParseException {
 		try {
 			
-			ArrayList<Chamado> ListaOs = new ArrayList<Chamado>();
+			ArrayList<Chamado> ListaProblema = new ArrayList<Chamado>();
 			String sql_listaRDM = "";
 			
 			// tipo = "R";
@@ -75,19 +76,16 @@ public class PainelPessoalOsDao {
 					+ "vwg.last_name as equipe," 
 					+ "req.summary as titulo,  "
 					+ "stat.sym as statusDescricao, " 
-					+ "ctg.sym as grupo, " 
-					+ "CASE req.type  as tipo, " 
-					+ "datediff(dd,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) as diasatualizacao, " 
-					+ "(DATEADD(HOUR, -3, DATEADD(SS,req.last_mod_dt,'19700101'))) as atualizacao, " 
-					+ "(DATEADD(HOUR, -3, DATEADD(SS,log.time_stamp,'19700101'))) as data_inicio, " 
-					+ "COALESCE(DATEADD(HOUR, -3, DATEADD(SS,call_back_date,'19700101')),0) as data_retorno " 
+					+ "ctg.sym as grupo " 
 					+ "from " 
 					+ "call_req req WITH (NOLOCK)  join cr_stat stat WITH (NOLOCK) on req.status = stat.code " 
 					+ "left join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee " 
 					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
 					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
-					+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
+					+ "where ctg.sym like 'INFRA%' "
+					+ "and ctg.sym not like 'INFRA.Ordem de Servico' "
+					+ "and req.type in ('P') "
 					+ "and stat.code in ('RSCH', 'OP', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK','WIP','PRBAPP') " 
 					+ "and log.type='INIT' " 
 					+ "and usu.userid = '"+username+"' "
@@ -127,10 +125,7 @@ public class PainelPessoalOsDao {
 					chamados.setTipo(popula.populaTipo(rs_listaOs));
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listaOs));
 					
-					chamados.setDiasAtualizacao(popula.populaDiasAtualizacao(rs_listaOs));
-					chamados.setAtualizacao(popula.populaAtualizacao(rs_listaOs));
-					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs));
-					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
+					
 					
 					
 //					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
@@ -139,7 +134,7 @@ public class PainelPessoalOsDao {
 //					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
 //					System.out.println(chamados.getTime());
 //					System.out.println(chamados.getStatus());
-					ListaOs.add(chamados);
+					ListaProblema.add(chamados);
 					count++;
 				}
 			
@@ -147,7 +142,7 @@ public class PainelPessoalOsDao {
 				rs_listaOs.close();
 				stmt.close();
 
-				return ListaOs;
+				return ListaProblema;
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -155,10 +150,10 @@ public class PainelPessoalOsDao {
 	}
 	
 	
-	public List<Chamado> listaPainelPessoalEquipeOs() throws ParseException {
+	public List<Chamado> listaPainelPessoalEquipeProblema() throws ParseException {
 		try {
 			
-			ArrayList<Chamado> ListaOs = new ArrayList<Chamado>();
+			ArrayList<Chamado> ListaProblema = new ArrayList<Chamado>();
 			String sql_listaRDM = "";
 			
 			// tipo = "R";
@@ -195,18 +190,16 @@ public class PainelPessoalOsDao {
 					+ "req.summary as titulo,  "
 					+ "stat.sym as statusDescricao, " 
 					+ "ctg.sym as grupo, " 
-					+ "CASE req.type  as tipo, " 
-					+ "datediff(dd,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) as diasatualizacao, " 
-					+ "(DATEADD(HOUR, -3, DATEADD(SS,req.last_mod_dt,'19700101'))) as atualizacao, " 
-					+ "(DATEADD(HOUR, -3, DATEADD(SS,log.time_stamp,'19700101'))) as data_inicio, " 
-					+ "COALESCE(DATEADD(HOUR, -3, DATEADD(SS,call_back_date,'19700101')),0) as data_retorno " 
+					+ "CASE req.type  as tipo " 
 					+ "from " 
 					+ "call_req req WITH (NOLOCK)  join cr_stat stat WITH (NOLOCK) on req.status = stat.code " 
 					+ "left join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee " 
 					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
 					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
-					+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
+					+ "where ctg.sym like 'INFRA%' "
+					+ "and ctg.sym not like 'INFRA.Ordem de Servico' "
+					+ "and req.type in ('P') "
 					+ "and stat.code in ('RSCH', 'OP', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK','WIP','PRBAPP') " 
 					+ "and log.type='INIT' " 
 					+"and vwg.last_name in ("+ listaEquipe + ") "
@@ -247,10 +240,7 @@ public class PainelPessoalOsDao {
 					chamados.setTipo(popula.populaTipo(rs_listaOs));
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listaOs));
 					
-					chamados.setDiasAtualizacao(popula.populaDiasAtualizacao(rs_listaOs));
-					chamados.setAtualizacao(popula.populaAtualizacao(rs_listaOs));
-					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs));
-					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
+					
 					
 					
 //					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
@@ -259,7 +249,7 @@ public class PainelPessoalOsDao {
 //					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
 //					System.out.println(chamados.getTime());
 //					System.out.println(chamados.getStatus());
-					ListaOs.add(chamados);
+					ListaProblema.add(chamados);
 					count++;
 				}
 			
@@ -267,7 +257,7 @@ public class PainelPessoalOsDao {
 				rs_listaOs.close();
 				stmt.close();
 
-				return ListaOs;
+				return ListaProblema;
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -277,4 +267,5 @@ public class PainelPessoalOsDao {
 	public Connection getConnection() throws SQLException {
 		return connection;
 	}
+	
 }
