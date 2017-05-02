@@ -48,6 +48,7 @@ public class PainelChamadosDao {
 			
 			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
 			String sql_listaChamados = "";
+			String sql_listaChamadosFilhoAtd = "";
 			
 			// tipo = "R";
 			
@@ -89,6 +90,29 @@ public class PainelChamadosDao {
 									+"and req.type in('"+tipo+"') "
 									//+"and req.ref_num = 65799"
 									+"and stat.code in('WIP','PRBAPP') ";
+			
+				if (tipo.equals("R")){
+						
+
+					sql_listaChamadosFilhoAtd = "select "
+													+"req.ref_num as chamado, "
+													+"req.id as ID "
+												+"from "
+													+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
+													+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
+													+"cat.persid = req.category "
+													+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+												+"where "
+													+"cat.sym like 'INFRA%' "
+													+"and cat.sym not like 'INFRA.Ordem de Servico' "
+													+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+													+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+													+"and cat.sym not like 'Infra.Tarefas Internas' "
+													+"and req.type != 'P' "
+													+"and stat.code = 'FIP' "
+													+"and (select count(1) from call_req where parent = req.persid) = (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR'))";
+				
+				}
 			
 			}else if (equipe.equals("todas")) {
 				
@@ -149,8 +173,9 @@ public class PainelChamadosDao {
 											+"and cat3.sym not like 'Infra.Tarefas Internas' "
 											+"and req.type in('"+tipo+"') "
 											+"and stat.code in('WIP','PRBAPP') "
-											+"and vwg.last_name = '"+equipe+"'";	
-					//System.out.println(sql_listaChamados);
+											+"and vwg.last_name = '"+equipe+"'"
+													+ "and req.ref_num = '70413'";	
+						//System.out.println(sql_listaChamados);
 
 					
 			}
@@ -173,11 +198,22 @@ public class PainelChamadosDao {
 			
 			rs_listaChamados.close();
 			
-			//System.out.println(lista);
-			// 65497
-			// 65529
-			// 65536
-			// 65538
+			if(!sql_listaChamadosFilhoAtd.equals("")){
+				
+				stmt = connection
+						.prepareStatement(sql_listaChamadosFilhoAtd);
+				ResultSet rs_listaChamadosFilho = stmt.executeQuery();
+				
+				while (rs_listaChamadosFilho.next()){
+
+					lista = lista +",\'" + rs_listaChamadosFilho.getString("ID") + "\'";
+				}
+				
+				rs_listaChamadosFilho.close();
+				
+			}
+			
+			
 			String sql_listaLog = "select "
 									+"req.id as ID, "
 									+"req.ref_num as chamados, "

@@ -72,7 +72,7 @@ private  final Connection connection;
 				user_exclusao = "'antonio.junior'";
 			}
 			
-
+			// chamados em andamento
 				sql_listaChamados = "select "
 						+"req.ref_num as chamado, "
 						+"req.id as ID "
@@ -106,13 +106,96 @@ private  final Connection connection;
 			ResultSet rs_listaChamados = stmt.executeQuery();
 			
 			String lista = "\'\'";
-
+			
+			int countTeste = 0;
 			while (rs_listaChamados.next()){
-
+				countTeste++;
 				lista = lista +",\'" + rs_listaChamados.getString("ID") + "\'";
 			}
 			
 			rs_listaChamados.close();
+			
+			// chamados filhos atendidos
+						sql_listaChamados = "select "
+								+"req.ref_num as chamado, "
+								+"req.id as ID "
+							+"from "
+								+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
+								+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
+								+"cat.persid = req.category "
+								+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+							+"where "
+								+"cat.sym like 'INFRA%' "
+								+"and cat.sym not like 'INFRA.Ordem de Servico' "
+								+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+								+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+								+"and cat.sym not like 'Infra.Tarefas Internas' "
+								+"and req.type != 'P' "
+								+"and stat.code = 'FIP' "
+								+"and usu.userid = '"+username+"'"
+								+"and (select count(1) from call_req where parent = req.persid) = (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR'))";
+
+					 stmt = connection
+							.prepareStatement(sql_listaChamados);
+					ResultSet rs_listaChamadosFilhos = stmt.executeQuery();
+					
+					 lista = "\'\'";
+					
+					
+					while (rs_listaChamadosFilhos.next()){
+						countTeste++;
+						lista = lista +",\'" + rs_listaChamadosFilhos.getString("ID") + "\'";
+					}
+					
+					rs_listaChamadosFilhos.close();
+			
+			if(countTeste == 0){
+				
+				sql_listaChamados = "select "
+						+"req.ref_num as chamado, "
+						+"req.id as ID "
+					+"from "
+						+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
+						+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
+						+"cat.persid = req.category "
+						+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+						+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
+					+"where "
+						+"cat.sym like 'INFRA%' "
+						+"and cat.sym not like 'INFRA.Ordem de Servico' "
+						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+						+"and cat.sym not like 'Infra.Tarefas Internas' "
+						+"and req.type != 'P'"
+						+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
+						+"and usu.userid != '"+username+"' "
+						+"and usu.userid not in ("+user_exclusao+") "
+						+"and vwg.last_name in ("+ listaEquipe + ") ";
+
+			
+			
+				
+				
+			
+			System.out.println(sql_listaChamados);
+			
+			 
+			 stmt = connection
+					.prepareStatement(sql_listaChamados);
+			ResultSet rs_listaChamadosPendente = stmt.executeQuery();
+			
+			lista = "\'\'";
+			
+			countTeste = 0;
+			while (rs_listaChamadosPendente.next()){
+				countTeste++;
+				lista = lista +",\'" + rs_listaChamadosPendente.getString("ID") + "\'";
+			}
+			
+			rs_listaChamadosPendente.close();
+				
+			}
+			
 			
 			String sql_listaLog = "select "
 									+"req.id as ID, "
