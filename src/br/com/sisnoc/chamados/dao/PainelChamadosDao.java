@@ -8,15 +8,15 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.context.annotation.RequestScope;
+
 
 import br.com.sisnoc.chamados.dao.util.ChamadosDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
