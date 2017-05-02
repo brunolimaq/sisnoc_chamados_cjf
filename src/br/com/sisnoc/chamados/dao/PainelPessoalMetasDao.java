@@ -85,7 +85,7 @@ private  final Connection connection;
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and stat.code in ('RE','CL') "
 						+"and usu.userid = '"+username+"' "
-						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
+						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
 
 //						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),'03/01/2017',101)) ";
 
@@ -228,7 +228,7 @@ public int listaPainelPessoalReabertos() throws ParseException {
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and stat.code in ('RE','CL') "
 						+"and usu.userid = '"+username+"' "
-						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
+						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
 						+ "and log.action_desc like 'registrar texto da solução' "
 						+ "group by req.ref_num ,req.id ";
 
