@@ -229,6 +229,7 @@ public class PainelSemSlaDao {
 			
 			ArrayList<Chamado> ListaOs = new ArrayList<Chamado>();
 			String sql_listaRDM = "";
+			String sql_listaRDM2 = "";
 			
 			// tipo = "R";
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -256,6 +257,7 @@ public class PainelSemSlaDao {
 				user_exclusao = "'antonio.junior'";
 			}
 			
+			//OS em andamento
 			sql_listaRDM = "select "
 					+ "req.id as ID, " 
 					+ "usu.first_name as responsavel, "
@@ -294,11 +296,49 @@ public class PainelSemSlaDao {
 					.prepareStatement(sql_listaRDM);
 			ResultSet rs_listaOs = stmt.executeQuery();
 
+			// OS com filhos atendidos
+			sql_listaRDM2 = "select "
+					+ "req.id as ID, " 
+					+ "usu.first_name as responsavel, "
+					+ "req.ref_num as chamados, "
+					+ "vwg.last_name as equipe," 
+					+ "req.summary as titulo,  "
+					+ "stat.sym as statusDescricao, " 
+					+ "ctg.sym as grupo, " 
+					+ "CASE req.type  as tipo, " 
+					+ "datediff(dd,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) as diasatualizacao, " 
+					+ "(DATEADD(HOUR, -3, DATEADD(SS,req.last_mod_dt,'19700101'))) as atualizacao, " 
+					+ "(DATEADD(HOUR, -3, DATEADD(SS,log.time_stamp,'19700101'))) as data_inicio, " 
+					+ "COALESCE(DATEADD(HOUR, -3, DATEADD(SS,call_back_date,'19700101')),0) as data_retorno " 
+					+ "from " 
+					+ "call_req req WITH (NOLOCK)  join cr_stat stat WITH (NOLOCK) on req.status = stat.code " 
+					+ "left join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee " 
+					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
+					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
+					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
+					+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
+					+ "and stat.code in ('RSCH', 'OP', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK','WIP','PRBAPP') " 
+					+ "and log.type='INIT' " 
+					+ "and usu.userid = '"+username+"' "
+					+"and stat.code = 'FIP' "
+					+"and (select count(1) from call_req where parent = req.persid) = (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR')) "
+					+ "order by 1 ";
+					
+
+//						+"and ca_contact.userid  not in ("+user_exclusao+") "
+//						+"and vwg.last_name in ("+ listaEquipe + ") "
+//						+"order by 6,5";
+
+						
+			PreparedStatement stmt2 = connection
+					.prepareStatement(sql_listaRDM2);				
+			
+			stmt2 = connection
+					.prepareStatement(sql_listaRDM2);
+			ResultSet rs_listaOs2 = stmt2.executeQuery();
+			
+			
 			Popula popula = new Popula();
-			
-			
-			
-			
 			
 			//Corre o ResultSet
 			Integer count = 0;
@@ -330,10 +370,41 @@ public class PainelSemSlaDao {
 					ListaOs.add(chamados);
 					count++;
 				}
+				
+				while (rs_listaOs2.next()){
+					// adiciona um chamado na lista
+					
+					Chamado chamados = new Chamado();
+					chamados.setId(popula.populaID(rs_listaOs2));
+					chamados.setEquipe(popula.populaEquipe(rs_listaOs2));
+					chamados.setChamado(popula.populaChamados(rs_listaOs2));
+					chamados.setTitulo(popula.populaTitulo(rs_listaOs2));
+					chamados.setStatus(popula.populaStatus(rs_listaOs2));
+					chamados.setGrupo(popula.populaGrupo(rs_listaOs2));
+					chamados.setTipo(popula.populaTipo(rs_listaOs2));
+					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listaOs2));
+					
+					chamados.setDiasAtualizacao(popula.populaDiasAtualizacao(rs_listaOs2));
+					chamados.setAtualizacao(popula.populaAtualizacao(rs_listaOs2));
+					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs2));
+					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs2));
+					
+					
+//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
+//					System.out.println(chamados.getChamado());
+//					System.out.println(chamados.getEpoch());
+//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
+//					System.out.println(chamados.getTime());
+//					System.out.println(chamados.getStatus());
+					ListaOs.add(chamados);
+					count++;
+				}
 			
 				
 				rs_listaOs.close();
 				stmt.close();
+				rs_listaOs2.close();
+				stmt2.close();
 
 				return ListaOs;
 			
@@ -348,6 +419,7 @@ public class PainelSemSlaDao {
 			
 			ArrayList<Chamado> ListaOs = new ArrayList<Chamado>();
 			String sql_listaRDM = "";
+			String sql_listaRDM2 = "";
 			
 			// tipo = "R";
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -374,7 +446,7 @@ public class PainelSemSlaDao {
 				
 				user_exclusao = "'antonio.junior'";
 			}
-			
+			// OS em andamento
 			sql_listaRDM = "select "
 					+ "req.id as ID, " 
 					+ "usu.first_name as responsavel, "
@@ -413,6 +485,47 @@ public class PainelSemSlaDao {
 			stmt = connection
 					.prepareStatement(sql_listaRDM);
 			ResultSet rs_listaOs = stmt.executeQuery();
+			// OS com filhos atendidos
+			sql_listaRDM2 = "select "
+					+ "req.id as ID, " 
+					+ "usu.first_name as responsavel, "
+					+ "req.ref_num as chamados, "
+					+ "vwg.last_name as equipe," 
+					+ "req.summary as titulo,  "
+					+ "stat.sym as statusDescricao, " 
+					+ "ctg.sym as grupo, " 
+					+ "CASE req.type  as tipo, " 
+					+ "datediff(dd,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) as diasatualizacao, " 
+					+ "(DATEADD(HOUR, -3, DATEADD(SS,req.last_mod_dt,'19700101'))) as atualizacao, " 
+					+ "(DATEADD(HOUR, -3, DATEADD(SS,log.time_stamp,'19700101'))) as data_inicio, " 
+					+ "COALESCE(DATEADD(HOUR, -3, DATEADD(SS,call_back_date,'19700101')),0) as data_retorno " 
+					+ "from " 
+					+ "call_req req WITH (NOLOCK)  join cr_stat stat WITH (NOLOCK) on req.status = stat.code " 
+					+ "left join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee " 
+					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
+					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
+					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
+					+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
+					+ "and stat.code in ('RSCH', 'OP', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK','WIP','PRBAPP') " 
+					+ "and log.type='INIT' " 
+					+"and vwg.last_name in ("+ listaEquipe + ") "
+					+ "and usu.userid != '"+username+"' "
+					+"and stat.code = 'FIP' "
+					+"and (select count(1) from call_req where parent = req.persid) = (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR')) "
+					+ "order by 1 ";
+					
+
+//						+"and ca_contact.userid  not in ("+user_exclusao+") "
+//						+"and vwg.last_name in ("+ listaEquipe + ") "
+//						+"order by 6,5";
+
+						
+			PreparedStatement stmt2 = connection
+					.prepareStatement(sql_listaRDM2);				
+			
+			stmt2 = connection
+					.prepareStatement(sql_listaRDM2);
+			ResultSet rs_listaOs2 = stmt2.executeQuery();
 
 			Popula popula = new Popula();
 			
@@ -452,9 +565,41 @@ public class PainelSemSlaDao {
 				}
 			
 				
+				while (rs_listaOs2.next()){
+					// adiciona um chamado na lista
+					
+					Chamado chamados = new Chamado();
+					chamados.setId(popula.populaID(rs_listaOs2));
+					chamados.setEquipe(popula.populaEquipe(rs_listaOs2));
+					chamados.setChamado(popula.populaChamados(rs_listaOs2));
+					chamados.setTitulo(popula.populaTitulo(rs_listaOs2));
+					chamados.setStatus(popula.populaStatus(rs_listaOs2));
+					chamados.setGrupo(popula.populaGrupo(rs_listaOs2));
+					chamados.setTipo(popula.populaTipo(rs_listaOs2));
+					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listaOs2));
+					
+					chamados.setDiasAtualizacao(popula.populaDiasAtualizacao(rs_listaOs2));
+					chamados.setAtualizacao(popula.populaAtualizacao(rs_listaOs2));
+					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs2));
+					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs2));
+					
+					
+//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
+//					System.out.println(chamados.getChamado());
+//					System.out.println(chamados.getEpoch());
+//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
+//					System.out.println(chamados.getTime());
+//					System.out.println(chamados.getStatus());
+					ListaOs.add(chamados);
+					count++;
+				}
+				
 				rs_listaOs.close();
 				stmt.close();
 
+				rs_listaOs2.close();
+				stmt2.close();
+				
 				return ListaOs;
 			
 		} catch (SQLException e) {
