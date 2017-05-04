@@ -62,4 +62,4 @@
 <br/>
 <br/>
 	
-<input type="hidden" id="input-urlRaiz"  value="http://localhost:8080/chamados/">
+<input type="hidden" id="input-urlRaiz"  value="http://candiru:8180/chamados/">

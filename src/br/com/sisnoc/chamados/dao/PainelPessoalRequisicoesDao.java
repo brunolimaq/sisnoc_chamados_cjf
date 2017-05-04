@@ -112,8 +112,6 @@ private  final Connection connection;
 				.prepareStatement(sql_listaChamados);
 		ResultSet rs_listaChamadosFilhos = stmt.executeQuery();
 		
-		 lista = "\'\'";
-		
 		
 		while (rs_listaChamadosFilhos.next()){
 			countTeste++;

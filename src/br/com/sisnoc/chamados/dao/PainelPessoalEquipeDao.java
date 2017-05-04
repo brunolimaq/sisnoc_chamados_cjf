@@ -124,6 +124,7 @@ private  final Connection connection;
 								+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
 								+"cat.persid = req.category "
 								+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+								+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
 							+"where "
 								+"cat.sym like 'INFRA%' "
 								+"and cat.sym not like 'INFRA.Ordem de Servico' "
@@ -132,14 +133,15 @@ private  final Connection connection;
 								+"and cat.sym not like 'Infra.Tarefas Internas' "
 								+"and req.type != 'P' "
 								+"and stat.code = 'FIP' "
-								+"and usu.userid = '"+username+"'"
+								+"and usu.userid != '"+username+"' "
+								+"and usu.userid not in ("+user_exclusao+") "
+								+"and vwg.last_name in ("+ listaEquipe + ") "
 								+"and (select count(1) from call_req where parent = req.persid) = (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR'))";
 
 					 stmt = connection
 							.prepareStatement(sql_listaChamados);
 					ResultSet rs_listaChamadosFilhos = stmt.executeQuery();
 					
-					 lista = "\'\'";
 					
 					
 					while (rs_listaChamadosFilhos.next()){
