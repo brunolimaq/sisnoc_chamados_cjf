@@ -173,8 +173,7 @@ public class PainelChamadosDao {
 											+"and cat3.sym not like 'Infra.Tarefas Internas' "
 											+"and req.type in('"+tipo+"') "
 											+"and stat.code in('WIP','PRBAPP') "
-											+"and vwg.last_name = '"+equipe+"'"
-													+ "and req.ref_num = '70413'";	
+											+"and vwg.last_name = '"+equipe+"'";	
 						//System.out.println(sql_listaChamados);
 
 					

@@ -53,6 +53,87 @@ public class EquipesController {
 		return "chamados/equipes";
 	}
 
+	@RequestMapping("/equipe_SO_LINUX")
+	public String lista_SO_LINUX(Model model) throws ParseException{
+
+		String equipe = "Analistas SO Linux";
+		String status = "andamento";
+
+		model.addAttribute("chamadosEquipeAndamento", daoChamados.listaPainelChamados(equipe, status,"R"));
+		model.addAttribute("incidenteEquipeAndamento", daoChamados.listaPainelChamados(equipe, status,"I"));
+		
+		status = "pendente";
+		model.addAttribute("chamadosEquipePendente", daoChamados.listaPainelChamados(equipe, status,"R"));
+		model.addAttribute("incidenteEquipePendente", daoChamados.listaPainelChamados(equipe, status,"I"));
+		
+		
+		
+		status = "andamento";
+		model.addAttribute("osEquipeAndamento", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Ordem de Servico"));
+		model.addAttribute("tarefaEquipeAndamento", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Tarefas Internas"));
+		
+		status = "pendente";
+		model.addAttribute("osEquipePendente", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Ordem de Servico"));
+		model.addAttribute("tarefaEquipePendente", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Tarefas Internas"));
+
+		model.addAttribute("equipe", "Analistas Sistemas Operacionais");
+		return "chamados/equipes";
+	}
+	
+	@RequestMapping("/equipe_SO_WIN")
+	public String lista_SO_WIN(Model model) throws ParseException{
+
+		String equipe = "Analistas SO Windows";
+		String status = "andamento";
+
+		model.addAttribute("chamadosEquipeAndamento", daoChamados.listaPainelChamados(equipe, status,"R"));
+		model.addAttribute("incidenteEquipeAndamento", daoChamados.listaPainelChamados(equipe, status,"I"));
+		
+		status = "pendente";
+		model.addAttribute("chamadosEquipePendente", daoChamados.listaPainelChamados(equipe, status,"R"));
+		model.addAttribute("incidenteEquipePendente", daoChamados.listaPainelChamados(equipe, status,"I"));
+		
+		
+		
+		status = "andamento";
+		model.addAttribute("osEquipeAndamento", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Ordem de Servico"));
+		model.addAttribute("tarefaEquipeAndamento", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Tarefas Internas"));
+		
+		status = "pendente";
+		model.addAttribute("osEquipePendente", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Ordem de Servico"));
+		model.addAttribute("tarefaEquipePendente", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Tarefas Internas"));
+
+		model.addAttribute("equipe", "Analistas Sistemas Operacionais");
+		return "chamados/equipes";
+	}
+	
+	@RequestMapping("/equipe_SO_AIX")
+	public String lista_SO_AIX(Model model) throws ParseException{
+
+		String equipe = "Analistas SO AIX";
+		String status = "andamento";
+
+		model.addAttribute("chamadosEquipeAndamento", daoChamados.listaPainelChamados(equipe, status,"R"));
+		model.addAttribute("incidenteEquipeAndamento", daoChamados.listaPainelChamados(equipe, status,"I"));
+		
+		status = "pendente";
+		model.addAttribute("chamadosEquipePendente", daoChamados.listaPainelChamados(equipe, status,"R"));
+		model.addAttribute("incidenteEquipePendente", daoChamados.listaPainelChamados(equipe, status,"I"));
+		
+		
+		
+		status = "andamento";
+		model.addAttribute("osEquipeAndamento", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Ordem de Servico"));
+		model.addAttribute("tarefaEquipeAndamento", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Tarefas Internas"));
+		
+		status = "pendente";
+		model.addAttribute("osEquipePendente", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Ordem de Servico"));
+		model.addAttribute("tarefaEquipePendente", daoSemSla.listaPainelSemSla(equipe, status,"INFRA.Tarefas Internas"));
+
+		model.addAttribute("equipe", "Analistas Sistemas Operacionais");
+		return "chamados/equipes";
+	}
+	
 	@RequestMapping("/equipe_armazenamento")
 	public String lista_storage(Model model) throws ParseException{
 

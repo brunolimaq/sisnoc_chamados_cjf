@@ -27,6 +27,9 @@
             <li><a href="/chamados/equipe_monit">Analistas Monitoração <span class="badge"></span></a></li>
             <li><a href="/chamados/equipe_bkp">Analistas Backup <span class="badge"></span></a></li>
             <li><a href="/chamados/equipe_SO">Analistas Sistemas Operacionais <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_SO_LINUX">Analistas Linux <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_SO_WIN">Analistas Windows <span class="badge"></span></a></li>
+            <li><a href="/chamados/equipe_SO_AIX">Analistas AIX <span class="badge"></span></a></li>
             <li><a href="/chamados/equipe_virt">Analistas Virtualização <span class="badge"></span></a></li>
             <li><a href="/chamados/equipe_doc">Documentadores <span class="badge"></span></a></li>
             <li><a href="/chamados/monitoradores">Monitoradores <span class="badge"></span></a></li>
