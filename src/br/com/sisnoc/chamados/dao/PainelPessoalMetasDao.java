@@ -42,7 +42,7 @@ private  final Connection connection;
 	
 
 	
-	public ArrayList<Chamado> listaPainelPessoalMetas() throws ParseException {
+	public ArrayList<Chamado> listaPainelPessoalMetas(String perfil) throws ParseException {
 		
 		
 		
@@ -64,10 +64,27 @@ private  final Connection connection;
 			   username = usuarioLogado.toString();
 			}
 			
-			
-			//System.out.println(username);
-			
-			
+			if (perfil == "GESTOR"){
+				
+				sql_listaChamados = "select "
+						+"req.ref_num as chamado, "
+						+"req.id as ID "
+					+"from "
+						+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
+						+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
+						+"cat.persid = req.category "
+						+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+					+"where "
+						+"cat.sym like 'INFRA%' "
+						+"and cat.sym not like 'INFRA.Ordem de Servico' "
+						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+						+"and cat.sym not like 'Infra.Tarefas Internas' "
+						+"and req.type != 'P' "
+						+"and stat.code in ('RE','CL') "
+						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
+				
+			} else {
 
 				sql_listaChamados = "select "
 						+"req.ref_num as chamado, "
@@ -83,13 +100,14 @@ private  final Connection connection;
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
+						+"and req.type != 'P' "
 						+"and stat.code in ('RE','CL') "
 						+"and usu.userid = '"+username+"' "
 						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
 
-//						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),'03/01/2017',101)) ";
 
-				
+
+			}
 
 			PreparedStatement stmt = connection
 					.prepareStatement(sql_listaChamados);
@@ -104,10 +122,6 @@ private  final Connection connection;
 				
 			}
 			
-			
-			
-			
-		
 			
 			rs_listaChamados.close();
 			
@@ -183,7 +197,7 @@ private  final Connection connection;
 	}
 	
 	
-public int listaPainelPessoalReabertos() throws ParseException {
+public int listaPainelPessoalReabertos(String perfil) throws ParseException {
 		
 		
 		
@@ -206,7 +220,31 @@ public int listaPainelPessoalReabertos() throws ParseException {
 			}
 		
 			
-			
+			if (perfil == "GESTOR"){
+
+				sql_listaChamados = "select "
+						+"req.ref_num as chamado, "
+						+"req.id as ID , "
+						+"count(cast(log.action_desc as varchar)) reaberturas "
+					+"from "
+						+"call_req req WITH(NOLOCK) "
+						+ "join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
+						+ "join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
+						+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+						+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
+					+"where "
+						+"cat.sym like 'INFRA%' "
+						+"and cat.sym not like 'INFRA.Ordem de Servico' "
+						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+						+"and cat.sym not like 'Infra.Tarefas Internas' "
+						+"and req.type != 'P' "
+						+"and stat.code in ('RE','CL') "
+						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
+						+ "and log.action_desc like 'registrar texto da solução' "
+						+ "group by req.ref_num ,req.id ";
+
+			} else {
 			
 			
 
@@ -226,14 +264,15 @@ public int listaPainelPessoalReabertos() throws ParseException {
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
+						+"and req.type != 'P' "
 						+"and stat.code in ('RE','CL') "
 						+"and usu.userid = '"+username+"' "
 						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
 						+ "and log.action_desc like 'registrar texto da solução' "
 						+ "group by req.ref_num ,req.id ";
 
-//						+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),'03/01/2017',101)) ";
 
+			}
 				//registrar texto da solução
 
 			PreparedStatement stmt = connection
@@ -264,7 +303,7 @@ public int listaPainelPessoalReabertos() throws ParseException {
 	}
 
 
-public int listaPainelPessoalPendentes() throws ParseException {
+public int listaPainelPessoalPendentes(String perfil) throws ParseException {
 	
 	
 	
@@ -287,8 +326,22 @@ public int listaPainelPessoalPendentes() throws ParseException {
 		}
 	
 		
-		
-		
+		if (perfil == "GESTOR"){
+
+			sql_listaChamados = "select "
+					+"count(1) as pendentes  "
+					
+				+"from "
+					+"call_req req WITH(NOLOCK) "
+					+ "join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
+					+ "join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
+					+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+				+"where "
+					+"cat.sym like 'INFRA%' "
+					+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') ";
+
+
+		} else {
 		
 
 			sql_listaChamados = "select "
@@ -304,8 +357,7 @@ public int listaPainelPessoalPendentes() throws ParseException {
 					+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 					+"and usu.userid = '"+username+"'  ";
 
-//					+"and close_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),'03/01/2017',101)) ";
-
+		}
 			//registrar texto da solução
 
 		PreparedStatement stmt = connection

@@ -224,7 +224,10 @@ public class PainelSemSlaDao {
 		}
 	}
 
-	public List<Chamado> listaPainelPessoalOs() throws ParseException {
+	
+
+	
+public List<Chamado> listaPainelPessoalOs() throws ParseException {
 		try {
 			
 			ArrayList<Chamado> ListaOs = new ArrayList<Chamado>();

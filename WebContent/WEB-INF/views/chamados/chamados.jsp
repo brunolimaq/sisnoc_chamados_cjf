@@ -34,17 +34,7 @@
        
  </script>
 
-  <script> 
-  
-  $( document ).ready(function play() {   
 
-	   audio = document.getElementById('audio');
-	  	 audio.play();
-
-	   });
-  
-  
-  </script>
   
 
 
@@ -280,12 +270,23 @@
 							<tbody>
 								<c:forEach items="${chamadosPainelChamados}" var="chamadosPainelChamados">	
 									<tr  class="${chamadosPainelChamados.alerta}">
-										<td>${chamadosPainelChamados.equipe}</td>
+										<td>${chamadosPainelChamados.equipe}
+										<c:if test="${chamadosPainelChamados.statusDescricao == 'Em andamento'}">
+												<span class="glyphicon glyphicon-check  alert-success"></span>
+										</c:if>
+										<c:if test="${chamadosPainelChamados.statusDescricao != 'Em andamento' && chamadosPainelChamados.statusDescricao != 'Aberto chamado filho' }">
+												<span class="glyphicon glyphicon-share alert-danger "></span>
+										</c:if>
+										
+										</td>
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelChamados.id}" target="_blank" >${chamadosPainelChamados.chamado}</a></td>
 										<td>${chamadosPainelChamados.titulo}</td>
-										<td>${chamadosPainelChamados.sla}
-										</td>
-										
+										<c:if test="${chamadosPainelChamados.statusDescricao == 'Aberto chamado filho'}">
+											<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
+										</c:if>						
+										<c:if test="${chamadosPainelChamados.statusDescricao != 'Aberto chamado filho'}">
+											<td>${chamadosPainelChamados.sla}</td>
+										</c:if>
 										<c:if test="${chamadosPainelChamados.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
 												<td  width="15%" height="70%" style="padding:3px" >
 												<div class="progress" style="height:30px" align="center">

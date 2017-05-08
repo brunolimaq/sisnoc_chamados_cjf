@@ -1,12 +1,15 @@
 package br.com.sisnoc.chamados.controller;
 
 import java.text.ParseException;
+import java.util.Collection;
 
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,8 @@ import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalRdmDao;
 import br.com.sisnoc.chamados.dao.PainelGeralRdmDao;
 import br.com.sisnoc.chamados.dao.UsuariosDao;
+import br.com.sisnoc.chamados.modelo.Chamado;
+import br.com.sisnoc.chamados.security.UsuarioSistema;
 
 
 
@@ -48,11 +53,48 @@ public class ChamadosController {
 	
 	@RequestMapping("/")
 	public ModelAndView principal(Model model) throws ParseException{
-//		model.addAttribute("chamadosPainelChamados", ((PainelPessoalMetasDao) metasDao).listaPainelPessoalMetas());
+		String perfil;
+		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username;
+		Collection<? extends GrantedAuthority> permissao = null;
+		String user_exclusao = "''";
+		if (usuarioLogado  instanceof UsuarioSistema ) {
+			   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+			   permissao = ( (UsuarioSistema)usuarioLogado).getUsuario().getAuthority();
+		} else {
+		   username = usuarioLogado.toString();
+		}
+		
+		System.out.println(permissao);
+		
+		for (GrantedAuthority autorizacao : permissao) {
+			System.out.println(autorizacao);
+			if (autorizacao.toString().equals("GESTOR")){
 
+				perfil = "GESTOR";
+				String rdmPainelAprovada = "APR";
+
+				model.addAttribute("chamadosPainelEquipe", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoDestaques(perfil));
+				
+				
+				model.addAttribute("chamadosPainelPessoal", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoPendentes(perfil));
+				
+				
+				model.addAttribute("chamadosRDMPessoal", ((PainelPessoalRdmDao) rdmDao).listaPainelPessoalRdm());
+				
+				model.addAttribute("chamadosRDMGeralAprovada", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelAprovada));
+
+				
+				ModelAndView mv = new ModelAndView("chamados/indexGestor");
+				return mv;
+
+			}
+		}
+		
+		perfil = "";
 		model.addAttribute("chamadosPainelPessoal", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelPessoalDestaques());
 
-		model.addAttribute("chamadosPainelEquipe", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoDestaques());
+		model.addAttribute("chamadosPainelEquipe", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoDestaques(perfil));
 		
 		model.addAttribute("chamadosRDMPessoal", ((PainelPessoalRdmDao) rdmDao).listaPainelPessoalRdm());
 		
@@ -62,6 +104,9 @@ public class ChamadosController {
 	
 	@RequestMapping("/listaChamados")
 	public String lista(Model model) throws ParseException{
+		
+		
+		
 		String equipe = "";
 		String status = "";
 		
@@ -77,6 +122,33 @@ public class ChamadosController {
 	
 	@RequestMapping("/pendencias")
 	public ModelAndView listaPendencias(Model model) throws ParseException{
+		
+		
+		String perfil;
+		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username;
+		Collection<? extends GrantedAuthority> permissao = null;
+		if (usuarioLogado  instanceof UsuarioSistema ) {
+			   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+			   permissao = ( (UsuarioSistema)usuarioLogado).getUsuario().getAuthority();
+		} else {
+		   username = usuarioLogado.toString();
+		}
+
+		for (GrantedAuthority autorizacao : permissao) {
+			System.out.println(autorizacao);
+			if (autorizacao.toString().equals("GESTOR")){
+				perfil = "GESTOR";
+				model.addAttribute("chamadosPainelPessoal", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoPendentes(perfil));
+				//model.addAttribute("chamadosPainelPessoalPendencias", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelPessoalPendencias());
+
+				
+				ModelAndView mv = new ModelAndView("chamados/pendenciasGestor");
+				return mv;
+
+				
+			}
+		}
 		
 		model.addAttribute("chamadosPainelPessoalPendencias", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelPessoalPendencias());
 
@@ -107,6 +179,16 @@ public class ChamadosController {
 		model.addAttribute("chamadosRDMGeralOutros", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelOutros));
 		
 		ModelAndView mv = new ModelAndView("chamados/gmud");
+		return mv;
+	}
+
+	
+	@RequestMapping("/ordemServicos")
+	public ModelAndView listaOrdemServicoTarefaInterna(Model model) throws ParseException{
+		
+		
+		
+		ModelAndView mv = new ModelAndView("chamados/ordemServicos");
 		return mv;
 	}
 

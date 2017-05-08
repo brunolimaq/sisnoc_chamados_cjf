@@ -2,13 +2,20 @@ package br.com.sisnoc.chamados.negocio;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
+import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
+import br.com.sisnoc.chamados.dao.PainelPessoalRdmDao;
 import br.com.sisnoc.chamados.dao.util.MetasDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
+import br.com.sisnoc.chamados.security.UsuarioSistema;
 import br.com.sisnoc.chamados.service.GraficosPessoalService;
 
 
@@ -51,15 +58,37 @@ public class GraficosPessoal implements GraficosPessoalService {
 		int countIncidentes = 0;
 		int countChamados = 0;
 		
+		String perfil = "";
+		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username;
+		Collection<? extends GrantedAuthority> permissao = null;
+		if (usuarioLogado  instanceof UsuarioSistema ) {
+			   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+			   permissao = ( (UsuarioSistema)usuarioLogado).getUsuario().getAuthority();
+		} else {
+		   username = usuarioLogado.toString();
+		}
+		
+		
+		for (GrantedAuthority autorizacao : permissao) {
+			if (autorizacao.toString().equals("GESTOR")){
+
+				perfil = "GESTOR";
+	
+			} 
+			
+		}
+		
+		
+		
 		
 		ArrayList<Chamado> chamados = new ArrayList<Chamado>();
 		
-		
 			
 			try {
-				chamados = metasDao.listaPainelPessoalMetas();
-				this.setReabertosMes(metasDao.listaPainelPessoalReabertos());
-				this.setPendencias(metasDao.listaPainelPessoalPendentes());
+				chamados = metasDao.listaPainelPessoalMetas(perfil);
+				this.setReabertosMes(metasDao.listaPainelPessoalReabertos(perfil));
+				this.setPendencias(metasDao.listaPainelPessoalPendentes(perfil));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

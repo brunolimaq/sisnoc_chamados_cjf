@@ -218,11 +218,12 @@ public class PainelChamadosDao {
 									+"req.id as ID, "
 									+"req.ref_num as chamados, "
 									+"usu.first_name as responsavel,"
-									+"vwg.last_name as equipe,"
+									+"replace(vwg.last_name, 'Analistas ', '') as equipe,"
 									+"ctg.sym as grupo,"
 									+"req.summary as titulo, "
 									+"log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time,"
 									+"DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch,"
+									+ "stat.sym as statusDescricao, "
 									+ "log.type as status "
 								+"from "
 									+"call_req req WITH(NOLOCK) "
@@ -262,6 +263,8 @@ public class PainelChamadosDao {
 					chamados.setEpoch(popula.populaEpoch(rs_listalog));
 					chamados.setGrupo(popula.populaGrupo(rs_listalog));
 					chamados.setTipo(tipo);
+					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
+
 //					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
 //					System.out.println(chamados.getChamado());
 //					System.out.println(chamados.getEpoch());

@@ -10,7 +10,7 @@ public class Mudanca {
 	private String responsavel;
 	private String loginResponsavel;
 	private String equipe;
-	
+	private String ccm;
 	
 	
 	public String getId() {
@@ -61,8 +61,13 @@ public class Mudanca {
 	public void setEquipe(String equipe) {
 		this.equipe = equipe;
 	}
-	
-	
+	public String getCcm() {
+		return ccm;
+	}
+	public void setCcm(String ccm) {
+		this.ccm = ccm;
+	}
+
 	
 
 }

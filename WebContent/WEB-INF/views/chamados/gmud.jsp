@@ -100,7 +100,13 @@
 							<tbody>
 								<c:forEach items="${chamadosRDMGeralPlanejamento}" var="chamadosRDMGeralPlanejamento">	
 									<tr>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMGeralPlanejamento.id}" target="_blank" >${chamadosRDMGeralPlanejamento.mudanca}</a></td>
+
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMGeralPlanejamento.id}" target="_blank" >${chamadosRDMGeralPlanejamento.mudanca}</a>
+										<c:if test="${chamadosRDMGeralPlanejamento.ccm == 1}">
+											 <span class="glyphicon glyphicon-copyright-mark"></span>
+										</c:if>											 
+										</td>
+										
 										<td>${chamadosRDMGeralPlanejamento.responsavel}</td>
 										<td>${chamadosRDMGeralPlanejamento.resumo}</td>
 									</tr>
@@ -134,7 +140,11 @@
 							<tbody>
 								<c:forEach items="${chamadosRDMGeralValidacao}" var="chamadosRDMGeralValidacao">	
 									<tr>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMGeralValidacao.id}" target="_blank" >${chamadosRDMGeralValidacao.mudanca}</a></td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMGeralValidacao.id}" target="_blank" >${chamadosRDMGeralValidacao.mudanca}</a>
+										<c:if test="${chamadosRDMGeralValidacao.ccm == 1}">
+											 <span class="glyphicon glyphicon-copyright-mark"></span>
+										</c:if>											 
+										</td>
 										<td>${chamadosRDMGeralValidacao.responsavel}</td>
 										<td>${chamadosRDMGeralValidacao.resumo}</td>
 									</tr>
@@ -172,7 +182,8 @@
 							<tbody>
 								<c:forEach items="${chamadosRDMGeralAprovada}" var="chamadosRDMGeralAprovada">	
 									<tr>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMGeralAprovada.id}" target="_blank" >${chamadosRDMGeralAprovada.mudanca}</a></td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMGeralAprovada.id}" target="_blank" >${chamadosRDMGeralAprovada.mudanca}</a>
+										</td>
 										<td>${chamadosRDMGeralAprovada.responsavel}</td>
 										<td>${chamadosRDMGeralAprovada.resumo}</td>
 										<td>${chamadosRDMGeralAprovada.agendamento}</td>
@@ -211,7 +222,7 @@
 							<tbody>
 								<c:forEach items="${chamadosRDMGeralOutros}" var="chamadosRDMGeralOutros">	
 									<tr>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMGeralOutros.id}" target="_blank" >${chamadosRDMGeralOutros.mudanca}</a></td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMGeralOutros.id}" target="_blank" >${chamadosRDMGeralOutros.mudanca}</a>
 										<td>${chamadosRDMGeralOutros.responsavel}</td>
 										<td>${chamadosRDMGeralOutros.resumo}</td>
 										<td>${chamadosRDMGeralOutros.agendamento}</td>

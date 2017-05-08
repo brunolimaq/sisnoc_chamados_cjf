@@ -106,6 +106,10 @@ public class Popula {
 		
 		return rs.getString("data_retorno");
 	}
+
+	public String populaCCM(ResultSet rs)throws SQLException, ParseException {
+		return rs.getString("ccm");
+	}
 	
 	
 	

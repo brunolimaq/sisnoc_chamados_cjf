@@ -84,6 +84,7 @@ private  final Connection connection;
 						+"chgstat.sym statusDescricao, " 
 						+"ca_contact.first_name nome, " 
 						+"ca_contact.userid username, " 
+						+"chg.cab_approval as ccm, "
 						+"vwg.last_name as grupo "
 						+"from chg WITH (NOLOCK) " 
 						+"join chgstat WITH (NOLOCK) on chg.status = chgstat.code " 
@@ -103,6 +104,7 @@ private  final Connection connection;
 						+"chgstat.sym statusDescricao, " 
 						+"ca_contact.first_name nome, " 
 						+"ca_contact.userid username, " 
+						+"chg.cab_approval as ccm, "
 						+"vwg.last_name as grupo "
 						+"from chg WITH (NOLOCK) " 
 						+"join chgstat WITH (NOLOCK) on chg.status = chgstat.code " 
@@ -139,7 +141,7 @@ private  final Connection connection;
 					mudancas.setAgendamento(popula.populaAgendamento(rs_listaChamado));
 					mudancas.setStatusDescricao(popula.populaStatusDescricao(rs_listaChamado));
 					mudancas.setResponsavel(popula.populResponsavel(rs_listaChamado));
-					
+					mudancas.setCcm(popula.populaCCM(rs_listaChamado));
 
 					ListaRDM.add(mudancas);
 					count++;

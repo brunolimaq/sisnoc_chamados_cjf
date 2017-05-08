@@ -318,17 +318,6 @@ var gaugeSLA4 = {
   
   
 
-<!--   <script>  
-  
-   $( document ).ready(function play() {   
-
-	   audio = document.getElementById('audio'); 	  	 
-	   audio.play();
-
-	   });
-  
-  
-  </script> -->
   
   
 </head>
@@ -344,112 +333,89 @@ var gaugeSLA4 = {
 			  <div class="col-md-6">
 				<div class="list-group ">
 					<a href="#chamados" class="list-group-item active" id="painel_noc_titulo">
-						<strong>Meus chamados em andamento</strong>
+						<strong>Chamados em andamento</strong>
 					</a>
-					<c:if test="${empty chamadosPainelPessoal}">
+					
+					
+					
+										<c:if test="${empty chamadosPainelEquipe}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
 
   					</c:if>
-  					<c:if test="${!empty chamadosPainelPessoal}">
-  					
-						<table class="table table-bordered table-hover">
+  					<c:if test="${!empty chamadosPainelEquipe}">
+           	
+						<table class="table table-bordered col-md-3">
 							<thead>
 								<tr class="painel_noc">
-									<td><center><strong>Categoria</strong></center></td>
+									<td><center><strong>Equipe</strong></center></td>
 									<td><center><strong>Chamado</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
-									<td><center><strong>Status</strong></center></td>
 									<td><center><strong>SLA</strong></center></td>
-									<td><center><strong>META</strong></center></td>
+									<td><center><strong>Meta</strong></center></td>
 								</tr>
 							</thead>
 							<tbody>
-		  						                   
-							<c:forEach items="${chamadosPainelPessoal}" var="chamadosPainelPessoal">
-										
-									<tr class="${chamadosPainelPessoal.alerta}" >
-									<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Incidente'}">	
-										<td id="painel_incidente_titulo">${chamadosPainelPessoal.tipoLegivel}</td>
-									<audio id="audio">
-   										<source src="resources/audio/alertaIC.mp3" type="audio/mp3" />
-									</audio>	
-										
-									</c:if>
-									<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Chamado'}">
-										<td>${chamadosPainelPessoal.tipoLegivel}</td>
-									</c:if>		
-											
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelPessoal.id}" target="_blank" >${chamadosPainelPessoal.chamado}</a></td>
-										<td>${chamadosPainelPessoal.titulo}</td>
-										<c:if test="${chamadosPainelPessoal.statusDescricao == 'Aberto chamado filho'}">
+								<c:forEach items="${chamadosPainelEquipe}" var="chamadosPainelEquipe">
+									
+										<tr  class="${chamadosPainelEquipe.alerta}">
+										<td>${chamadosPainelEquipe.equipe}
+										<c:if test="${chamadosPainelEquipe.statusDescricao == 'Em andamento'}">
+												<span class="glyphicon glyphicon-check  alert-success"></span>
+										</c:if>
+										<c:if test="${chamadosPainelEquipe.statusDescricao != 'Em andamento' && chamadosPainelEquipe.statusDescricao != 'Aberto chamado filho' }">
+												<span class="glyphicon glyphicon-share alert-danger "></span>
+										</c:if>
+										</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelEquipe.id}" target="_blank" >${chamadosPainelEquipe.chamado}</a></td>
+										<td>${chamadosPainelEquipe.titulo}</td>
+										<c:if test="${chamadosPainelEquipe.statusDescricao == 'Aberto chamado filho'}">
 											<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
 										</c:if>						
-													 
-										
-										<c:if test="${chamadosPainelPessoal.statusDescricao != 'Aberto chamado filho'}">
-											<td>${chamadosPainelPessoal.statusDescricao}</td>
+										<c:if test="${chamadosPainelEquipe.statusDescricao != 'Aberto chamado filho'}">
+											<td>${chamadosPainelEquipe.sla}</td>
 										</c:if>
-										<td>${chamadosPainelPessoal.sla}</td>
-										
-										<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Incidente'}">	
-										<td  width="15%" height="70%" style="padding:3px" >
-										<div class="progress" style="height:30px" align="center">
-										  <div class="progress-bar ${chamadosPainelPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-										    <span >15m</span>
-										  </div>
-										  <div class="progress-bar ${chamadosPainelPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-										    <span>45m</span>
-										  </div>
-										  <div class="progress-bar ${chamadosPainelPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-										    <span>1h</span>
-										  </div>
-										</div>
-										</td>
-										</c:if>
-										<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Chamado'}">
-										
-																
-										<c:if test="${chamadosPainelPessoal.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
+											
+										<c:if test="${chamadosPainelEquipe.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
 												<td  width="15%" height="70%" style="padding:3px" >
 												<div class="progress" style="height:30px" align="center">
-												  <div class="progress-bar ${chamadosPainelPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+												  <div class="progress-bar ${chamadosPainelEquipe.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
 												    <span >15m</span>
 												  </div>
-												  <div class="progress-bar ${chamadosPainelPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+												  <div class="progress-bar ${chamadosPainelEquipe.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
 												    <span>30m</span>
 												  </div>
-												  <div class="progress-bar ${chamadosPainelPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+												  <div class="progress-bar ${chamadosPainelEquipe.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
 												    <span>1h</span>
 												  </div>
 												</div>
 												</td>
 											</c:if>
-											<c:if test="${chamadosPainelPessoal.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum'}">	
+											<c:if test="${chamadosPainelEquipe.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum'}">	
 												<td  width="15%" height="70%" style="padding:3px" >
 												<div class="progress" style="height:30px" align="center">
-												  <div class="progress-bar ${chamadosPainelPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+												  <div class="progress-bar ${chamadosPainelEquipe.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
 												    <span >45m</span>
 												  </div>
-												  <div class="progress-bar ${chamadosPainelPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+												  <div class="progress-bar ${chamadosPainelEquipe.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
 												    <span>1h30m</span>
 												  </div>
-												  <div class="progress-bar ${chamadosPainelPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+												  <div class="progress-bar ${chamadosPainelEquipe.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
 												    <span>2h</span>
 												  </div>
 												</div>
 												</td>
 											</c:if>
-											<c:if test="${chamadosPainelPessoal.grupo != 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum'}">	
-												<c:if test="${chamadosPainelPessoal.grupo != 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
+											<c:if test="${chamadosPainelEquipe.grupo != 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum'}">	
+												<c:if test="${chamadosPainelEquipe.grupo != 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
 													<td  width="15%" height="70%" style="padding:3px" >
 													<div class="progress" style="height:30px" align="center">
-													  <div class="progress-bar ${chamadosPainelPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+													  <div class="progress-bar ${chamadosPainelEquipe.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
 													    <span >2h</span>
 													  </div>
-													  <div class="progress-bar ${chamadosPainelPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+													  <div class="progress-bar ${chamadosPainelEquipe.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
 													    <span>4h</span>
 													  </div>
-													  <div class="progress-bar ${chamadosPainelPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+													  <div class="progress-bar ${chamadosPainelEquipe.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
 													    <span>6h</span>
 													  </div>
 													</div>
@@ -457,14 +423,19 @@ var gaugeSLA4 = {
 												</c:if>
 											</c:if>
 											
-											</c:if>
 									</tr>
-								
-							</c:forEach>
-						</tbody>    
-					</table>
-				</c:if>
-		  		
+									
+								</c:forEach>
+							</tbody>    
+						</table>
+					</c:if>
+					
+					
+					
+					
+					
+					
+					
 				</div>
 				</div>
                <div class="col-md-6">
@@ -523,148 +494,127 @@ var gaugeSLA4 = {
                    </div>
                </div> <!-- fim DIV col-md4 do Incidentes ROW -->
                
-               </div>
-		<div class="panel-body">
 	
 		<div class="row">
-           	<div class="col-md-6 clearfix">
-				<div class="list-group ">
-					<a href="#chamados" class="list-group-item active" id="painel_noc_titulo">
-						<strong>Chamados em andamento do meu(s) grupos</strong>
-					</a>
-					<c:if test="${empty chamadosPainelEquipe}">
-						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
+		
+		
+		
+		<div class="col-md-6">
 
-  					</c:if>
-  					<c:if test="${!empty chamadosPainelEquipe}">
-           	
-						<table class="table table-bordered table-hover col-md-3">
-							<thead>
-								<tr class="painel_noc">
-									<td><center><strong>Equipe</strong></center></td>
-									<td><center><strong>Chamado</strong></center></td>
-									<td><center><strong>Descrição</strong></center></td>
-									<td><center><strong>Status</strong></center></td>
-									<td><center><strong>SLA</strong></center></td>
-									<td><center><strong>Meta</strong></center></td>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${chamadosPainelEquipe}" var="chamadosPainelEquipe">
-									
-										<tr  class="${chamadosPainelEquipe.alerta}">
-										<td>${chamadosPainelEquipe.equipe}</td>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelEquipe.id}" target="_blank" >${chamadosPainelEquipe.chamado}</a></td>
-										<td>${chamadosPainelEquipe.titulo}</td>
-										<td>${chamadosPainelEquipe.statusDescricao}</td>
-										<td>${chamadosPainelEquipe.sla}
-										</td>
-										
-										<c:if test="${chamadosPainelEquipe.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
-												<td  width="15%" height="70%" style="padding:3px" >
-												<div class="progress" style="height:30px" align="center">
-												  <div class="progress-bar ${chamadosPainelEquipe.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-												    <span >15m</span>
-												  </div>
-												  <div class="progress-bar ${chamadosPainelEquipe.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-												    <span>30m</span>
-												  </div>
-												  <div class="progress-bar ${chamadosPainelEquipe.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-												    <span>1h</span>
-												  </div>
-												</div>
-												</td>
-											</c:if>
-											<c:if test="${chamadosPainelEquipe.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum'}">	
-												<td  width="15%" height="70%" style="padding:3px" >
-												<div class="progress" style="height:30px" align="center">
-												  <div class="progress-bar ${chamadosPainelEquipe.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-												    <span >45m</span>
-												  </div>
-												  <div class="progress-bar ${chamadosPainelEquipe.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-												    <span>1h30m</span>
-												  </div>
-												  <div class="progress-bar ${chamadosPainelEquipe.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-												    <span>2h</span>
-												  </div>
-												</div>
-												</td>
-											</c:if>
-											<c:if test="${chamadosPainelEquipe.grupo != 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum'}">	
-												<c:if test="${chamadosPainelEquipe.grupo != 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
-													<td  width="15%" height="70%" style="padding:3px" >
-													<div class="progress" style="height:30px" align="center">
-													  <div class="progress-bar ${chamadosPainelEquipe.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-													    <span >2h</span>
-													  </div>
-													  <div class="progress-bar ${chamadosPainelEquipe.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-													    <span>4h</span>
-													  </div>
-													  <div class="progress-bar ${chamadosPainelEquipe.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-													    <span>6h</span>
-													  </div>
-													</div>
-													</td>
-												</c:if>
-											</c:if>
-											
-									</tr>
-									
-								</c:forEach>
-							</tbody>    
-						</table>
-					</c:if>
-				</div>
-				<div><br></div>
-				</div> <!-- fim DIV col-md4 do NOC ROW -->
-				
-				<div class="col-md-6">
                	<div class="list-group ">
-                   	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
-						<strong>RDM's do meu(s) grupos</strong>
+                   	<a href="#chamados" class="list-group-item active" " id="painel_rdm_aprovada">
+						<strong>RDM's Aprovadas</strong>
 					 </a>
-					<c:if test="${empty chamadosRDMPessoal}">
+					 <c:if test="${empty chamadosRDMGeralAprovada}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
 
   					</c:if>
-  					<c:if test="${!empty chamadosRDMPessoal}">
+  					<c:if test="${!empty chamadosRDMGeralAprovada}">
 					 
 						<table class="table table-bordered table-hover">
 							<thead>
-								<tr class="painel_chamados">
+								<tr class="painel_rdm_aprovada">
 									<td><center><strong>Número</strong></center></td>
 									<td><center><strong>Responsável</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
-									<td><center><strong>Status</strong></center></td>
 									<td><center><strong>Agendamento</strong></center></td>
+									
 								</tr>
 							</thead>
-							
-					
-							
 							<tbody>
-								<c:forEach items="${chamadosRDMPessoal}" var="chamadosRDMPessoal">	
+								<c:forEach items="${chamadosRDMGeralAprovada}" var="chamadosRDMGeralAprovada">	
 									<tr>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMPessoal.id}" target="_blank" >${chamadosRDMPessoal.mudanca}</a></td>
-										<td>${chamadosRDMPessoal.responsavel}</td>
-										<td>${chamadosRDMPessoal.resumo}</td>
-										<c:if test="${chamadosRDMPessoal.statusDescricao == 'Em execução'}">	
-											<td id="painel_rdm_execucao">${chamadosRDMPessoal.statusDescricao}</td>
-										</c:if>
-										<c:if test="${chamadosRDMPessoal.statusDescricao != 'Em execução'}">	
-											<td>${chamadosRDMPessoal.statusDescricao}</td>
-										</c:if>
-										<td>${chamadosRDMPessoal.agendamento}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMGeralAprovada.id}" target="_blank" >${chamadosRDMGeralAprovada.mudanca}</a>
+										</td>
+										<td>${chamadosRDMGeralAprovada.responsavel}</td>
+										<td>${chamadosRDMGeralAprovada.resumo}</td>
+										<td>${chamadosRDMGeralAprovada.agendamento}</td>
 									</tr>
-									
 								</c:forEach>
 							</tbody>    
 						</table>
 					</c:if>						
+					 
+				
                    </div>
                </div> <!-- fim DIV col-md4 do Chamados ROW -->
+    
+				
+				<div class="col-md-6">
+
+				<div class="row">
+					  		<br/>
+					  		<div class="col-md-6">
+								<div id="graficoPizza" style="min-width: 300px; height: 300px; max-width: 450px; "></div>
+							</div>
+						<div class="list-group col-md-6">
+                   			<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
+								<strong>Pendências</strong>
+					 		</a>
+					  		
+					 		<div class="col-sm-6">
+								 <div class="panel panel-default" >
+								  <div class="panel-heading">Fornecedor</div>
+								  <div class="panel-body paineis_indices" >
+								    <label class="letras" id="violados">0</label>
+								  </div>
+								</div>
+								<div class="panel panel-default">
+								  <div class="panel-heading">Informação de Cliente</div>
+								  <div class="panel-body paineis_indices">
+								    <label class="letras" id="pendencias">0</label>
+								  </div>
+								</div>
+						 		<div id="gauge-sla2" style="width: 200px; height: 134px;" ></div>
+							</div>
+							<div class="col-sm-6">
+								 <div class="panel panel-default">
+								  <div class="panel-heading">Aberto chamado filho</div>
+								  <div class="panel-body paineis_indices">
+								    <label class="letras" id="requisicoesMes">0</label>
+								  </div>
+								</div>
+								<div class="panel panel-default">
+								  <div class="panel-heading">Chamados Reaberto</div>
+								  <div class="panel-body paineis_indices">
+								    <label class="letras" id="reabertosMes">0</label>
+								  </div>
+								</div>
+								<div id="gauge-sla4" style="width: 200px; height: 134px;"></div>
+							</div>
+							
+					 
+					</div>
+						 	
+						 </div>
+               </div> <!-- fim DIV col-md4 do Chamados ROW -->
+               
+               
+               
 			</div> <!-- Fechamento ROL 01 -->
 			
+			<div class="row">
+       	<div class="col-md-6 clearfix">
+				<div class="list-group ">
+					<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
+						<strong>Ordem de Serviços em andamento</strong>
+					</a>
+					<c:if test="${empty chamadosPainelPessoal}">
+						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
+
+  					</c:if>
+  					<c:if test="${!empty chamadosPainelPessoal}">
+  											<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
+  					
+						
+					</c:if>
+				</div>
+											
+				
+				</div> <!-- fim DIV col-md4 do NOC ROW -->			
+				
+				
+				</div>
 			
 			
                

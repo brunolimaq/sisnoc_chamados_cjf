@@ -10,7 +10,8 @@
       <ul class="nav navbar-nav">
         <li><a href="/chamados/">Painel</a></li>
         <li><a href="/chamados/pendencias">Pendências</a></li>
-        <li><a href="/chamados/gmud">GMUD</a></li>
+        <li><a href="/chamados/gmud">RDM</a></li>
+        <li><a href="/chamados/ordemServicos">Ordens de Serviço</a></li>
 <!--         <li><a href="#">Problemas <span class="badge"></span></a></li> -->
 <!--         <li><a href="#">GMUD</a></li> -->
 <!--         <li><a href="#">Relatórios</a></li> -->
