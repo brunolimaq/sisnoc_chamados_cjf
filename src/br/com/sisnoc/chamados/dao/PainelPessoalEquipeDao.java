@@ -50,7 +50,7 @@ private  final Connection connection;
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username;
 			String equipe = "";
-			String user_exclusao = "''";
+			
 			
 
 			if (usuarioLogado  instanceof UsuarioSistema ) {
@@ -68,10 +68,7 @@ private  final Connection connection;
 				listaEquipe = listaEquipe +",\'" + eqp + "\'";
 			}
 			
-			if (username.equals("bruno.queiroz") || username.equals("walison.morales")){
-				
-				user_exclusao = "'antonio.junior'";
-			}
+			
 			if (perfil != "GESTOR"){
 				
 				username = "";
@@ -94,7 +91,6 @@ private  final Connection connection;
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and stat.code in ('OP','WIP','PRBAPP') "
 						+"and usu.userid != '"+username+"' "
-						+"and usu.userid not in ("+user_exclusao+") "
 						+"and vwg.last_name in ("+ listaEquipe + ") ";
 
 			
@@ -138,7 +134,6 @@ private  final Connection connection;
 								+"and req.type != 'P' "
 								+"and stat.code = 'FIP' "
 								+"and usu.userid != '"+username+"' "
-								+"and usu.userid not in ("+user_exclusao+") "
 								+"and vwg.last_name in ("+ listaEquipe + ") "
 								+"and (select count(1) from call_req where parent = req.persid) = (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR'))";
 
@@ -175,7 +170,6 @@ private  final Connection connection;
 						+"and req.type != 'P'"
 						+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 						+"and usu.userid != '"+username+"' "
-						+"and usu.userid not in ("+user_exclusao+") "
 						+"and vwg.last_name in ("+ listaEquipe + ") ";
 
 			
@@ -293,7 +287,7 @@ private  final Connection connection;
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username;
 			String equipe = "";
-			String user_exclusao = "''";
+			
 			
 
 			if (usuarioLogado  instanceof UsuarioSistema ) {
@@ -311,10 +305,7 @@ private  final Connection connection;
 				listaEquipe = listaEquipe +",\'" + eqp + "\'";
 			}
 			
-			if (username.equals("bruno.queiroz") || username.equals("walison.morales")){
-				
-				user_exclusao = "'antonio.junior'";
-			}
+			
 			if (perfil != "GESTOR"){
 				
 				username = "";
@@ -338,7 +329,6 @@ private  final Connection connection;
 						+"and req.type != 'P' "
 						+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 						+"and usu.userid != '"+username+"' "
-						+"and usu.userid not in ("+user_exclusao+") "
 						+"and vwg.last_name in ("+ listaEquipe + ") ";
 
 			
