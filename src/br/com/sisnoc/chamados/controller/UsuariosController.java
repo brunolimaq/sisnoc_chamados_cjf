@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
-import br.com.sisnoc.chamados.dao.PainelPessoalRequisicoesDao;
+
+
 import br.com.sisnoc.chamados.dao.UsuariosDao;
 import br.com.sisnoc.chamados.modelo.Usuario;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
@@ -39,7 +39,7 @@ public class UsuariosController {
 		   username = usuarioLogado .toString();
 		}
 		
-		System.out.println(username);
+	
 		
 		
 		return "chamados/ok";
@@ -62,7 +62,7 @@ public class UsuariosController {
 		   
 		}
 
-		System.out.println(grupos + "teste");
+	
 		
 		model.addAttribute("nome", username);
 		model.addAttribute("grupos", grupos);
@@ -77,7 +77,6 @@ public class UsuariosController {
 	@RequestMapping("/alterarPerfil")
 	public String alterarPerfil (Model model, Usuario usuario, RedirectAttributes attributes) throws SQLException{
 		
-		System.out.println(usuario.getSenhaUsuario() + " validacao " + usuario.getSenhaUsuarioValidacao());
 		if(usuario.getSenhaUsuario().equals(usuario.getSenhaUsuarioValidacao())){
 			dao.alterarSenha(usuario.getSenhaUsuario(), usuario.getNome());	
 			attributes.addFlashAttribute("mensagemSucesso", "Senha alterada com sucesso!");

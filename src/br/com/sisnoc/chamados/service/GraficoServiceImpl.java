@@ -1,11 +1,10 @@
 package br.com.sisnoc.chamados.service;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 import org.springframework.stereotype.Service;
 
@@ -90,9 +89,7 @@ public class GraficoServiceImpl implements GraficoService {
 			grafico.setDados(dados);
 			grafico.setNome("Meta 2/hs");
 			
-			System.out.println(listaChamadosMes);
-			System.out.println(listaIncidentes);
-			System.out.println(listaReabertosMes);
+		
 		
 		
 		return grafico;

@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
 
 import javax.sql.DataSource;
@@ -19,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
-import br.com.sisnoc.chamados.modelo.Chamado;
+
 import br.com.sisnoc.chamados.modelo.Usuario;
 
 
@@ -153,7 +151,7 @@ public class UsuariosDao {
 
 		String sql_cadastro = "UPDATE usuario SET senhaUsuario = '"+senha+"' where loginUsuario = '"+usuario+"'";
 		
-		System.out.println(sql_cadastro);
+	
 		PreparedStatement stmt = connection
 				.prepareStatement(sql_cadastro);
 		stmt.executeUpdate();

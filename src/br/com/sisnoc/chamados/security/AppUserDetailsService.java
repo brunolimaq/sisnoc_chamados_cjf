@@ -1,10 +1,7 @@
 package br.com.sisnoc.chamados.security;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.Optional;
 
 
@@ -33,11 +30,11 @@ public class AppUserDetailsService implements UserDetailsService {
 			try {
 				usuarioOptional = usuarios.validaLogin(loginUsuario);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			Usuario usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou senha incorretos"));
-			System.out.println("permissao: " + usuario.getAuthority());
+			
 			return new UsuarioSistema(usuario, usuario.getAuthority());
 
 		

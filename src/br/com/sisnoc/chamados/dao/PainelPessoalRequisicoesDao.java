@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.context.annotation.RequestScope;
 
 import br.com.sisnoc.chamados.dao.util.DestaquesDao;
-import br.com.sisnoc.chamados.dao.util.MetasDao;
+
 import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.negocio.CalculaSla;
 import br.com.sisnoc.chamados.negocio.Popula;
@@ -160,11 +160,7 @@ private  final Connection connection;
 			}
 			
 			
-			//System.out.println(lista);
-			// 65497
-			// 65529
-			// 65536
-			// 65538
+			
 			String sql_listaLog = "select "
 									+"req.id as ID, "
 									+"req.ref_num as chamados, "
@@ -218,14 +214,7 @@ private  final Connection connection;
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
 					
-//					System.out.println(chamados.getStatusDescricao() + " statusDescricao");
 
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaChamados.add(chamados);
 					count++;
 				}
@@ -343,14 +332,7 @@ private  final Connection connection;
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
 					
-//					System.out.println(chamados.getStatusDescricao() + " statusDescricao");
 
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaChamados.add(chamados);
 					count++;
 				}

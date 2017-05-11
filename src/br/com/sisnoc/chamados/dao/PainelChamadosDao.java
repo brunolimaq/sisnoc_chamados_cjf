@@ -70,6 +70,29 @@ public class PainelChamadosDao {
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and req.type in('"+tipo+"') "
 						+"and stat.code = 'OP' ";
+				
+				if (tipo.equals("R")){
+					
+
+					sql_listaChamadosFilhoAtd = "select "
+													+"req.ref_num as chamado, "
+													+"req.id as ID "
+												+"from "
+													+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
+													+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
+													+"cat.persid = req.category "
+													+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+												+"where "
+													+"cat.sym like 'INFRA%' "
+													+"and cat.sym not like 'INFRA.Ordem de Servico' "
+													+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+													+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+													+"and cat.sym not like 'Infra.Tarefas Internas' "
+													+"and req.type != 'P' "
+													+"and stat.code = 'FIP' "
+													+"and (select count(1) from call_req where parent = req.persid) = (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR'))";
+				
+				}
 
 			}else if ( equipe.equals("")){
 				
@@ -91,28 +114,7 @@ public class PainelChamadosDao {
 									//+"and req.ref_num = 65799"
 									+"and stat.code in('WIP','PRBAPP') ";
 			
-				if (tipo.equals("R")){
-						
 
-					sql_listaChamadosFilhoAtd = "select "
-													+"req.ref_num as chamado, "
-													+"req.id as ID "
-												+"from "
-													+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
-													+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
-													+"cat.persid = req.category "
-													+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
-												+"where "
-													+"cat.sym like 'INFRA%' "
-													+"and cat.sym not like 'INFRA.Ordem de Servico' "
-													+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
-													+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-													+"and cat.sym not like 'Infra.Tarefas Internas' "
-													+"and req.type != 'P' "
-													+"and stat.code = 'FIP' "
-													+"and (select count(1) from call_req where parent = req.persid) = (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR'))";
-				
-				}
 			
 			}else if (equipe.equals("todas")) {
 				
@@ -153,7 +155,7 @@ public class PainelChamadosDao {
 											+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 											+"and vwg.last_name = '"+equipe+"'";	
 					
-					//System.out.println(sql_listaChamados);
+		
 					
 				}else if(status.equals("andamento")){
 
@@ -174,7 +176,7 @@ public class PainelChamadosDao {
 											+"and req.type in('"+tipo+"') "
 											+"and stat.code in('WIP','PRBAPP') "
 											+"and vwg.last_name = '"+equipe+"'";	
-						//System.out.println(sql_listaChamados);
+						
 
 					
 			}
@@ -264,12 +266,6 @@ public class PainelChamadosDao {
 					chamados.setTipo(tipo);
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
 
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaChamados.add(chamados);
 					count++;
 				}

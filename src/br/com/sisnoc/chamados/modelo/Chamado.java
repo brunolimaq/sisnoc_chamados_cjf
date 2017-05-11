@@ -428,5 +428,10 @@ public class Chamado {
 	}
 
 
+	public void setCountTotalNoc(Integer countTotalNoc) {
+		this.countTotalNoc = countTotalNoc;
+	}
+
+
 	
 }

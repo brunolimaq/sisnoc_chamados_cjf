@@ -3,11 +3,10 @@ package br.com.sisnoc.chamados.controller;
 import java.text.ParseException;
 import java.util.Collection;
 
-import javax.annotation.Resource;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,11 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.sisnoc.chamados.dao.PainelChamadosDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalRequisicoesDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
-import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
+
 import br.com.sisnoc.chamados.dao.PainelPessoalRdmDao;
 import br.com.sisnoc.chamados.dao.PainelGeralRdmDao;
-import br.com.sisnoc.chamados.dao.UsuariosDao;
-import br.com.sisnoc.chamados.modelo.Chamado;
+
 import br.com.sisnoc.chamados.security.UsuarioSistema;
 
 
@@ -36,8 +34,8 @@ public class ChamadosController {
 	@Autowired
 	private PainelChamadosDao daoChamados;
 	
-	@Autowired
-	private PainelPessoalMetasDao metasDao;
+//	@Autowired
+//	private PainelPessoalMetasDao metasDao;
 
 	@Autowired
 	private PainelPessoalRequisicoesDao destaquesDao;
@@ -65,10 +63,10 @@ public class ChamadosController {
 		   username = usuarioLogado.toString();
 		}
 		
-		System.out.println(permissao);
+		
 		
 		for (GrantedAuthority autorizacao : permissao) {
-			System.out.println(autorizacao);
+			
 			if (autorizacao.toString().equals("GESTOR")){
 
 				perfil = "GESTOR";
@@ -126,7 +124,7 @@ public class ChamadosController {
 		
 		String perfil;
 		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username;
+		String username = "";
 		Collection<? extends GrantedAuthority> permissao = null;
 		if (usuarioLogado  instanceof UsuarioSistema ) {
 			   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
@@ -136,7 +134,7 @@ public class ChamadosController {
 		}
 
 		for (GrantedAuthority autorizacao : permissao) {
-			System.out.println(autorizacao);
+			
 			if (autorizacao.toString().equals("GESTOR")){
 				perfil = "GESTOR";
 				model.addAttribute("chamadosPainelPessoal", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoPendentes(perfil));

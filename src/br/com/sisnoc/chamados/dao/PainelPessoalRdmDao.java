@@ -14,12 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.context.annotation.RequestScope;
+
 
 import br.com.sisnoc.chamados.dao.util.RDMDao;
-import br.com.sisnoc.chamados.modelo.Chamado;
+
 import br.com.sisnoc.chamados.modelo.Mudanca;
-import br.com.sisnoc.chamados.negocio.CalculaSla;
+
 import br.com.sisnoc.chamados.negocio.Popula;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
 

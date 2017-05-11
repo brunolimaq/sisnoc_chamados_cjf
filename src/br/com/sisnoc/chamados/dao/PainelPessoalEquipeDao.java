@@ -69,7 +69,7 @@ private  final Connection connection;
 			}
 			
 			
-			if (perfil != "GESTOR"){
+			if (perfil == "GESTOR"){
 				
 				username = "";
 			}
@@ -98,7 +98,7 @@ private  final Connection connection;
 				
 				
 			
-			System.out.println(sql_listaChamados);
+			
 			
 			 
 			PreparedStatement stmt = connection
@@ -177,7 +177,7 @@ private  final Connection connection;
 				
 				
 			
-			System.out.println(sql_listaChamados);
+			
 			
 			 
 			 stmt = connection
@@ -250,12 +250,6 @@ private  final Connection connection;
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
 					
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaChamados.add(chamados);
 					count++;
 				}
@@ -306,7 +300,7 @@ private  final Connection connection;
 			}
 			
 			
-			if (perfil != "GESTOR"){
+			if (perfil == "GESTOR"){
 				
 				username = "";
 			}
@@ -336,7 +330,7 @@ private  final Connection connection;
 				
 				
 			
-			System.out.println(sql_listaChamados);
+			
 			
 			 
 			PreparedStatement stmt = connection
@@ -409,12 +403,6 @@ private  final Connection connection;
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
 					
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaChamados.add(chamados);
 					count++;
 				}

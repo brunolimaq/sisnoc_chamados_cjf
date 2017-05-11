@@ -10,9 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
+
 import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
-import br.com.sisnoc.chamados.dao.PainelPessoalRdmDao;
+
 import br.com.sisnoc.chamados.dao.util.MetasDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
@@ -90,7 +90,7 @@ public class GraficosPessoal implements GraficosPessoalService {
 				this.setReabertosMes(metasDao.listaPainelPessoalReabertos(perfil));
 				this.setPendencias(metasDao.listaPainelPessoalPendentes(perfil));
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		
@@ -118,9 +118,7 @@ public class GraficosPessoal implements GraficosPessoalService {
 				 
 				} 
 				 
-			System.out.println(countMeta2h);
-			System.out.println(countMeta4h);
-			System.out.println(countTotal);
+			
 			
 				this.setMeta2h((countMeta2h*100)/countTotal);
 				this.setMeta4h((countMeta4h*100)/countTotal);

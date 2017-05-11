@@ -108,7 +108,7 @@ public class PainelSemSlaDao {
 											+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 											+"and vwg.last_name = '"+equipe+"'";	
 					
-					//System.out.println(sql_listaChamados);
+					
 					
 				}else if(status.equals("andamento")){
 
@@ -124,7 +124,7 @@ public class PainelSemSlaDao {
 											+"and req.type in('"+tipo+"') "
 											+"and stat.code in('WIP','PRBAPP') "
 											+"and vwg.last_name = '"+equipe+"'";	
-					//System.out.println(sql_listaChamados);
+					
 
 					
 			}
@@ -147,11 +147,7 @@ public class PainelSemSlaDao {
 			
 			rs_listaChamados.close();
 			
-			//System.out.println(lista);
-			// 65497
-			// 65529
-			// 65536
-			// 65538
+			
 			String sql_listaLog = "select "
 									+"req.id as ID, "
 									+"req.ref_num as chamados, "
@@ -198,12 +194,6 @@ public class PainelSemSlaDao {
 					
 					chamados.setGrupo(popula.populaGrupo(rs_listalog));
 					chamados.setTipo(tipo);
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaChamados.add(chamados);
 					count++;
 				}
@@ -255,10 +245,7 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 			}
 
 		
-			if (username.equals("bruno.queiroz") || username.equals("walison.morales")){
-				
-				user_exclusao = "'antonio.junior'";
-			}
+		
 			
 			//OS em andamento
 			sql_listaRDM = "select "
@@ -364,12 +351,6 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
 					
 					
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaOs.add(chamados);
 					count++;
 				}
@@ -393,12 +374,6 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs2));
 					
 					
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaOs.add(chamados);
 					count++;
 				}
@@ -445,10 +420,6 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 			}
 
 		
-			if (username.equals("bruno.queiroz") || username.equals("walison.morales")){
-				
-				user_exclusao = "'antonio.junior'";
-			}
 			// OS em andamento
 			sql_listaRDM = "select "
 					+ "req.id as ID, " 
@@ -557,12 +528,6 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
 					
 					
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaOs.add(chamados);
 					count++;
 				}
@@ -587,12 +552,6 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs2));
 					
 					
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaOs.add(chamados);
 					count++;
 				}
@@ -604,6 +563,116 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 				stmt2.close();
 				
 				return ListaOs;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public List<Chamado> listaPainelGeralProblema(String status) throws ParseException {
+		
+//		Aberto					OP
+//		Em investigação			RSCH
+//		Causa identificada		PRBANCOMP
+//		Solução em implantação	PO
+//		Em revisão				PF
+//		Encerrado				CL
+		
+		try {
+			
+			ArrayList<Chamado> ListaProblema = new ArrayList<Chamado>();
+			String sql_listaRDM = "";
+			
+			// tipo = "R";
+			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username;
+			String equipe = "";
+			String user_exclusao = "''";
+			if (usuarioLogado  instanceof UsuarioSistema ) {
+				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
+			} else {
+			   username = usuarioLogado.toString();
+			}
+					
+			String[] splitEquipe = equipe.split(",");
+			
+			String listaEquipe = "\'\'";
+			
+			for (String eqp : splitEquipe) {
+				listaEquipe = listaEquipe +",\'" + eqp + "\'";
+			}
+
+		
+			
+			
+			sql_listaRDM = "select "
+					+ "req.id as ID, " 
+					+ "usu.first_name as responsavel, "
+					+ "req.ref_num as chamados, "
+					+ "vwg.last_name as equipe," 
+					+ "req.summary as titulo,  "
+					+ "stat.sym as statusDescricao, " 
+					+ "ctg.sym as grupo " 
+					+ "from " 
+					+ "call_req req WITH (NOLOCK)  join cr_stat stat WITH (NOLOCK) on req.status = stat.code " 
+					+ "left join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee " 
+					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
+					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
+					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
+					+ "where ctg.sym like 'INFRA%' "
+					+ "and ctg.sym not like 'INFRA.Ordem de Servico' "
+					+ "and req.type in ('P') "
+					+ "and stat.code in ('RSCH', 'OP', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK','WIP','PRBAPP') " 
+					+ "and log.type='INIT' " 
+					+ "and stat.code = '"+status+"' "
+					+ "order by 1 ";
+					
+
+//						+"and ca_contact.userid  not in ("+user_exclusao+") "
+//						+"and vwg.last_name in ("+ listaEquipe + ") "
+//						+"order by 6,5";
+
+						
+			PreparedStatement stmt = connection
+					.prepareStatement(sql_listaRDM);				
+			
+			stmt = connection
+					.prepareStatement(sql_listaRDM);
+			ResultSet rs_listaOs = stmt.executeQuery();
+
+			Popula popula = new Popula();
+			
+			
+			
+			
+			
+			//Corre o ResultSet
+			Integer count = 0;
+				while (rs_listaOs.next()){
+					// adiciona um chamado na lista
+					
+					Chamado chamados = new Chamado();
+					chamados.setId(popula.populaID(rs_listaOs));
+					chamados.setEquipe(popula.populaEquipe(rs_listaOs));
+					chamados.setChamado(popula.populaChamados(rs_listaOs));
+					chamados.setTitulo(popula.populaTitulo(rs_listaOs));
+					chamados.setStatus(popula.populaStatus(rs_listaOs));
+					chamados.setGrupo(popula.populaGrupo(rs_listaOs));
+					chamados.setTipo(popula.populaTipo(rs_listaOs));
+					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listaOs));
+					
+					
+					
+					ListaProblema.add(chamados);
+					count++;
+				}
+			
+				
+				rs_listaOs.close();
+				stmt.close();
+
+				return ListaProblema;
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -637,10 +706,7 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 			}
 
 		
-			if (username.equals("bruno.queiroz") || username.equals("walison.morales")){
-				
-				user_exclusao = "'antonio.junior'";
-			}
+			
 			
 			sql_listaRDM = "select "
 					+ "req.id as ID, " 
@@ -700,13 +766,6 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 					
 					
 					
-					
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaProblema.add(chamados);
 					count++;
 				}
@@ -750,10 +809,7 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 			}
 
 		
-			if (username.equals("bruno.queiroz") || username.equals("walison.morales")){
-				
-				user_exclusao = "'antonio.junior'";
-			}
+			
 			
 			sql_listaRDM = "select "
 					+ "req.id as ID, " 
@@ -816,12 +872,6 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 					
 					
 					
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getChamado());
-//					System.out.println(chamados.getEpoch());
-//					System.out.println("$$$$$$$$$$$$$$###########$$$$$$$$$$$");
-//					System.out.println(chamados.getTime());
-//					System.out.println(chamados.getStatus());
 					ListaProblema.add(chamados);
 					count++;
 				}
