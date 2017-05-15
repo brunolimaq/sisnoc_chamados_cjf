@@ -254,6 +254,7 @@
 							<thead>
 								<tr class="painel_noc">
 									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Responsável</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
 									<td><center><strong>Status</strong></center></td>
 									<td><center><strong>Prazo</strong></center></td>
@@ -269,6 +270,7 @@
 										<tr class="SemAlerta" > 
 
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosOSEquipePendente.id}" target="_blank" >${chamadosOSEquipePendente.chamado}</a></td>
+										<td>${chamadosOSEquipePendente.responsavel}</td>
 										<td>${chamadosOSEquipePendente.titulo}</td>
 										
 										<c:if test="${chamadosOSEquipePendente.statusDescricao == 'Aberto chamado filho'}">

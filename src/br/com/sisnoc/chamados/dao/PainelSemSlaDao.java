@@ -496,6 +496,8 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 				chamados.setData_inicio(popula.populaData_inicio(rs_listaOs));
 				chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
 				chamados.setPrazo(popula.populaPrazo(rs_listaOs));
+				chamados.setResponsavel(popula.populaResponsavel(rs_listaOs));
+
 				
 				ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs.getString("diasatualizacao")), chamados));
 			
@@ -640,12 +642,15 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 				while (rs_listaOs.next()){
 					// adiciona um chamado na lista
 					
+					
+					
 					Chamado chamados = new Chamado();
 					chamados.setId(popula.populaID(rs_listaOs));
 					chamados.setEquipe(popula.populaEquipe(rs_listaOs));
 					chamados.setChamado(popula.populaChamados(rs_listaOs));
 					chamados.setTitulo(popula.populaTitulo(rs_listaOs));
-					chamados.setStatus(popula.populaStatus(rs_listaOs));
+					
+					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listaOs));
 					chamados.setGrupo(popula.populaGrupo(rs_listaOs));
 					chamados.setTipo(popula.populaTipo(rs_listaOs));
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listaOs));
@@ -654,9 +659,12 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 					chamados.setAtualizacao(popula.populaAtualizacao(rs_listaOs));
 					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs));
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
+					chamados.setPrazo(popula.populaPrazo(rs_listaOs));
+					chamados.setResponsavel(popula.populaResponsavel(rs_listaOs));
+					
+					ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs.getString("diasatualizacao")), chamados));
 					
 					
-					ListaOs.add(chamados);
 					count++;
 				}
 			
@@ -669,7 +677,8 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 					chamados.setEquipe(popula.populaEquipe(rs_listaOs2));
 					chamados.setChamado(popula.populaChamados(rs_listaOs2));
 					chamados.setTitulo(popula.populaTitulo(rs_listaOs2));
-					chamados.setStatus(popula.populaStatus(rs_listaOs2));
+					
+					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listaOs2));
 					chamados.setGrupo(popula.populaGrupo(rs_listaOs2));
 					chamados.setTipo(popula.populaTipo(rs_listaOs2));
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listaOs2));
@@ -678,9 +687,12 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 					chamados.setAtualizacao(popula.populaAtualizacao(rs_listaOs2));
 					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs2));
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs2));
+					chamados.setPrazo(popula.populaPrazo(rs_listaOs2));
+					chamados.setResponsavel(popula.populaResponsavel(rs_listaOs2));
+
 					
+					ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs2.getString("diasatualizacao")), chamados));
 					
-					ListaOs.add(chamados);
 					count++;
 				}
 				
