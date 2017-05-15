@@ -110,6 +110,11 @@ public class Popula {
 	public String populaCCM(ResultSet rs)throws SQLException, ParseException {
 		return rs.getString("ccm");
 	}
+
+	public String populaPrazo(ResultSet rs) throws SQLException,  ParseException  {
+		
+		return rs.getString("prazo");
+	}
 	
 	
 	

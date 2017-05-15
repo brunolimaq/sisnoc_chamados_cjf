@@ -30,6 +30,7 @@ public class PainelPessoalEquipeDao {
 
 private  final Connection connection;
 
+
 	
 	@Autowired
 	public PainelPessoalEquipeDao(@Qualifier("datasourceSQL") DataSource datasource) {
@@ -50,7 +51,7 @@ private  final Connection connection;
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username;
 			String equipe = "";
-			
+			Integer flagFilho = 0;
 			
 
 			if (usuarioLogado  instanceof UsuarioSistema ) {

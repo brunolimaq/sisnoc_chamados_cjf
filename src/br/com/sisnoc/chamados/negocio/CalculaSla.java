@@ -330,6 +330,41 @@ public class CalculaSla {
 
 	//diferença de dias entre duas datas
 	
+	public static Chamado CalculaMetaOS(Integer dias, Chamado ordenServico){
+		
+		
+		// Metas
+		if(dias < 1){ //menor que 7
+			ordenServico.setMeta_2("progress-bar-success");
+			ordenServico.setMeta_6("progress-bar-success");
+			ordenServico.setMeta_24("progress-bar-success");
+			
+		}else if(dias < 2){ //menor que 15 
+			
+			ordenServico.setMeta_2("progress-bar-danger");
+			ordenServico.setMeta_6("progress-bar-success");
+			ordenServico.setMeta_24("progress-bar-success");
+			
+		}else if(dias < 3){ // menor que 22 
+			
+			ordenServico.setMeta_2("progress-bar-danger");
+			ordenServico.setMeta_6("progress-bar-danger");
+			ordenServico.setMeta_24("progress-bar-success");
+			
+		}else {
+			
+			ordenServico.setMeta_2("progress-bar-danger");
+			ordenServico.setMeta_6("progress-bar-danger");
+			ordenServico.setMeta_24("progress-bar-danger");
+			
+		}
+		
+		ordenServico.setAlerta("SemAlerta");
+		
+		return ordenServico;
+		  
+	}
+	
 	public static int countDays(Calendar from, Calendar to) {
 	    
 		Calendar f = Calendar.getInstance();
@@ -596,6 +631,7 @@ public class CalculaSla {
 		//System.out.println("1");
 		return validado;
 	}
+	
 	
 	
 	

@@ -49,6 +49,8 @@ private  final Connection connection;
 			// tipo = "R";
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username;
+			Integer flagFilho = 0;
+			
 			if (usuarioLogado  instanceof UsuarioSistema ) {
 			   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
 			} else {
@@ -151,6 +153,7 @@ private  final Connection connection;
 			
 			countTeste = 0;
 			while (rs_listaChamadosPendente.next()){
+				flagFilho = 1;
 				countTeste++;
 				lista = lista +",\'" + rs_listaChamadosPendente.getString("ID") + "\'";
 			}
@@ -213,6 +216,7 @@ private  final Connection connection;
 					chamados.setTipo(popula.populaTipo(rs_listalog));
 					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
+					chamados.setFlagFilho(flagFilho);
 					
 
 					ListaChamados.add(chamados);

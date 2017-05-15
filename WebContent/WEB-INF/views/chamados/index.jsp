@@ -78,11 +78,11 @@
 			    // the value axis
 			    yAxis: {
 			        stops: [
-			            [0.8, '#DF5353'], // red
-			            [0.84, '#DF5353'], // red
+			            [0.70, '#DF5353'], // red
+			            [0.74, '#DF5353'], // red
+			            [0.75, '#DDDF0D'], // yellow
 			            [0.85, '#DDDF0D'], // yellow
-			            [0.89, '#DDDF0D'], // yellow
-			            [0.9, '#55BF3B'] // green
+			            [0.86, '#55BF3B'] // green
 			        ],
 			        lineWidth: 0,
 			        minorTickInterval: null,
@@ -381,14 +381,24 @@ var gaugeSLA4 = {
 											
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelPessoal.id}" target="_blank" >${chamadosPainelPessoal.chamado}</a></td>
 										<td>${chamadosPainelPessoal.titulo}</td>
+										
 										<c:if test="${chamadosPainelPessoal.statusDescricao == 'Aberto chamado filho'}">
-											<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
+											<c:if test="${chamadosPainelPessoal.flagFilho == 1}">
+												<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
+											</c:if>	
+										</c:if>	
+										
+											<c:if test="${chamadosPainelPessoal.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosPainelPessoal.flagFilho == 0}">
+												<td>${chamadosPainelPessoal.statusDescricao}</td>
+											</c:if>	
 										</c:if>						
 													 
 										
 										<c:if test="${chamadosPainelPessoal.statusDescricao != 'Aberto chamado filho'}">
 											<td>${chamadosPainelPessoal.statusDescricao}</td>
 										</c:if>
+										
 										<td>${chamadosPainelPessoal.sla}</td>
 										
 										<c:if test="${chamadosPainelPessoal.tipoLegivel == 'Incidente'}">	

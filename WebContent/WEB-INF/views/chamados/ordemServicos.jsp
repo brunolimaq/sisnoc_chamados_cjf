@@ -49,12 +49,72 @@
                    	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
 						<strong>Minhas Ordem de serviços em andamento </strong>
 					 </a>
-					<c:if test="${empty chamadosPainelPessoalPendencias}">
-						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
+					<c:if test="${empty chamadosOSPessoal}">
+						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta filaaaa!</strong></div>
 
   					</c:if>
-  					<c:if test="${!empty chamadosPainelPessoalPendencias}">
+  					<c:if test="${!empty chamadosOSPessoal}">
 					 
+					 	<table class="table table-bordered table-hover">
+							<thead>
+								<tr class="painel_noc">
+									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Status</strong></center></td>
+									<td><center><strong>Prazo</strong></center></td>
+									<td><center><strong>Sem Atualização</strong></center></td>
+								</tr>
+							</thead>
+							<tbody>
+		  						                   
+							<c:forEach items="${chamadosOSPessoal}" var="chamadosOSPessoal">
+										
+<%-- 									<tr class="${chamadosOSGeral.alerta}" > --%>
+
+										<tr class="SemAlerta" > 
+
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosOSPessoal.id}" target="_blank" >${chamadosOSPessoal.chamado}</a></td>
+										<td>${chamadosOSPessoal.titulo}</td>
+										
+										<c:if test="${chamadosOSPessoal.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosOSPessoal.flagFilho == 1}">
+												<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
+											</c:if>	
+										</c:if>	
+										
+											<c:if test="${chamadosOSPessoal.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosOSPessoal.flagFilho == 0}">
+												<td>${chamadosOSPessoal.statusDescricao}</td>
+											</c:if>	
+										</c:if>						
+													 
+										
+										<c:if test="${chamadosOSPessoal.statusDescricao != 'Aberto chamado filho'}">
+											<td>${chamadosOSPessoal.statusDescricao}</td>
+										</c:if>
+										
+										<td>${chamadosOSPessoal.prazo}</td>
+										
+																		
+											
+											<td  width="15%" height="70%" style="padding:3px" >
+													<div class="progress" style="height:30px" align="center">
+													  <div class="progress-bar ${chamadosOSPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+													    <span >1d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosOSPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+													    <span>2d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosOSPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+													    <span>3d</span>
+													  </div>
+													</div>
+													</td>
+									</tr>
+								
+							</c:forEach>
+						</tbody>    
+					</table>
 						
 					</c:if>
                    </div>
@@ -72,6 +132,7 @@
   					</c:if>
   					<c:if test="${!empty chamadosPainelPessoalPendencias}">
 					 
+					 
 						
 					</c:if>
 					 
@@ -86,14 +147,74 @@
            	<div class="col-md-6 clearfix">
 				<div class="list-group ">
 					<a href="#chamados" class="list-group-item active" id="painel_noc_titulo">
-						<strong>Ordem de Serviço em andamento do meu(s) grupos</strong>
+						<strong>Ordem de Serviço em andamento do(s) meu(s) grupos</strong>
 					</a>
-					<c:if test="${empty chamadosPainelEquipe}">
+					<c:if test="${empty chamadosOSGeralGrupo}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
 
   					</c:if>
-  					<c:if test="${!empty chamadosPainelEquipe}">
-           	
+  					<c:if test="${!empty chamadosOSGeralGrupo}">
+           				
+           				<table class="table table-bordered table-hover">
+							<thead>
+								<tr class="painel_noc">
+									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Status</strong></center></td>
+									<td><center><strong>Prazo</strong></center></td>
+									<td><center><strong>Sem Atualização</strong></center></td>
+								</tr>
+							</thead>
+							<tbody>
+		  						                   
+							<c:forEach items="${chamadosOSGeralGrupo}" var="chamadosOSGeralGrupo">
+										
+<%-- 									<tr class="${chamadosOSGeral.alerta}" > --%>
+
+										<tr class="SemAlerta" > 
+
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosOSGeralGrupo.id}" target="_blank" >${chamadosOSGeralGrupo.chamado}</a></td>
+										<td>${chamadosOSGeralGrupo.titulo}</td>
+										
+										<c:if test="${chamadosOSGeralGrupo.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosOSGeralGrupo.flagFilho == 1}">
+												<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
+											</c:if>	
+										</c:if>	
+										
+											<c:if test="${chamadosOSGeralGrupo.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosOSGeralGrupo.flagFilho == 0}">
+												<td>${chamadosOSGeralGrupo.statusDescricao}</td>
+											</c:if>	
+										</c:if>						
+													 
+										
+										<c:if test="${chamadosOSGeralGrupo.statusDescricao != 'Aberto chamado filho'}">
+											<td>${chamadosOSGeralGrupo.statusDescricao}</td>
+										</c:if>
+										
+										<td>${chamadosOSGeralGrupo.prazo}</td>
+										
+																		
+											
+											<td  width="15%" height="70%" style="padding:3px" >
+													<div class="progress" style="height:30px" align="center">
+													  <div class="progress-bar ${chamadosOSGeralGrupo.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+													    <span >1d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosOSGeralGrupo.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+													    <span>2d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosOSGeralGrupo.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+													    <span>3d</span>
+													  </div>
+													</div>
+													</td>
+									</tr>
+								
+							</c:forEach>
+						</tbody>    
+					</table>
 
 					</c:if>
 				</div>
@@ -123,12 +244,72 @@
                    	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
 						<strong>Ordem de Serviços pendentes</strong>
 					 </a>
-					<c:if test="${empty incidenteEquipeAndamento}">
+					<c:if test="${empty chamadosOSEquipePendente}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
 
   					</c:if>
-  					<c:if test="${!empty incidenteEquipeAndamento}">
+  					<c:if test="${!empty chamadosOSEquipePendente}">
 					 
+					 <table class="table table-bordered table-hover">
+							<thead>
+								<tr class="painel_noc">
+									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Status</strong></center></td>
+									<td><center><strong>Prazo</strong></center></td>
+									<td><center><strong>Sem Atualização</strong></center></td>
+								</tr>
+							</thead>
+							<tbody>
+		  						                   
+							<c:forEach items="${chamadosOSEquipePendente}" var="chamadosOSEquipePendente">
+										
+<%-- 									<tr class="${chamadosOSGeral.alerta}" > --%>
+
+										<tr class="SemAlerta" > 
+
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosOSEquipePendente.id}" target="_blank" >${chamadosOSEquipePendente.chamado}</a></td>
+										<td>${chamadosOSEquipePendente.titulo}</td>
+										
+										<c:if test="${chamadosOSEquipePendente.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosOSEquipePendente.flagFilho == 1}">
+												<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
+											</c:if>	
+										</c:if>	
+										
+											<c:if test="${chamadosOSEquipePendente.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosOSEquipePendente.flagFilho == 0}">
+												<td>${chamadosOSEquipePendente.statusDescricao}</td>
+											</c:if>	
+										</c:if>						
+													 
+										
+										<c:if test="${chamadosOSEquipePendente.statusDescricao != 'Aberto chamado filho'}">
+											<td>${chamadosOSEquipePendente.statusDescricao}</td>
+										</c:if>
+										
+										<td>${chamadosOSEquipePendente.prazo}</td>
+										
+																		
+											
+											<td  width="15%" height="70%" style="padding:3px" >
+													<div class="progress" style="height:30px" align="center">
+													  <div class="progress-bar ${chamadosOSEquipePendente.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+													    <span >1d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosOSEquipePendente.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+													    <span>2d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosOSEquipePendente.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+													    <span>3d</span>
+													  </div>
+													</div>
+													</td>
+									</tr>
+								
+							</c:forEach>
+						</tbody>    
+					</table>
 
 					</c:if>
                    </div>

@@ -29,6 +29,9 @@ public class Chamado {
 	private Integer countNocIncidentes;
 	private Integer countTotalNoc;
 	
+	private Integer flagFilho;
+	private String prazo;
+	
 	//OS
 	private String atualizacao;
 	private String diasAtualizacao;
@@ -431,6 +434,29 @@ public class Chamado {
 	public void setCountTotalNoc(Integer countTotalNoc) {
 		this.countTotalNoc = countTotalNoc;
 	}
+
+
+	public Integer getFlagFilho() {
+		return flagFilho;
+	}
+
+
+	public void setFlagFilho(Integer flagFilho) {
+		this.flagFilho = flagFilho;
+	}
+
+
+	public String getPrazo() {
+		return prazo;
+	}
+
+
+	public void setPrazo(String prazo) {
+		this.prazo = prazo;
+	}
+
+
+	
 
 
 	

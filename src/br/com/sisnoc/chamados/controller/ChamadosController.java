@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.com.sisnoc.chamados.dao.PainelChamadosDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalRequisicoesDao;
+import br.com.sisnoc.chamados.dao.PainelSemSlaDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
 
 import br.com.sisnoc.chamados.dao.PainelPessoalRdmDao;
@@ -45,6 +46,9 @@ public class ChamadosController {
 	
 	@Autowired
 	private PainelPessoalRdmDao rdmDao;
+	
+	@Autowired
+	private PainelSemSlaDao osDao;
 	
 	@Autowired
 	private PainelGeralRdmDao rdmGeral;
@@ -184,7 +188,9 @@ public class ChamadosController {
 	@RequestMapping("/ordemServicos")
 	public ModelAndView listaOrdemServicoTarefaInterna(Model model) throws ParseException{
 		
-		
+		model.addAttribute("chamadosOSPessoal", ((PainelSemSlaDao) osDao).listaPainelPessoalOs());
+		model.addAttribute("chamadosOSEquipePendente", ((PainelSemSlaDao) osDao).listaPainelPessoalOsPendente());
+		model.addAttribute("chamadosOSGeralGrupo", ((PainelSemSlaDao) osDao).listaPainelPessoalEquipeOs());
 		
 		ModelAndView mv = new ModelAndView("chamados/ordemServicos");
 		return mv;

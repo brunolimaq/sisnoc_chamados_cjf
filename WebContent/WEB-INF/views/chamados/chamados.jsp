@@ -184,8 +184,18 @@
 										<td>${chamadosPainelNoc.equipe}</td>
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosPainelNoc.id}" target="_blank" >${chamadosPainelNoc.chamado}</a></td>
 										<td>${chamadosPainelNoc.titulo}</td>
-										<td>${chamadosPainelNoc.sla}
-										</td>
+									
+										
+										
+										<c:if test="${chamadosPainelNoc.statusDescricao == 'Aberto chamado filho'}">
+											<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
+										</c:if>						
+										<c:if test="${chamadosPainelNoc.statusDescricao != 'Aberto chamado filho'}">
+											<td>${chamadosPainelNoc.sla}</td>
+										</c:if>
+										
+										
+										
 										
 										<c:if test="${chamadosPainelNoc.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	
 												<td  width="15%" height="70%" style="padding:3px" >
