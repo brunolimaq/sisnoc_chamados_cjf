@@ -188,9 +188,16 @@ public class ChamadosController {
 	@RequestMapping("/ordemServicos")
 	public ModelAndView listaOrdemServicoTarefaInterna(Model model) throws ParseException{
 		
-		model.addAttribute("chamadosOSPessoal", ((PainelSemSlaDao) osDao).listaPainelPessoalOs());
-		model.addAttribute("chamadosOSEquipePendente", ((PainelSemSlaDao) osDao).listaPainelPessoalOsPendente());
-		model.addAttribute("chamadosOSGeralGrupo", ((PainelSemSlaDao) osDao).listaPainelPessoalEquipeOs());
+		//Infra.Tarefas Internas
+		//INFRA.Ordem de Servico
+		
+		model.addAttribute("chamadosOSPessoal", ((PainelSemSlaDao) osDao).listaPainelPessoalOs("INFRA.Ordem de Servico"));
+		model.addAttribute("chamadosOSEquipePendente", ((PainelSemSlaDao) osDao).listaPainelPessoalOsPendente("INFRA.Ordem de Servico"));
+		model.addAttribute("chamadosOSGeralGrupo", ((PainelSemSlaDao) osDao).listaPainelPessoalEquipeOs("INFRA.Ordem de Servico"));
+
+		model.addAttribute("chamadosTarefaPessoal", ((PainelSemSlaDao) osDao).listaPainelPessoalOs("Infra.Tarefas Internas"));
+		model.addAttribute("chamadosTarefaEquipePendente", ((PainelSemSlaDao) osDao).listaPainelPessoalOsPendente("Infra.Tarefas Internas"));
+		model.addAttribute("chamadosTarefaGeralGrupo", ((PainelSemSlaDao) osDao).listaPainelPessoalEquipeOs("Infra.Tarefas Internas"));
 		
 		ModelAndView mv = new ModelAndView("chamados/ordemServicos");
 		return mv;

@@ -126,13 +126,72 @@
 						<strong>Minhas Tarefas internas em andamento </strong>
 						
 					 </a>
-					 					<c:if test="${empty chamadosPainelPessoalPendencias}">
+					 					<c:if test="${empty chamadosTarefaPessoal}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
 
   					</c:if>
-  					<c:if test="${!empty chamadosPainelPessoalPendencias}">
+  					<c:if test="${!empty chamadosTarefaPessoal}">
 					 
-					 
+					 <table class="table table-bordered table-hover">
+							<thead>
+								<tr class="painel_noc">
+									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Status</strong></center></td>
+									<td><center><strong>Prazo</strong></center></td>
+									<td><center><strong>Sem Atualização</strong></center></td>
+								</tr>
+							</thead>
+							<tbody>
+		  						                   
+							<c:forEach items="${chamadosTarefaPessoal}" var="chamadosTarefaPessoal">
+										
+<%-- 									<tr class="${chamadosOSGeral.alerta}" > --%>
+
+										<tr class="SemAlerta" > 
+
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosTarefaPessoal.id}" target="_blank" >${chamadosTarefaPessoal.chamado}</a></td>
+										<td>${chamadosTarefaPessoal.titulo}</td>
+										
+										<c:if test="${chamadosTarefaPessoal.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosTarefaPessoal.flagFilho == 1}">
+												<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
+											</c:if>	
+										</c:if>	
+										
+											<c:if test="${chamadosTarefaPessoal.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosTarefaPessoal.flagFilho == 0}">
+												<td>${chamadosTarefaPessoal.statusDescricao}</td>
+											</c:if>	
+										</c:if>						
+													 
+										
+										<c:if test="${chamadosTarefaPessoal.statusDescricao != 'Aberto chamado filho'}">
+											<td>${chamadosTarefaPessoal.statusDescricao}</td>
+										</c:if>
+										
+										<td>${chamadosTarefaPessoal.prazo}</td>
+										
+																		
+											
+											<td  width="15%" height="70%" style="padding:3px" >
+													<div class="progress" style="height:30px" align="center">
+													  <div class="progress-bar ${chamadosTarefaPessoal.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+													    <span >1d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosTarefaPessoal.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+													    <span>2d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosTarefaPessoal.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+													    <span>3d</span>
+													  </div>
+													</div>
+													</td>
+									</tr>
+								
+							</c:forEach>
+						</tbody>    
+					</table>
 						
 					</c:if>
 					 
@@ -226,11 +285,72 @@
                    	<a href="#chamados" class="list-group-item active" id="painel_noc_titulo"> 
 						<strong>Tarefas Internas em andamento do meu(s) grupos</strong>
 					 </a>
-					<c:if test="${empty chamadosRDMPessoal}">
+					<c:if test="${empty chamadosTarefaGeralGrupo}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
 
   					</c:if>
-  					<c:if test="${!empty chamadosRDMPessoal}">
+  					<c:if test="${!empty chamadosTarefaGeralGrupo}">
+					 
+					  <table class="table table-bordered table-hover">
+							<thead>
+								<tr class="painel_noc">
+									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Status</strong></center></td>
+									<td><center><strong>Prazo</strong></center></td>
+									<td><center><strong>Sem Atualização</strong></center></td>
+								</tr>
+							</thead>
+							<tbody>
+		  						                   
+							<c:forEach items="${chamadosTarefaGeralGrupo}" var="chamadosTarefaGeralGrupo">
+										
+<%-- 									<tr class="${chamadosOSGeral.alerta}" > --%>
+
+										<tr class="SemAlerta" > 
+
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosTarefaGeralGrupo.id}" target="_blank" >${chamadosTarefaGeralGrupo.chamado}</a></td>
+										<td>${chamadosTarefaGeralGrupo.titulo}</td>
+										
+										<c:if test="${chamadosTarefaGeralGrupo.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosTarefaGeralGrupo.flagFilho == 1}">
+												<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
+											</c:if>	
+										</c:if>	
+										
+											<c:if test="${chamadosTarefaGeralGrupo.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosTarefaGeralGrupo.flagFilho == 0}">
+												<td>${chamadosTarefaGeralGrupo.statusDescricao}</td>
+											</c:if>	
+										</c:if>						
+													 
+										
+										<c:if test="${chamadosTarefaGeralGrupo.statusDescricao != 'Aberto chamado filho'}">
+											<td>${chamadosTarefaGeralGrupo.statusDescricao}</td>
+										</c:if>
+										
+										<td>${chamadosTarefaGeralGrupo.prazo}</td>
+										
+																		
+											
+											<td  width="15%" height="70%" style="padding:3px" >
+													<div class="progress" style="height:30px" align="center">
+													  <div class="progress-bar ${chamadosTarefaGeralGrupo.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+													    <span >1d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosTarefaGeralGrupo.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+													    <span>2d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosTarefaGeralGrupo.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+													    <span>3d</span>
+													  </div>
+													</div>
+													</td>
+									</tr>
+								
+							</c:forEach>
+						</tbody>    
+					</table>
 					 
 					</c:if>						
                    </div>
@@ -319,12 +439,72 @@
                    	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
 						<strong>Tarefas Internas pendentes</strong>
 					 </a>
-					<c:if test="${empty incidenteEquipeAndamento}">
+					<c:if test="${empty chamadosTarefaEquipePendente}">
 						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
 
   					</c:if>
-  					<c:if test="${!empty incidenteEquipeAndamento}">
+  					<c:if test="${!empty chamadosTarefaEquipePendente}">
 					 
+					 <table class="table table-bordered table-hover">
+							<thead>
+								<tr class="painel_noc">
+									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Status</strong></center></td>
+									<td><center><strong>Prazo</strong></center></td>
+									<td><center><strong>Sem Atualização</strong></center></td>
+								</tr>
+							</thead>
+							<tbody>
+		  						                   
+							<c:forEach items="${chamadosTarefaEquipePendente}" var="chamadosTarefaEquipePendente">
+										
+<%-- 									<tr class="${chamadosOSGeral.alerta}" > --%>
+
+										<tr class="SemAlerta" > 
+
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosTarefaEquipePendente.id}" target="_blank" >${chamadosTarefaEquipePendente.chamado}</a></td>
+										<td>${chamadosTarefaEquipePendente.titulo}</td>
+										
+										<c:if test="${chamadosTarefaEquipePendente.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosTarefaEquipePendente.flagFilho == 1}">
+												<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
+											</c:if>	
+										</c:if>	
+										
+											<c:if test="${chamadosTarefaEquipePendente.statusDescricao == 'Aberto chamado filho'}">
+											<c:if test="${chamadosTarefaEquipePendente.flagFilho == 0}">
+												<td>${chamadosTarefaEquipePendente.statusDescricao}</td>
+											</c:if>	
+										</c:if>						
+													 
+										
+										<c:if test="${chamadosTarefaEquipePendente.statusDescricao != 'Aberto chamado filho'}">
+											<td>${chamadosTarefaEquipePendente.statusDescricao}</td>
+										</c:if>
+										
+										<td>${chamadosTarefaEquipePendente.prazo}</td>
+										
+																		
+											
+											<td  width="15%" height="70%" style="padding:3px" >
+													<div class="progress" style="height:30px" align="center">
+													  <div class="progress-bar ${chamadosTarefaEquipePendente.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+													    <span >1d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosTarefaEquipePendente.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+													    <span>2d</span>
+													  </div>
+													  <div class="progress-bar ${chamadosTarefaEquipePendente.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+													    <span>3d</span>
+													  </div>
+													</div>
+													</td>
+									</tr>
+								
+							</c:forEach>
+						</tbody>    
+					</table>
 
 					</c:if>
                    </div>
