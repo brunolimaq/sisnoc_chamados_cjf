@@ -358,6 +358,7 @@ public List<Chamado> listaPainelPessoalOs(String categoria) throws ParseExceptio
 					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs));
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
 					chamados.setPrazo(popula.populaPrazo(rs_listaOs));
+					chamados.setResponsavel(popula.populResponsavel(rs_listaOs));
 					
 					ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs.getString("diasatualizacao")), chamados));
 				
@@ -382,6 +383,8 @@ public List<Chamado> listaPainelPessoalOs(String categoria) throws ParseExceptio
 					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs2));
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs2));
 					chamados.setPrazo(popula.populaPrazo(rs_listaOs2));
+					chamados.setResponsavel(popula.populResponsavel(rs_listaOs2));
+					
 					chamados.setFlagFilho(1);
 					ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs2.getString("diasatualizacao")), chamados));
 					count++;
@@ -498,6 +501,7 @@ public List<Chamado> listaPainelPessoalOsPendente(String categoria) throws Parse
 				chamados.setData_inicio(popula.populaData_inicio(rs_listaOs));
 				chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
 				chamados.setPrazo(popula.populaPrazo(rs_listaOs));
+				chamados.setResponsavel(popula.populResponsavel(rs_listaOs));
 				
 				ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs.getString("diasatualizacao")), chamados));
 			
@@ -660,6 +664,7 @@ public List<Chamado> listaPainelPessoalEquipeOs(String categoria) throws ParseEx
 					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs));
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
 					chamados.setPrazo(popula.populaPrazo(rs_listaOs));
+					chamados.setResponsavel(popula.populResponsavel(rs_listaOs));
 					
 					ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs.getString("diasatualizacao")), chamados));
 					count++;
@@ -683,6 +688,7 @@ public List<Chamado> listaPainelPessoalEquipeOs(String categoria) throws ParseEx
 					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs2));
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs2));
 					chamados.setPrazo(popula.populaPrazo(rs_listaOs2));
+					chamados.setResponsavel(popula.populResponsavel(rs_listaOs2));
 					chamados.setFlagFilho(1);
 					
 					ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs2.getString("diasatualizacao")), chamados));
