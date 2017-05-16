@@ -122,6 +122,20 @@ public class ChamadosController {
 		return "chamados/chamados";
 	}
 	
+	@RequestMapping("/debug")
+	public String debug(Model model) throws ParseException{
+		
+		
+		
+		String equipe = "";
+		String status = "";
+		
+		model.addAttribute("chamadosPainelChamados", ((PainelChamadosDao) daoChamados).listaChamadosDebug());
+	
+		
+		return "chamados/debug";
+	}
+	
 	@RequestMapping("/pendencias")
 	public ModelAndView listaPendencias(Model model) throws ParseException{
 		
