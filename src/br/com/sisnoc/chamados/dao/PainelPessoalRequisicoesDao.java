@@ -187,7 +187,6 @@ private  final Connection connection;
 									+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
 								+"where "
 									+"log.type in ('INIT','SLADELAY','SLARESUME','RE') "
-									//+"and req.id in  (470837) "
 									+"and req.id in  ("+ lista + ") "
 									+ "order by req.id, log.time_stamp";
 			

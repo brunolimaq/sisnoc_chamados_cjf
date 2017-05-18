@@ -237,9 +237,11 @@ public class PainelChamadosDao {
 									+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
 								+"where "
 									+"log.type in ('INIT','SLADELAY','SLARESUME','RE') "
-									//+"and req.id in  (470837) "
 									+"and req.id in  ("+ lista + ") "
 									+ "order by req.id, log.time_stamp";
+			
+			
+		
 			
 			stmt = connection
 					.prepareStatement(sql_listaLog);
@@ -265,7 +267,8 @@ public class PainelChamadosDao {
 					chamados.setTime(popula.populaTime(rs_listalog));
 					chamados.setEpoch(popula.populaEpoch(rs_listalog));
 					chamados.setGrupo(popula.populaGrupo(rs_listalog));
-					chamados.setTipo(tipo);
+					chamados.setTipo(popula.populaTipo(rs_listalog));
+					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
 
 					ListaChamados.add(chamados);
@@ -298,7 +301,7 @@ public class PainelChamadosDao {
 			
 			
 			
-			String sql_listaLog = "select "
+			String sql_listaLog = "select top 1 "
 									+"req.id as ID, "
 									+"req.ref_num as chamados, "
 									+"usu.first_name as responsavel,"
@@ -307,7 +310,7 @@ public class PainelChamadosDao {
 									+"req.type as tipo, "
 									+"req.summary as titulo, "
 									+"log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time,"
-									+"'1494934982' as epoch,"
+									+"'1495115766' as epoch,"
 									+ "stat.sym as statusDescricao, "
 									+ "log.type as status "
 								+"from "
@@ -319,7 +322,7 @@ public class PainelChamadosDao {
 									+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
 								+"where "
 									+"log.type in ('INIT','SLADELAY','SLARESUME','RE') "
-									+"and req.id in  (476872) "
+									+"and req.id in  (477265) "
 									+ "order by req.id, log.time_stamp";
 									//476918
 									//476872

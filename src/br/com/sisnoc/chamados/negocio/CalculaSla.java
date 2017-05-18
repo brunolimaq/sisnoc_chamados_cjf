@@ -54,7 +54,7 @@ public class CalculaSla {
 				
 				slaInicial = 900;
 				slaFinal = 1900;
-				System.out.println("teste");
+				
 			}if(logChamado.getEquipe().equals("Analistas Aplicações")){
 				
 				slaInicial = 800;
@@ -80,9 +80,9 @@ public class CalculaSla {
 				slaInicial = 1200;
 				slaFinal = 2100;
 			}
-//			System.out.println(logChamado.getChamado()+" - "+logChamado.getEquipe());
-//			System.out.println("inicial: "+slaInicial);
-//			System.out.println("Final: "+slaFinal);
+			//System.out.println(logChamado.getChamado()+" - "+logChamado.getEquipe());
+			//System.out.println("inicial: "+slaInicial);
+			//System.out.println("Final: "+slaFinal);
 			
 			if(num_chamado.equals("")){
 				
@@ -171,7 +171,7 @@ public class CalculaSla {
 		//System.out.println(tipo);
 		if (tipo == "I") {
 				return (int) (tempoFinal - tempoInicial);
-		}else if (tipo == "P" || grupo.equals("INFRA.Ordem de Servico")){
+		}else if (tipo == "P" || grupo.equals("INFRA.Ordem de Servico") || grupo.equals("Infra.Tarefas Internas")){
 				return 1;
 		}
 		
