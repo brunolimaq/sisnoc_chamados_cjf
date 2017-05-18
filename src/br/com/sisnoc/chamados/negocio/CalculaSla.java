@@ -50,7 +50,12 @@ public class CalculaSla {
 			
 			
 			
-			if(logChamado.getEquipe().equals("Analistas Aplicações")){
+			if(logChamado.getEquipe().equals("Documentadores")){
+				
+				slaInicial = 900;
+				slaFinal = 1900;
+				System.out.println("teste");
+			}if(logChamado.getEquipe().equals("Analistas Aplicações")){
 				
 				slaInicial = 800;
 				slaFinal = 2100;

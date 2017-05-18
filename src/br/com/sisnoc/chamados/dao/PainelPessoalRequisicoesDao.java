@@ -116,6 +116,7 @@ private  final Connection connection;
 		
 		
 		while (rs_listaChamadosFilhos.next()){
+			flagFilho = 1;
 			countTeste++;
 			lista = lista +",\'" + rs_listaChamadosFilhos.getString("ID") + "\'";
 		}
@@ -143,7 +144,8 @@ private  final Connection connection;
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and req.type != 'P'"
 						+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
-						+"and usu.userid = '"+username+"'";
+						+"and usu.userid = '"+username+"'"
+						+"and datediff(hh,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) > 22";
 
 			 stmt = connection
 					.prepareStatement(sql_listaChamados);
@@ -153,7 +155,7 @@ private  final Connection connection;
 			
 			countTeste = 0;
 			while (rs_listaChamadosPendente.next()){
-				flagFilho = 1;
+				
 				countTeste++;
 				lista = lista +",\'" + rs_listaChamadosPendente.getString("ID") + "\'";
 			}

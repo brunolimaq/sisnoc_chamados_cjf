@@ -171,7 +171,8 @@ private  final Connection connection;
 						+"and req.type != 'P'"
 						+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 						+"and usu.userid != '"+username+"' "
-						+"and vwg.last_name in ("+ listaEquipe + ") ";
+						+"and vwg.last_name in ("+ listaEquipe + ") "
+						+"and datediff(hh,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) > 22";
 
 			
 			
