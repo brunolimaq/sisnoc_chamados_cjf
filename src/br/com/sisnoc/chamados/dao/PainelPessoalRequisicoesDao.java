@@ -166,6 +166,8 @@ private  final Connection connection;
 			
 			
 			
+			
+			
 			String sql_listaLog = "select "
 									+"req.id as ID, "
 									+"req.ref_num as chamados, "
@@ -240,7 +242,63 @@ private  final Connection connection;
 		}
 	}
 	
+	public Integer listaPainelAtualizacaoOS() throws ParseException {
+		try {
+			
+						
+			// tipo = "R";
+			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username;
+			
+			
+			if (usuarioLogado  instanceof UsuarioSistema ) {
+			   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+			} else {
+			   username = usuarioLogado.toString();
+			}
+			
+
+			String sql_atualizacaoOs = "select "
+					+ "MAX(datediff(dd,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate())) as diasatualizacao " 
+					+ "from " 
+					+ "call_req req WITH (NOLOCK)  join cr_stat stat WITH (NOLOCK) on req.status = stat.code " 
+					+ "left join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee " 
+					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
+					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
+					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
+					+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
+					+ "and stat.code in ('OP','WIP','PRBAPP') " 
+					+ "and log.type='INIT' " 
+					+ "and usu.userid = '"+username+"' "
+					+ "and datediff(dd,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) > 3"
+					+ "order by 1 ";
+			
+			PreparedStatement stmt = connection
+					.prepareStatement(sql_atualizacaoOs);
+			ResultSet rs_atualizacaoOs = stmt.executeQuery();
+			
+			
+			
+			Integer atualizacaoOS = 0;
+				while (rs_atualizacaoOs.next()){
+					
 	
+					atualizacaoOS = rs_atualizacaoOs.getInt("diasatualizacao");
+				}
+			
+				
+				rs_atualizacaoOs.close();
+				stmt.close();
+
+				
+					return atualizacaoOS;
+				
+
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 	public List<Chamado> listaPainelPessoalPendencias() throws ParseException {
 		try {

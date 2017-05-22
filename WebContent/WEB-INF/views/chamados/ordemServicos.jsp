@@ -393,23 +393,7 @@
 										<td>${chamadosOSEquipePendente.responsavel}</td>
 										<td>${chamadosOSEquipePendente.titulo}</td>
 										
-										<c:if test="${chamadosOSEquipePendente.statusDescricao == 'Aberto chamado filho'}">
-											<c:if test="${chamadosOSEquipePendente.flagFilho == 1}">
-												<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
-											</c:if>	
-										</c:if>	
-										
-											<c:if test="${chamadosOSEquipePendente.statusDescricao == 'Aberto chamado filho'}">
-											<c:if test="${chamadosOSEquipePendente.flagFilho == 0}">
-												<td>${chamadosOSEquipePendente.statusDescricao}</td>
-											</c:if>	
-										</c:if>						
-													 
-										
-										<c:if test="${chamadosOSEquipePendente.statusDescricao != 'Aberto chamado filho'}">
-											<td>${chamadosOSEquipePendente.statusDescricao}</td>
-										</c:if>
-										
+										<td>${chamadosOSEquipePendente.statusDescricao}</td>
 										<td>${chamadosOSEquipePendente.prazo}</td>
 										
 																		

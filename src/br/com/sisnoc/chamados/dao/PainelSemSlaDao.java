@@ -462,6 +462,7 @@ public List<Chamado> listaPainelPessoalOsPendente(String categoria) throws Parse
 				+ "and stat.code in ('RSCH', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK') " 
 				+ "and log.type='INIT' " 
 				+"and vwg.last_name in ("+ listaEquipe + ") "
+				+"and (select count(1) from call_req where parent = req.persid) != (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR')) "
 				+ "order by 1 ";
 				
 		
@@ -477,6 +478,8 @@ public List<Chamado> listaPainelPessoalOsPendente(String categoria) throws Parse
 				.prepareStatement(sql_listaRDM);
 		ResultSet rs_listaOs = stmt.executeQuery();
 
+		
+		
 		
 		Popula popula = new Popula();
 		
@@ -507,6 +510,8 @@ public List<Chamado> listaPainelPessoalOsPendente(String categoria) throws Parse
 			
 				count++;
 			}
+			
+			
 			
 		
 			
