@@ -218,9 +218,10 @@ public class PainelSemSlaDao {
 	
 
 	
-public List<Chamado> listaPainelPessoalOs() throws ParseException {
+public List<Chamado> listaPainelPessoalOs(String categoria) throws ParseException {
 		try {
-			
+			//Infra.Tarefas Internas
+			//INFRA.Ordem de Servico
 			ArrayList<Chamado> ListaOs = new ArrayList<Chamado>();
 			String sql_listaRDM = "";
 			String sql_listaRDM2 = "";
@@ -271,7 +272,7 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
 					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
-					+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
+					+ "where ctg.sym like '"+categoria+"' " 
 					+ "and stat.code in ('OP','WIP','PRBAPP') " 
 					+ "and log.type='INIT' " 
 					+ "and usu.userid = '"+username+"' "
@@ -313,7 +314,7 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
 					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
-					+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
+					+ "where ctg.sym like '"+categoria+"' " 
 					+ "and log.type='INIT' " 
 					+ "and usu.userid = '"+username+"' "
 					+"and stat.code = 'FIP' "
@@ -357,6 +358,7 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs));
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
 					chamados.setPrazo(popula.populaPrazo(rs_listaOs));
+					chamados.setResponsavel(popula.populResponsavel(rs_listaOs));
 					
 					ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs.getString("diasatualizacao")), chamados));
 				
@@ -381,6 +383,8 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs2));
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs2));
 					chamados.setPrazo(popula.populaPrazo(rs_listaOs2));
+					chamados.setResponsavel(popula.populResponsavel(rs_listaOs2));
+					
 					chamados.setFlagFilho(1);
 					ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs2.getString("diasatualizacao")), chamados));
 					count++;
@@ -400,9 +404,10 @@ public List<Chamado> listaPainelPessoalOs() throws ParseException {
 	}
 	
 	
-public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
+public List<Chamado> listaPainelPessoalOsPendente(String categoria) throws ParseException {
 	try {
-		
+		//Infra.Tarefas Internas
+		//INFRA.Ordem de Servico
 		ArrayList<Chamado> ListaOs = new ArrayList<Chamado>();
 		String sql_listaRDM = "";
 		String sql_listaRDM2 = "";
@@ -453,10 +458,11 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 				+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
 				+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 				+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
-				+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
+				+ "where ctg.sym like '"+categoria+"' "  
 				+ "and stat.code in ('RSCH', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK') " 
 				+ "and log.type='INIT' " 
 				+"and vwg.last_name in ("+ listaEquipe + ") "
+				+"and (select count(1) from call_req where parent = req.persid) != (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR')) "
 				+ "order by 1 ";
 				
 		
@@ -472,6 +478,8 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 				.prepareStatement(sql_listaRDM);
 		ResultSet rs_listaOs = stmt.executeQuery();
 
+		
+		
 		
 		Popula popula = new Popula();
 		
@@ -496,13 +504,14 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 				chamados.setData_inicio(popula.populaData_inicio(rs_listaOs));
 				chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
 				chamados.setPrazo(popula.populaPrazo(rs_listaOs));
-				chamados.setResponsavel(popula.populaResponsavel(rs_listaOs));
-
+				chamados.setResponsavel(popula.populResponsavel(rs_listaOs));
 				
 				ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs.getString("diasatualizacao")), chamados));
 			
 				count++;
 			}
+			
+			
 			
 		
 			
@@ -517,9 +526,10 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 	}
 }
 
-	public List<Chamado> listaPainelPessoalEquipeOs() throws ParseException {
+public List<Chamado> listaPainelPessoalEquipeOs(String categoria) throws ParseException {
 		try {
-			
+			//Infra.Tarefas Internas
+			//INFRA.Ordem de Servico
 			ArrayList<Chamado> ListaOs = new ArrayList<Chamado>();
 			String sql_listaRDM = "";
 			String sql_listaRDM2 = "";
@@ -568,7 +578,7 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
 					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
-					+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
+					+ "where ctg.sym like '"+categoria+"' "  
 					+ "and stat.code in ('OP','WIP','PRBAPP') " 
 					+ "and log.type='INIT' " 
 					+"and vwg.last_name in ("+ listaEquipe + ") "
@@ -579,7 +589,8 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 //						+"and ca_contact.userid  not in ("+user_exclusao+") "
 //						+"and vwg.last_name in ("+ listaEquipe + ") "
 //						+"order by 6,5";
-
+//Infra.Tarefas Internas
+//INFRA.Ordem de Servico
 						
 			PreparedStatement stmt = connection
 					.prepareStatement(sql_listaRDM);				
@@ -610,7 +621,7 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
 					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
-					+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
+					+ "where ctg.sym like '"+categoria+"' "  
 					+ "and log.type='INIT' " 
 					+"and vwg.last_name in ("+ listaEquipe + ") "
 					+ "and usu.userid != '"+username+"' "
@@ -642,8 +653,6 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 				while (rs_listaOs.next()){
 					// adiciona um chamado na lista
 					
-					
-					
 					Chamado chamados = new Chamado();
 					chamados.setId(popula.populaID(rs_listaOs));
 					chamados.setEquipe(popula.populaEquipe(rs_listaOs));
@@ -660,24 +669,20 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs));
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs));
 					chamados.setPrazo(popula.populaPrazo(rs_listaOs));
-					chamados.setResponsavel(popula.populaResponsavel(rs_listaOs));
+					chamados.setResponsavel(popula.populResponsavel(rs_listaOs));
 					
 					ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs.getString("diasatualizacao")), chamados));
-					
-					
 					count++;
 				}
 			
 				
 				while (rs_listaOs2.next()){
 					// adiciona um chamado na lista
-					
 					Chamado chamados = new Chamado();
 					chamados.setId(popula.populaID(rs_listaOs2));
 					chamados.setEquipe(popula.populaEquipe(rs_listaOs2));
 					chamados.setChamado(popula.populaChamados(rs_listaOs2));
 					chamados.setTitulo(popula.populaTitulo(rs_listaOs2));
-					
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listaOs2));
 					chamados.setGrupo(popula.populaGrupo(rs_listaOs2));
 					chamados.setTipo(popula.populaTipo(rs_listaOs2));
@@ -688,8 +693,8 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 					chamados.setData_inicio(popula.populaData_inicio(rs_listaOs2));
 					chamados.setData_retorno(popula.populaData_retorno(rs_listaOs2));
 					chamados.setPrazo(popula.populaPrazo(rs_listaOs2));
-					chamados.setResponsavel(popula.populaResponsavel(rs_listaOs2));
-
+					chamados.setResponsavel(popula.populResponsavel(rs_listaOs2));
+					chamados.setFlagFilho(1);
 					
 					ListaOs.add(CalculaSla.CalculaMetaOS(Integer.parseInt(rs_listaOs2.getString("diasatualizacao")), chamados));
 					
@@ -709,7 +714,7 @@ public List<Chamado> listaPainelPessoalOsPendente() throws ParseException {
 		}
 	}
 	
-	public List<Chamado> listaPainelGeralProblema(String status) throws ParseException {
+public List<Chamado> listaPainelGeralProblema(String status) throws ParseException {
 		
 //		Aberto					OP
 //		Em investigação			RSCH

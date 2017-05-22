@@ -83,7 +83,7 @@ public class Popula {
 		return rs.getString("agendamento");
 	}
 
-	public String populaResponsavel(ResultSet rs) throws SQLException, ParseException {
+	public String populResponsavel(ResultSet rs) throws SQLException, ParseException {
 		return rs.getString("responsavel");
 	}
 
@@ -115,7 +115,7 @@ public class Popula {
 		
 		return rs.getString("prazo");
 	}
-
+	
 	
 	
 	

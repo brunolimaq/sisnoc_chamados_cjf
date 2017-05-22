@@ -28,6 +28,7 @@ public class Chamado {
 	private Integer countNocChamados;
 	private Integer countNocIncidentes;
 	private Integer countTotalNoc;
+	private Integer countPendencias;
 	
 	private Integer flagFilho;
 	private String prazo;
@@ -453,6 +454,16 @@ public class Chamado {
 
 	public void setPrazo(String prazo) {
 		this.prazo = prazo;
+	}
+
+
+	public Integer getCountPendencias() {
+		return countPendencias;
+	}
+
+
+	public void setCountPendencias(Integer countPendencias) {
+		this.countPendencias = countPendencias;
 	}
 
 

@@ -347,8 +347,13 @@ var gaugeSLA4 = {
 						<strong>Meus chamados em andamento</strong>
 					</a>
 					<c:if test="${empty chamadosPainelPessoal}">
-						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
-
+						
+						<c:if test="${atualizacaoOS > 0}">
+							<div class="alert alert-danger" role="alert"><strong>Existe uma Ordem de Servico com ${atualizacaoOS} dias sem atualização! <a href="/chamados/ordemServicos">Clique Aqui!</a></strong></div>
+						</c:if>
+						<c:if test="${atualizacaoOS == 0}">
+							<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
+						</c:if>
   					</c:if>
   					<c:if test="${!empty chamadosPainelPessoal}">
   					

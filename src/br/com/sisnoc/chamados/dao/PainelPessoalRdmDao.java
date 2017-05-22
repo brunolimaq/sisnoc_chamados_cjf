@@ -119,7 +119,7 @@ private  final Connection connection;
 					mudancas.setResumo(popula.populaTitulo(rs_listaChamado));
 					mudancas.setAgendamento(popula.populaAgendamento(rs_listaChamado));
 					mudancas.setStatusDescricao(popula.populaStatusDescricao(rs_listaChamado));
-					mudancas.setResponsavel(popula.populaResponsavel(rs_listaChamado));
+					mudancas.setResponsavel(popula.populResponsavel(rs_listaChamado));
 					
 					
 					ListaRDM.add(mudancas);
