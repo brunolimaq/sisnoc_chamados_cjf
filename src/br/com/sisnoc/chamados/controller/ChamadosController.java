@@ -169,9 +169,7 @@ public class ChamadosController {
 		}
 		
 		model.addAttribute("chamadosPainelPessoalPendencias", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelPessoalPendencias());
-		model.addAttribute("countPendencias",((PainelPessoalRequisicoesDao) destaquesDao).getCountPendencias());
 		
-		System.out.println(destaquesDao.getCountPendencias() + "count pendendicias");
 		
 		ModelAndView mv = new ModelAndView("chamados/pendencias");
 		return mv;
