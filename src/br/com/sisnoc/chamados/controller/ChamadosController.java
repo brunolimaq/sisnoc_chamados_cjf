@@ -18,7 +18,7 @@ import br.com.sisnoc.chamados.dao.PainelChamadosDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalRequisicoesDao;
 import br.com.sisnoc.chamados.dao.PainelSemSlaDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
-
+import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalRdmDao;
 import br.com.sisnoc.chamados.dao.PainelGeralRdmDao;
 
@@ -52,6 +52,9 @@ public class ChamadosController {
 	
 	@Autowired
 	private PainelGeralRdmDao rdmGeral;
+	
+	@Autowired
+	private PainelPessoalMetasDao metasDao;
 	
 	@RequestMapping("/")
 	public ModelAndView principal(Model model) throws ParseException{
@@ -142,7 +145,7 @@ public class ChamadosController {
 	public ModelAndView listaPendencias(Model model) throws ParseException{
 		
 		
-		String perfil;
+		String perfil = "";
 		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = "";
 		Collection<? extends GrantedAuthority> permissao = null;
@@ -159,6 +162,9 @@ public class ChamadosController {
 				perfil = "GESTOR";
 				model.addAttribute("chamadosPainelPessoal", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoPendentes(perfil));
 				//model.addAttribute("chamadosPainelPessoalPendencias", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelPessoalPendencias());
+				model.addAttribute("chamadosViolados", metasDao.listaPainelPessoalMetas(perfil));
+				model.addAttribute("chamadosReabertos", metasDao.listaPainelPessoalReabertosLista(perfil));
+
 
 				
 				ModelAndView mv = new ModelAndView("chamados/pendenciasGestor");
@@ -169,6 +175,9 @@ public class ChamadosController {
 		}
 		
 		model.addAttribute("chamadosPainelPessoalPendencias", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelPessoalPendencias());
+		
+		model.addAttribute("chamadosViolados", metasDao.listaPainelPessoalMetas(perfil));
+		model.addAttribute("chamadosReabertos", metasDao.listaPainelPessoalReabertosLista(perfil));
 		
 		
 		ModelAndView mv = new ModelAndView("chamados/pendencias");
@@ -220,20 +229,28 @@ public class ChamadosController {
 		ModelAndView mv = new ModelAndView("chamados/ordemServicos");
 		return mv;
 	}
+	
+	
+	@RequestMapping("/problemas")
+	public ModelAndView listaProblemas(Model model) throws ParseException{
+		String status;
+		
+		status= "'OP'";
+		model.addAttribute("problemasAbertos", ((PainelSemSlaDao) osDao).listaPainelGeralProblema(status));
+		status= "'RSCH'";
+		model.addAttribute("problemasInvestigacao", ((PainelSemSlaDao) osDao).listaPainelGeralProblema(status));
+		status= "'PRBANCOMP'";
+		model.addAttribute("problemasCausaIdentificada", ((PainelSemSlaDao) osDao).listaPainelGeralProblema(status));
+		status= "'PO'";
+		model.addAttribute("problemasSolucaoImplatacao", ((PainelSemSlaDao) osDao).listaPainelGeralProblema(status));
+		status= "'PF'";
+		model.addAttribute("problemasEmRevisao", ((PainelSemSlaDao) osDao).listaPainelGeralProblema(status));
 
-//	@RequestMapping("/pendencias")
-//	public ModelAndView listaPendencias(Model model) throws ParseException{
-//		String equipe = "todas";
-//		String status = "";
-//		
-//		ModelAndView mv = new ModelAndView("chamados/pendencias");
-//		
-//		model.addAttribute("chamadosPendentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
-//		model.addAttribute("incidentesPendentes", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
-//		
-//		
-//		return mv;
-//	}
+		
+		ModelAndView mv = new ModelAndView("chamados/problemas");
+		return mv;
+	}
+
 
 	
 	

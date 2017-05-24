@@ -462,7 +462,6 @@ public List<Chamado> listaPainelPessoalOsPendente(String categoria) throws Parse
 				+ "and stat.code in ('RSCH', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK') " 
 				+ "and log.type='INIT' " 
 				+"and vwg.last_name in ("+ listaEquipe + ") "
-				+"and (select count(1) from call_req where parent = req.persid) != (select count(1) from call_req where parent = req.persid and status in ('CL','RE','CNCL','AEUR')) "
 				+ "order by 1 ";
 				
 		
@@ -755,7 +754,7 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 					+ "req.id as ID, " 
 					+ "usu.first_name as responsavel, "
 					+ "req.ref_num as chamados, "
-					+ "vwg.last_name as equipe," 
+					+ "replace(vwg.last_name, 'Analistas ', '') as equipe, "
 					+ "req.summary as titulo,  "
 					+ "stat.sym as statusDescricao, " 
 					+ "ctg.sym as grupo " 
@@ -768,9 +767,8 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 					+ "where ctg.sym like 'INFRA%' "
 					+ "and ctg.sym not like 'INFRA.Ordem de Servico' "
 					+ "and req.type in ('P') "
-					+ "and stat.code in ('RSCH', 'OP', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK','WIP','PRBAPP') " 
+					+ "and stat.code in ("+status+") " 
 					+ "and log.type='INIT' " 
-					+ "and stat.code = '"+status+"' "
 					+ "order by 1 ";
 					
 
@@ -802,10 +800,7 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 					chamados.setEquipe(popula.populaEquipe(rs_listaOs));
 					chamados.setChamado(popula.populaChamados(rs_listaOs));
 					chamados.setTitulo(popula.populaTitulo(rs_listaOs));
-					chamados.setStatus(popula.populaStatus(rs_listaOs));
 					chamados.setGrupo(popula.populaGrupo(rs_listaOs));
-					chamados.setTipo(popula.populaTipo(rs_listaOs));
-					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listaOs));
 					
 					
 					

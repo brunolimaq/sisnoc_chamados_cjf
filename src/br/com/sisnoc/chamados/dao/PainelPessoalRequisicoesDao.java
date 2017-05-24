@@ -302,6 +302,8 @@ private  final Connection connection;
 		}
 	}
 	
+	//Pendências
+	
 	public List<Chamado> listaPainelPessoalPendencias() throws ParseException {
 		try {
 			
@@ -422,6 +424,7 @@ private  final Connection connection;
 	}
 	
 	
+
 	
 	
 	public Connection getConnection() throws SQLException {
