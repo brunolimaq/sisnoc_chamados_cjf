@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -43,9 +43,6 @@ private  final Connection connection;
 
 	
 	public ArrayList<Chamado> listaPainelPessoalMetas(String perfil) throws ParseException {
-		
-		
-		
 		
 		
 		try {
@@ -173,6 +170,8 @@ private  final Connection connection;
 					chamados.setEpoch(popula.populaEpoch(rs_listalog));
 					chamados.setGrupo(popula.populaGrupo(rs_listalog));
 					chamados.setTipo(popula.populaTipo(rs_listalog));
+					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
+
 					ListaChamados.add(chamados);
 					count++;
 				}
@@ -386,6 +385,142 @@ public int listaPainelPessoalPendentes(String perfil) throws ParseException {
 }
 	
 	
+
+public List<Chamado>  listaPainelPessoalReabertosLista(String perfil) throws ParseException {
+	
+	
+	ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
+
+	
+	
+	try {
+		
+		
+		String sql_listaChamados = "";
+		
+		
+		
+		// tipo = "R";
+		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username;
+		if (usuarioLogado  instanceof UsuarioSistema ) {
+		   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+		} else {
+		   username = usuarioLogado.toString();
+		}
+	
+		
+		if (perfil == "GESTOR"){
+
+			sql_listaChamados = "select " 
+					+"req.ref_num as chamados, "
+					+"req.id as ID , "
+					+"count(cast(log.action_desc as varchar)) reaberturas ,  "
+					+"usu.first_name as responsavel , "
+					+"vwg.last_name as equipe, "
+					+"cat.sym as grupo, "
+					+"req.type as tipo,  "
+					+"req.summary as titulo,  "
+					+"DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch, "
+					+"stat.sym as statusDescricao " 
+				+"from  "
+					+"call_req req WITH(NOLOCK)  "
+					+"join cr_stat stat WITH(NOLOCK) on req.status = stat.code  "
+					+"join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category " 
+					+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee  "
+					+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid " 
+					+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid  "
+				+"where  "
+					+"cat.sym like 'INFRA%' " 
+					+"and cat.sym not like 'INFRA.Ordem de Servico' " 
+					+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' " 
+					+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' " 
+					+"and cat.sym not like 'Infra.Tarefas Internas' " 
+					+"and req.type != 'P' " 
+					+"and stat.code in ('RE','CL') " 
+					+"and usu.userid = '"+username+"' "
+					+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
+					+"and log.action_desc like 'registrar texto da solução' " 
+					+"group by req.ref_num ,req.id, usu.first_name, vwg.last_name, cat.sym, req.type, req.summary, stat.sym " ;
+		} else {
+		
+		
+
+			sql_listaChamados ="select " 
+					+"req.ref_num as chamados, "
+					+"req.id as ID , "
+					+"count(cast(log.action_desc as varchar)) reaberturas ,  "
+					+"usu.first_name as responsavel , "
+					+"vwg.last_name as equipe, "
+					+"cat.sym as grupo, "
+					+"req.type as tipo,  "
+					+"req.summary as titulo,  "
+					+"DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch, "
+					+"stat.sym as statusDescricao " 
+				+"from  "
+					+"call_req req WITH(NOLOCK)  "
+					+"join cr_stat stat WITH(NOLOCK) on req.status = stat.code  "
+					+"join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category " 
+					+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee  "
+					+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid " 
+					+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid  "
+				+"where  "
+					+"cat.sym like 'INFRA%' " 
+					+"and cat.sym not like 'INFRA.Ordem de Servico' " 
+					+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' " 
+					+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' " 
+					+"and cat.sym not like 'Infra.Tarefas Internas' " 
+					+"and req.type != 'P' " 
+					+"and stat.code in ('RE','CL') " 
+					+"and usu.userid = '"+username+"' "
+					+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
+					+"and log.action_desc like 'registrar texto da solução' " 
+					+"group by req.ref_num ,req.id, usu.first_name, vwg.last_name, cat.sym, req.type, req.summary, stat.sym " ;
+		}
+			//registrar texto da solução
+
+		PreparedStatement stmt = connection
+				.prepareStatement(sql_listaChamados);
+		ResultSet rs_listaChamados = stmt.executeQuery();
+		
+		
+		
+		Popula popula = new Popula();
+
+		int countReabertos = 0;
+		
+		while (rs_listaChamados.next()){
+			Chamado chamados = new Chamado();
+			
+			chamados.setId(popula.populaID(rs_listaChamados));
+			chamados.setEquipe(popula.populaEquipe(rs_listaChamados));
+			chamados.setChamado(popula.populaChamados(rs_listaChamados));
+			chamados.setTitulo(popula.populaTitulo(rs_listaChamados));
+			chamados.setGrupo(popula.populaGrupo(rs_listaChamados));
+			chamados.setTipo(popula.populaTipo(rs_listaChamados));
+			chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listaChamados));
+			chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listaChamados));
+			chamados.setReaberto(popula.populaReaberto(rs_listaChamados));
+			System.out.println("Chamado reaberto" + chamados.getChamado() + "reaberto?" + chamados.getReaberto());
+			ListaChamados.add(chamados);
+			
+		}
+		rs_listaChamados.close();
+		stmt.close();
+
+		if(ListaChamados.isEmpty()){
+			return null;
+		} else {
+			return ListaChamados;
+		}
+
+	
+} catch (SQLException e) {
+	throw new RuntimeException(e);
+}
+}
+
+
 public Connection getConnection() throws SQLException {
 	return connection;
 }

@@ -39,6 +39,8 @@ private  final Connection connection;
 			throw new RuntimeException(e);
 		}
 	}
+
+	private Integer countPendencias;
 	
 	public List<Chamado> listaPainelPessoalDestaques() throws ParseException {
 		try {
@@ -145,7 +147,8 @@ private  final Connection connection;
 						+"and req.type != 'P'"
 						+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 						+"and usu.userid = '"+username+"'"
-						+"and datediff(hh,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) > 22";
+						+"and (datediff(hh,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) > 22"
+						+"or req.last_mod_by != (select contact_uuid from ca_contact where userid = '"+username+"'))";
 
 			 stmt = connection
 					.prepareStatement(sql_listaChamados);
@@ -300,6 +303,8 @@ private  final Connection connection;
 		}
 	}
 	
+	//Pendências
+	
 	public List<Chamado> listaPainelPessoalPendencias() throws ParseException {
 		try {
 			
@@ -327,6 +332,8 @@ private  final Connection connection;
 					+"where "
 						+"cat.sym like 'INFRA%' "
 						+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
+						+"and cat.sym not in ('Infra.Tarefas Internas', 'INFRA.Ordem de Servico') "
+						+"and req.type != 'P'"
 						+"and usu.userid = '"+username+"'";
 
 			PreparedStatement stmt = connection
@@ -400,6 +407,7 @@ private  final Connection connection;
 					count++;
 				}
 			
+				setCountPendencias(count);
 				
 				rs_listalog.close();
 				stmt.close();
@@ -417,9 +425,19 @@ private  final Connection connection;
 	}
 	
 	
+
 	
 	
 	public Connection getConnection() throws SQLException {
 		return connection;
 	}
+
+	public Integer getCountPendencias() {
+		return countPendencias;
+	}
+
+	public void setCountPendencias(Integer countPendencias) {
+		this.countPendencias = countPendencias;
+	}
+
 }

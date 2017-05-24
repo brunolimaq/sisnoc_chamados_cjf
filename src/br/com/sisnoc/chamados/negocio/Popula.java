@@ -115,6 +115,11 @@ public class Popula {
 		
 		return rs.getString("prazo");
 	}
+
+	public int populaReaberto(ResultSet rs)  throws SQLException,  ParseException {
+		// TODO Auto-generated method stub
+		return rs.getInt("reaberturas");
+	}
 	
 	
 	

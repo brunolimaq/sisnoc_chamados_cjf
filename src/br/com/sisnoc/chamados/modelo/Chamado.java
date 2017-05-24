@@ -28,6 +28,7 @@ public class Chamado {
 	private Integer countNocChamados;
 	private Integer countNocIncidentes;
 	private Integer countTotalNoc;
+	private Integer countPendencias;
 	
 	private Integer flagFilho;
 	private String prazo;
@@ -47,7 +48,7 @@ public class Chamado {
 	private String titulo;
 	private String status;
 	private String grupo;
-	private Integer reaberto;
+	private int reaberto;
 	private String statusReal;
 	private String tipoLegivel;
 	private String statusDescricao;
@@ -62,14 +63,6 @@ public class Chamado {
 	}
 
 
-	public Integer getReaberto() {
-		return reaberto;
-	}
-
-
-	public void setReaberto(Integer reaberto) {
-		this.reaberto = reaberto;
-	}
 
 
 	public String getMeta_2() {
@@ -455,6 +448,28 @@ public class Chamado {
 		this.prazo = prazo;
 	}
 
+
+	public Integer getCountPendencias() {
+		return countPendencias;
+	}
+
+
+	public void setCountPendencias(Integer countPendencias) {
+		this.countPendencias = countPendencias;
+	}
+
+
+	public int getReaberto() {
+		return reaberto;
+	}
+
+
+	public void setReaberto(int reaberto) {
+		this.reaberto = reaberto;
+	}
+
+
+	
 
 	
 

@@ -46,8 +46,8 @@
         <div class="panel-heading"><h3 id="chamados"><center><strong>Requisições dos(as) ${equipe}</strong></center></h3></div>
 	<div class="panel-body">
 		<div class="row">
-
-				<div class="col-md-6">
+		<!-- chamados -->
+		<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
 						<strong>Chamados em andamento </strong>
@@ -132,66 +132,9 @@
                    </div>
                </div> <!-- fim DIV col-md6 do Chamados ROW -->
                
-               				<div class="col-md-6">
+         <div class="col-md-6">
                	<div class="list-group ">
-                   	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
-						<strong>Incidentes em andamento</strong>
-					 </a>
-					<c:if test="${empty incidenteEquipeAndamento}">
-						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
-
-  					</c:if>
-  					<c:if test="${!empty incidenteEquipeAndamento}">
-					 
-						<table class="table table-bordered table-hover">
-							<thead>
-								<tr class="painel_incidente">
-									<td><center><strong>Equipe</strong></center></td>
-									<td><center><strong>Chamado</strong></center></td>
-									<td><center><strong>Descrição</strong></center></td>
-									<td><center><strong>SLA</strong></center></td>
-									<td><center><strong>Meta</strong></center></td>
-									
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${incidenteEquipeAndamento}" var="incidenteEquipeAndamento">	
-									<tr  class="${incidenteEquipeAndamento.alerta}">
-										<td>${incidenteEquipeAndamento.equipe}</td>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${incidenteEquipeAndamento.id}" target="_blank" >${incidenteEquipeAndamento.chamado}</a></td>
-										<td>${incidenteEquipeAndamento.titulo}</td>
-										<td>${incidenteEquipeAndamento.sla}
-										</td>
-										<td  width="15%" height="70%" style="padding:3px" >
-										<div class="progress" style="height:30px" align="center">
-										  <div class="progress-bar ${incidenteEquipeAndamento.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
-										    <span >15m</span>
-										  </div>
-										  <div class="progress-bar ${incidenteEquipeAndamento.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
-										    <span>45m</span>
-										  </div>
-										  <div class="progress-bar ${incidenteEquipeAndamento.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
-										    <span>1h</span>
-										  </div>
-										</div>
-										</td>
-									</tr>
-								</c:forEach>
-							</tbody>    
-						</table>
-					</c:if>
-                   </div>
-               </div> <!-- fim DIV col-md4 do Chamados ROW -->
-               
-               
-
-
-
-		<div class="row">
-
-				<div class="col-md-6">
-               	<div class="list-group ">
-                   	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
+                   	<a href="#chamados" class="list-group-item active" id="painel_incidente_titulo">
 						<strong>Chamados Pendentes </strong>
 					 </a>
 					<c:if test="${empty chamadosEquipePendente}">
@@ -202,7 +145,7 @@
 					 
 						<table class="table table-bordered table-hover">
 							<thead>
-								<tr class="painel_chamados">
+								<tr class="painel_incidente">
 									<td><center><strong>Equipe</strong></center></td>
 									<td><center><strong>Chamado</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
@@ -276,7 +219,67 @@
                    </div>
                </div> <!-- fim DIV col-md6 do Chamados ROW -->
                
-               				<div class="col-md-6">
+               
+
+		</div>
+
+
+		<div class="row">
+		<!-- Incidentes -->
+		      	<div class="col-md-6">
+               	<div class="list-group ">
+                   	<a href="#chamados" class="list-group-item active" "id="painel_chamados_titulo">
+						<strong>Incidentes em andamento</strong>
+					 </a>
+					<c:if test="${empty incidenteEquipeAndamento}">
+						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
+
+  					</c:if>
+  					<c:if test="${!empty incidenteEquipeAndamento}">
+					 
+						<table class="table table-bordered table-hover">
+							<thead>
+					<tr class="painel_chamados">
+									<td><center><strong>Equipe</strong></center></td>
+									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>SLA</strong></center></td>
+									<td><center><strong>Meta</strong></center></td>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${incidenteEquipeAndamento}" var="incidenteEquipeAndamento">	
+									<tr  class="${incidenteEquipeAndamento.alerta}">
+										<td>${incidenteEquipeAndamento.equipe}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${incidenteEquipeAndamento.id}" target="_blank" >${incidenteEquipeAndamento.chamado}</a></td>
+										<td>${incidenteEquipeAndamento.titulo}</td>
+										<td>${incidenteEquipeAndamento.sla}
+										</td>
+										<td  width="15%" height="70%" style="padding:3px" >
+										<div class="progress" style="height:30px" align="center">
+										  <div class="progress-bar ${incidenteEquipeAndamento.meta_2}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 2 horas">
+										    <span >15m</span>
+										  </div>
+										  <div class="progress-bar ${incidenteEquipeAndamento.meta_6}" style="width: 33%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 6 horas">
+										    <span>45m</span>
+										  </div>
+										  <div class="progress-bar ${incidenteEquipeAndamento.meta_24}" style="width: 34%" class="sr-only" data-toggle="tooltip" data-placement="bottom" title="Meta de 24 horas">
+										    <span>1h</span>
+										  </div>
+										</div>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>    
+						</table>
+					</c:if>
+                   </div>
+               </div> <!-- fim DIV col-md4 do Chamados ROW -->
+
+				
+               
+				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
 						<strong>Incidentes Pendentes </strong>
@@ -326,8 +329,9 @@
 					</c:if>
                    </div>
                </div> <!-- fim DIV col-md4 do Chamados ROW -->
-               
-               
+      </div>
+      <div class="row">
+               <!-- Ordem de serviços -->
 				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
@@ -364,50 +368,10 @@
 						</table>
 					</c:if>
                    </div>
-               </div> <!-- fim DIV col-md6 do Chamados ROW -->
-               
-               				<div class="col-md-6">
-               	<div class="list-group ">
-                   	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
-						<strong>Tarefas Internas em andamento </strong>
-					 </a>
-					<c:if test="${empty tarefaEquipeAndamento}">
-						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
-
-  					</c:if>
-  					<c:if test="${!empty tarefaEquipeAndamento}">
-					 
-						<table class="table table-bordered table-hover">
-							<thead>
-								<tr class="painel_incidente">
-									<td><center><strong>Equipe</strong></center></td>
-									<td><center><strong>Chamado</strong></center></td>
-									<td><center><strong>Descrição</strong></center></td>
-									
-									
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${tarefaEquipeAndamento}" var="tarefaEquipeAndamento">	
-									<tr  class="${tarefaEquipeAndamento.alerta}">
-										<td>${tarefaEquipeAndamento.equipe}</td>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${osEquipePendente.id}" target="_blank" >${osEquipePendente.chamado}</a></td>
-										<td>${tarefaEquipeAndamento.titulo}</td>
-										
-										
-									</tr>
-								</c:forEach>
-							</tbody>    
-						</table>
-					</c:if>
-                   </div>
-               </div> <!-- fim DIV col-md4 do Chamados ROW -->
-               
-               
-
+       </div> <!-- fim DIV col-md6 do Chamados ROW -->
 				<div class="col-md-6">
                	<div class="list-group ">
-                   	<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
+                   	<a href="#chamados" class="list-group-item active" id="painel_incidente_titulo">
 						<strong>Ordem de serviço pendentes </strong>
 					 </a>
 					<c:if test="${empty osEquipePendente}">
@@ -418,7 +382,7 @@
 					 
 						<table class="table table-bordered table-hover">
 							<thead>
-								<tr class="painel_chamados">
+							<tr class="painel_incidente">
 									<td><center><strong>Equipe</strong></center></td>
 									<td><center><strong>Chamado</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
@@ -442,8 +406,50 @@
 					</c:if>
                    </div>
                </div> <!-- fim DIV col-md6 do Chamados ROW -->
+		</div>
+		               
+              <div class="row">
+              
+               <!-- Tarefas Internas -->
                
-               				<div class="col-md-6">
+                <div class="col-md-6">
+               	<div class="list-group ">
+               	
+                   	<a href="#chamados" class="list-group-item active" " id="painel_chamados_titulo">
+						<strong>Tarefas Internas em andamento </strong>
+					 </a>
+					<c:if test="${empty tarefaEquipeAndamento}">
+						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
+
+  					</c:if>
+  					<c:if test="${!empty tarefaEquipeAndamento}">
+					 
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr class="painel_chamados">
+									<td><center><strong>Equipe</strong></center></td>
+									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Descrição</strong></center></td>
+									
+									
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${tarefaEquipeAndamento}" var="tarefaEquipeAndamento">	
+									<tr  class="${tarefaEquipeAndamento.alerta}">
+										<td>${tarefaEquipeAndamento.equipe}</td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${osEquipePendente.id}" target="_blank" >${osEquipePendente.chamado}</a></td>
+										<td>${tarefaEquipeAndamento.titulo}</td>
+										
+										
+									</tr>
+								</c:forEach>
+							</tbody>    
+						</table>
+					</c:if>
+                   </div>
+               	</div> <!-- fim DIV col-md4 do Chamados ROW -->
+				<div class="col-md-6">
                	<div class="list-group ">
                    	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
 						<strong>Tarefas Internas pendentes</strong>
@@ -478,10 +484,11 @@
 						</table>
 					</c:if>
                    </div>
-               </div> <!-- fim DIV col-md4 do Chamados ROW -->
+               	</div> <!-- fim DIV col-md4 do Chamados ROW -->
                
+            
                
-              </div> <!-- row -->
+       </div> <!-- row -->
               </div><!-- painel body -->
               </div><!-- painel -->
                

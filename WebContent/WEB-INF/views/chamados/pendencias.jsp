@@ -151,14 +151,77 @@
                    </div>
                </div> <!-- fim DIV col-md6 do Chamados ROW -->
                
-               				<div class="col-md-6">
+               	<div class="col-md-6">
+               	
                	<div class="list-group ">
-                   	<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
-						<strong>Índices </strong>
-						Em construção..
-					 </a>
+                   	<a href="#chamados" class="list-group-item active" id="painel_incidente_titulo">
+						<strong>Chamados pendêntes de justificativa</strong>
+
+							
 				
+					 </a>
+
+					<a href="#chamados" class="list-group-item active" id="painel_noc_titulo">
+						<strong>Chamados violados </strong>
+					 </a>
+					 
+					 	<table class="table table-bordered table-hover">
+							<thead>
+								<tr class="painel_noc">
+									<td><center><strong>Categoria</strong></center></td>
+									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Ações</strong></center></td>
+								</tr>
+							</thead>
+							<tbody>
+							
+								<c:forEach items="${chamadosViolados}" var="chamadosViolados">	
+									
+									<c:if test="${chamadosViolados.sla == 'Violado' }">
+									<tr >
+									    <td>${chamadosViolados.tipoLegivel}</td>
+									    <td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosViolados.id}" target="_blank" >${chamadosViolados.chamado}</a></td>
+										<td>${chamadosViolados.titulo}</td>
+										<td>${chamadosViolados.statusDescricao}</td>
+									</tr>
+								</c:if>
+								</c:forEach>
+							</tbody>    
+						</table>
+					 
+					<a href="#chamados" class="list-group-item active" id="painel_noc_titulo">
+						<strong>Chamados reabertos </strong>
+					 </a>
+					 
+					 
+					  	<table class="table table-bordered table-hover">
+							<thead>
+								<tr class="painel_noc">
+									<td><center><strong>Categoria</strong></center></td>
+									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Descrição</strong></center></td>
+									<td><center><strong>Ações</strong></center></td>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${chamadosReabertos}" var="chamadosReabertos">	
+								<c:if test="${chamadosReabertos.reaberto > '1' }">
+								
+									<tr>
+										<td>${chamadosReabertos.tipoLegivel}</td>
+									   <td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosReabertos.id}" target="_blank" >${chamadosReabertos.chamado}</a></td>
+										<td>${chamadosReabertos.titulo}</td>
+										<td></td>
+										</tr>
+									</c:if>
+								</c:forEach>
+							</tbody>    
+						</table>
                    </div>
+                   
+                   
                </div> <!-- fim DIV col-md4 do Chamados ROW -->
                
                
