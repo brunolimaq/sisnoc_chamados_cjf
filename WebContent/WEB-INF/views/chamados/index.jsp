@@ -497,13 +497,13 @@ var gaugeSLA4 = {
 								 <div class="panel panel-default" >
 								  <div class="panel-heading">Violados</div>
 								  <div class="panel-body paineis_indices" >
-								    <label class="letras" id="violados">0</label>
+								   <a href="/chamados/pendencias"><label class="letras" id="violados">0</label></a>
 								  </div>
 								</div>
 								<div class="panel panel-default">
 								  <div class="panel-heading">Pendências</div>
 								  <div class="panel-body paineis_indices">
-								    <label class="letras" id="pendencias">0</label>
+								     <a href="/chamados/pendencias"><label class="letras" id="pendencias">0</label></a>
 								  </div>
 								</div>
 						 		<div id="gauge-sla2" style="width: 200px; height: 134px;" ></div>
@@ -518,7 +518,7 @@ var gaugeSLA4 = {
 								<div class="panel panel-default">
 								  <div class="panel-heading">Chamados Reaberto</div>
 								  <div class="panel-body paineis_indices">
-								    <label class="letras" id="reabertosMes">0</label>
+								     <a href="/chamados/pendencias"><label class="letras" id="reabertosMes">0</label></a>
 								  </div>
 								</div>
 								<div id="gauge-sla4" style="width: 200px; height: 134px;"></div>

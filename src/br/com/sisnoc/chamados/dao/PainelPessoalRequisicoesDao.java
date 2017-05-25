@@ -262,7 +262,7 @@ private  final Connection connection;
 			
 
 			String sql_atualizacaoOs = "select "
-					+ "MAX(datediff(dd,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate())) as diasatualizacao " 
+					+ "MAX(datediff(dd,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate())) as diasatualizacao "
 					+ "from " 
 					+ "call_req req WITH (NOLOCK)  join cr_stat stat WITH (NOLOCK) on req.status = stat.code " 
 					+ "left join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee " 
@@ -270,7 +270,7 @@ private  final Connection connection;
 					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
 					+ "where ctg.sym like 'INFRA.Ordem de Servico' " 
-					+ "and stat.code in ('OP','WIP','PRBAPP') " 
+					+ "and stat.code in ('OP','WIP','PRBAPP', 'RSCH', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK') " 
 					+ "and log.type='INIT' " 
 					+ "and usu.userid = '"+username+"' "
 					+ "and datediff(dd,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) > 3"
