@@ -22,12 +22,10 @@
 	<link rel="stylesheet" href="resources/css/index.css">
 	<link rel="stylesheet" type="text/css" href="resources/css/sisnoc.css" />
 	
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/highcharts-more.js"></script>
-	<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-	
-
+	<script src="resources/js/jquery-3.1.1.min.js"></script>
+	<script src="resources/js/highcharts.js"></script>
+	<script src="resources/js/highcharts-more.js"></script>
+	<script src="resources/js/solid-gauge.js"></script>
 	
 	
 
