@@ -1,5 +1,7 @@
 package br.com.sisnoc.chamados.modelo;
 
+import java.util.Date;
+
 public class Relatorios {
 
 	
@@ -9,11 +11,16 @@ public class Relatorios {
 	private String resumo;
 	private String categoria;
 	private String tipo;
+	private Date inicio;
+	private Date fim;
 	private String data;
 	private String hora;
 	private String tempo_log;
 	private String qts_aberto;
 	private String result;
+	private Integer mes;
+	private Integer ano;
+	private String opcao;
 	
 	public String getResponsavel() {
 		return responsavel;
@@ -74,6 +81,36 @@ public class Relatorios {
 	}
 	public void setResult(String result) {
 		this.result = result;
+	}
+	public Date getInicio() {
+		return inicio;
+	}
+	public void setInicio(Date inicio) {
+		this.inicio = inicio;
+	}
+	public Date getFim() {
+		return fim;
+	}
+	public void setFim(Date fim) {
+		this.fim = fim;
+	}
+	public Integer getMes() {
+		return mes;
+	}
+	public void setMes(Integer mes) {
+		this.mes = mes;
+	}
+	public Integer getAno() {
+		return ano;
+	}
+	public void setAno(Integer ano) {
+		this.ano = ano;
+	}
+	public String getOpcao() {
+		return opcao;
+	}
+	public void setOpcao(String opcao) {
+		this.opcao = opcao;
 	}
 	
 	

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-05-29T09:06:23 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="chamados" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="372e1958-f113-4c1d-b7f6-30f5c0443cbc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sisnoc - sql"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="203"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="789"/>
+	<parameter name="equipe" class="java.lang.String" isForPrompting="false" evaluationTime="Early"/>
+	<parameter name="usuario" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[with a as (
+select 
+        req.ref_num as chamado, 
+        vwg.last_name as equipe,
+        usu.userid as usuario,
+        dateadd(s,resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60,'1970-01-01 00:00:00') as atendido,
+        case 
+                when upper(cat.sym) = upper('INFRA.Ordem de Servico') then 'Orden de Servico'
+                when upper(cat.sym) = upper('Infra.Tarefas Internas') then 'Tarefa Interna'
+                when  req.type = 'P' then 'Problema'
+                when  req.type = 'R' then 'Chamado'
+                when  req.type = 'I' then 'Incidente'
+                end as tipo
+from 
+        mdb.dbo.call_req req WITH(NOLOCK) 
+        join mdb.dbo.cr_stat stat WITH(NOLOCK) on req.status = stat.code 
+        join mdb.dbo.prob_ctg cat WITH(NOLOCK) on cat.persid = req.category 
+        join mdb.dbo.ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee 
+        join mdb.dbo.View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid
+where 
+        cat.sym like 'INFRA%' 
+        and stat.code in ('RE','CL') 
+        and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101))
+       
+) select count(chamado) as qtd, tipo
+from a 
+where a.usuario =  $P{usuario} 
+group by tipo]]>
+	</queryString>
+	<field name="qtd" class="java.lang.Integer"/>
+	<field name="tipo" class="java.lang.String"/>
+	<group name="Group1">
+		<groupHeader>
+			<band height="437">
+				<line>
+					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="c0851699-812c-4d2e-9277-4e0bc03f7a62"/>
+				</line>
+				<pieChart>
+					<chart evaluationTime="Report">
+						<reportElement x="-11" y="32" width="570" height="387" uuid="898f03a8-f431-4d74-a0ce-8c59e906f3d2"/>
+						<chartTitle/>
+						<chartSubtitle/>
+						<chartLegend/>
+					</chart>
+					<pieDataset>
+						<keyExpression><![CDATA[$F{tipo}]]></keyExpression>
+						<valueExpression><![CDATA[$F{qtd}]]></valueExpression>
+						<labelExpression><![CDATA[$F{qtd}.toString()]]></labelExpression>
+					</pieDataset>
+					<piePlot>
+						<plot/>
+						<itemLabel/>
+					</piePlot>
+				</pieChart>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group2"/>
+	<group name="Group3"/>
+	<group name="Group4"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="af6a7065-d649-46d3-b582-8af3137c0135"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="64a43cf5-ce46-4efa-9871-8b945f57bbd5"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Relatório Algar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="de773092-5351-4fbf-88c9-0dea8b163eab"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Volumetria]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="338c1c8a-1054-4c0b-80a1-4617aa5aed04"/>
+			</line>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="c981fcb4-877a-4e1f-8a5f-3aba0dcc30b3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="1d87475f-7308-4e4f-9dc5-bd8533d28a7c"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="2b868fe5-89f0-4b6f-8503-e0e9910312de"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

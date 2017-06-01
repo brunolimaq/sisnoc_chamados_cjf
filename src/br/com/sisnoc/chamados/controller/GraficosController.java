@@ -52,7 +52,7 @@ public class GraficosController {
 	public  @ResponseBody Grafico metasIndividual() throws ParseException{
 		
 		
-		
+		System.out.println("porra");
 		metasPessoal.calcMetas();
 	
 		

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-05-30T16:36:33 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Lista_chamados" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13d48cdc-44c6-4e84-bf82-1e4d19643b7a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sisnoc - sql"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<subDataset name="Listagem" uuid="b521d56e-fb76-441b-9a06-c6fb15910c50">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sisnoc - sql"/>
+		<parameter name="ano_list" class="java.lang.Integer"/>
+		<parameter name="mes_list" class="java.lang.Integer"/>
+		<queryString language="SQL">
+			<![CDATA[with a as (
+select 
+        req.ref_num as chamado, 
+        vwg.last_name as equipe,
+		usu.userid as usuario,
+		req.summary as descricao,
+		dateadd(s,resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60,'1970-01-01 00:00:00') as data,
+ case 
+                when upper(cat.sym) = upper('INFRA.Ordem de Servico') then 'Orden de Servico'
+                when upper(cat.sym) = upper('Infra.Tarefas Internas') then 'Tarefa Interna'
+                when  req.type = 'P' then 'Problema'
+                when  req.type = 'R' then 'Chamado'
+                when  req.type = 'I' then 'Incidente'
+                end as tipo
+			
+from 
+        mdb.dbo.call_req req WITH(NOLOCK) 
+        join mdb.dbo.cr_stat stat WITH(NOLOCK) on req.status = stat.code 
+        join mdb.dbo.prob_ctg cat WITH(NOLOCK) on cat.persid = req.category 
+        join mdb.dbo.ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee 
+        join mdb.dbo.View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid
+where 
+        cat.sym like 'INFRA%' 
+        and stat.code in ('RE','CL') 
+) select chamado, tipo,descricao,equipe, data 
+from a 
+where DATEPART(yyyy,data) =   $P{ano_list} 
+and DATEPART(MONTH,data) =  $P{mes_list} 
+order by chamado]]>
+		</queryString>
+		<field name="chamado" class="java.lang.String"/>
+		<field name="tipo" class="java.lang.String"/>
+		<field name="descricao" class="java.lang.String"/>
+		<field name="equipe" class="java.lang.String"/>
+		<field name="data" class="java.sql.Timestamp"/>
+	</subDataset>
+	<parameter name="mes" class="java.lang.Integer"/>
+	<parameter name="ano" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select  $P{ano}  as ano,  $P{mes} as mes]]>
+	</queryString>
+	<field name="ano" class="java.lang.Integer"/>
+	<field name="mes" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="-11" y="0" width="171" height="79" uuid="8b1c6d41-2f08-4f58-8086-0c61fa5836de"/>
+				<imageExpression><![CDATA["http://www5.cjf.jus.br/chamados/resources/logo_algar.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="180" y="10" width="409" height="30" forecolor="#0064A2" uuid="773c90d7-b71b-4784-960f-c51dbf05f91c"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatorio de Chamados do Periodo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="424" y="40" width="100" height="30" uuid="b3b96b7c-00b1-4b00-b93b-63ce74886016"/>
+				<text><![CDATA[Gerado as:]]></text>
+			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement x="480" y="40" width="100" height="30" uuid="df5fae1a-d782-4bd1-bc69-d6cb1519d327"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="74">
+			<textField>
+				<reportElement x="200" y="0" width="401" height="30" forecolor="#0064A2" uuid="befd67c2-cb6a-46f4-92f5-5a034e44ae03"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Chamados referentes ao mes "+$P{mes}+" de "+$P{ano}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="36" width="795" height="1" uuid="c99af3c2-6d4a-4723-9483-ae160c85c31a"/>
+			</line>
+			<line>
+				<reportElement x="0" y="57" width="795" height="1" uuid="d7aa84a6-d8f7-4627-8db1-491fa58ad5de"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="38" width="55" height="18" uuid="2ce92a59-99de-4d11-aa65-b09690f17f9b"/>
+				<text><![CDATA[Chamado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="38" width="55" height="18" uuid="8903f3df-6536-4c9b-9d94-6fe8cbe9f0a5"/>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="39" width="55" height="18" uuid="1330d9fe-7c52-488c-bb38-6aaf521e8687"/>
+				<text><![CDATA[Descriçao]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="530" y="38" width="55" height="18" uuid="3a6044bc-898a-4d39-82af-75eb31936a82"/>
+				<text><![CDATA[Equipe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="660" y="37" width="55" height="18" uuid="18644c56-13fb-4822-9fd7-df03d0d26320"/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="70" splitType="Stretch">
+			<componentElement>
+				<reportElement x="10" y="5" width="769" height="30" uuid="b7a0d1fb-f62f-4920-a621-c195f09381f5"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Listagem" uuid="94d26606-05aa-4237-a521-32e2abfc153d">
+						<datasetParameter name="ano_list">
+							<datasetParameterExpression><![CDATA[$P{ano}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="mes_list">
+							<datasetParameterExpression><![CDATA[$P{mes}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="30" width="769">
+						<textField>
+							<reportElement x="0" y="0" width="80" height="30" uuid="5b6c4b83-b17d-45ea-afe6-4164b4c1788d"/>
+							<textFieldExpression><![CDATA[$F{chamado}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="80" y="0" width="90" height="30" uuid="e0afc9bc-5acc-4931-ba6c-691a61793028"/>
+							<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="170" y="0" width="350" height="30" uuid="863d621d-68f9-4548-b897-699c618e1fa1"/>
+							<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="520" y="0" width="130" height="30" uuid="4c00a0d2-0619-4398-bf2c-04f3a6b74d03"/>
+							<textFieldExpression><![CDATA[$F{equipe}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="650" y="0" width="119" height="30" uuid="caba7d50-4cdc-420d-a72d-da7bf8f43673"/>
+							<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="516" y="4" width="279" height="13" backcolor="#E6E6E6" uuid="a03cb215-0c87-43b1-8333-a3b293cf45cc"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="1" y="4" width="339" height="13" uuid="73299f80-ce46-4399-a52b-0f9e5d8a2a6e"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="4" width="754" height="13" backcolor="#E6E6E6" uuid="44d972a8-5050-4def-85ca-cc2694b584f8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="757" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="e074095b-64ab-4d08-94d0-8cf0927605b5"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="7fec9e5c-4d73-47af-b304-1b6fa866280f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

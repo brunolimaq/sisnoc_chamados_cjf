@@ -28,6 +28,13 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+<!-- 		<bean -->
+<!-- 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsViewResolver"> -->
+<!-- 		<property name="prefix" value="classpath:/relatorios/" /> -->
+<!-- 		<property name="suffix" value=".jasper" /> -->
+<!-- 		<property name="datasource" value="datasourceSQL" /> -->
+		
+<!-- 	</bean> -->
 <!--  -->
  
 	<bean id="datasourceSQL" class="org.apache.commons.dbcp.BasicDataSource" primary="true"  >

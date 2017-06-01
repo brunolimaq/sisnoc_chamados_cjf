@@ -30,12 +30,14 @@ public class PainelPessoalEquipeDao {
 
 private  final Connection connection;
 
-
+	private DataSource dt;
+	
 	
 	@Autowired
 	public PainelPessoalEquipeDao(@Qualifier("datasourceSQL") DataSource datasource) {
 		try {
 			this.connection = datasource.getConnection();
+			this.setDt(datasource);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -427,6 +429,14 @@ private  final Connection connection;
 
 	public Connection getConnection() {
 		return connection;
+	}
+
+	public DataSource getDt() {
+		return dt;
+	}
+
+	public void setDt(DataSource dt) {
+		this.dt = dt;
 	}
 	
 }

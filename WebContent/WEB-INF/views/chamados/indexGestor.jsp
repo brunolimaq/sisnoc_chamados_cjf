@@ -27,6 +27,11 @@
 	<script src="https://code.highcharts.com/highcharts-more.js"></script>
 	<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 	
+	
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	
+	
 
 	
 	
@@ -39,14 +44,12 @@
   <![endif]-->
   
   
-  <script type="text/javascript">
+ <script type="text/javascript">
   //Metas de 2 e 4 horas
 
   $( document ).ready(function() {
 	  
 
-	  
-	
 		var gaugeSLA2 = {
 			
 			    chart: {
@@ -54,6 +57,11 @@
                     renderTo: 'gauge-sla2'
 
 			    },
+			    
+			    exporting: {
+			    	enabled: false
+			    },
+
 			
 			    title: null,
 			
@@ -78,11 +86,11 @@
 			    // the value axis
 			    yAxis: {
 			        stops: [
-			            [0.8, '#DF5353'], // red
-			            [0.84, '#DF5353'], // red
+			            [0.70, '#DF5353'], // red
+			            [0.74, '#DF5353'], // red
+			            [0.75, '#DDDF0D'], // yellow
 			            [0.85, '#DDDF0D'], // yellow
-			            [0.89, '#DDDF0D'], // yellow
-			            [0.9, '#55BF3B'] // green
+			            [0.86, '#55BF3B'] // green
 			        ],
 			        lineWidth: 0,
 			        minorTickInterval: null,
@@ -122,6 +130,11 @@ var gaugeSLA4 = {
             renderTo: 'gauge-sla4'
 
 	    },
+	    
+	    exporting: {
+	    	enabled: false
+	    },
+
 	
 	    title: null,
 	
@@ -208,6 +221,8 @@ var gaugeSLA4 = {
  			}];
  			    var chart = new Highcharts.Chart(gaugeSLA4);
  			    
+ 			  			   
+ 	 			    
  		   var violados = data.dados.violados;
  		   $("#violados").text(violados);
  		   var requisicoesMes = data.dados.requisicoesMes;
@@ -221,11 +236,60 @@ var gaugeSLA4 = {
 		});
 });
   
-  
 
   $( document ).ready(function() {   
 	 
+	  
+	  
+		var pendencias_grafico =  {
 
+			    chart: {
+                    renderTo: 'pendencias_grafico',
+			        polar: true,
+			        type: 'line'
+			    },
+
+			    title: {
+			        text: '',
+			        y: 0
+			    },
+			    credits: {
+			    	enabled: false
+			    },
+			    exporting: {
+			    	enabled: false
+			    },
+
+			    pane: {
+			        size: '80%'
+			    },
+
+			    xAxis: {},
+
+			    yAxis: {
+			        gridLineInterpolation: 'polygon',
+			        lineWidth: 0,
+			        min: 0
+			    },
+
+			    tooltip: {
+			        shared: false,
+			    },
+
+			    legend: {
+			        align: 'center',
+			        verticalAlign: 'bottom',
+			        y: 0,
+			        layout: 'horizontal'
+			    },
+
+			    series: [{}]
+
+			};
+
+		
+	
+	
 
   	Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
   	    return {
@@ -240,6 +304,10 @@ var gaugeSLA4 = {
   	        ]
   	    };
   	});
+  	
+  	
+
+  	
 
   	// Build the chart
   	var graficoPizza = {
@@ -253,6 +321,9 @@ var gaugeSLA4 = {
   	    tooltip: {
   	        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
   	    },
+	    exporting: {
+	    	enabled: false
+	    },
   	    title: { 
   	    text: '.'},
   	    plotOptions: {
@@ -280,39 +351,74 @@ var gaugeSLA4 = {
   		 
   		var chamados = data.dados.chamadosMes.pop();
   		var incidentes = data.dados.incidentesMes.pop();
-
-  		
+		var pendencias = data.dados.pendencias.pop();
+  		var violados = data.dados.violados.pop();
+  		var reabertos = data.dados.reabertosMes.pop();
+		
   		graficoPizza.series = [{
   	        name: 'Brands',
   	        data: [
   				{
-  				    name: 'Chamados',
+  				    name: 'Cha',
   				    y: chamados,
   				    sliced: true,
   				    selected: true
   				},
-  	            {name: 'Incidentes', y: incidentes, color: 'red'}
+  	            {name: 'Inc', y: incidentes, color: 'red'},
+  	            {name: 'Pend', y: pendencias, color: 'yellow'},
+  	            {name: 'Viol', y: violados, color: 'black'},
+  	            {name: 'Reab', y: reabertos, color: 'green'}
+
+
+
+  				
 
   	        ]
   	    }];
+  		
+  		
   			   var chart = new Highcharts.Chart(graficoPizza);
   		});
 
+
+
+	$.getJSON($("#input-urlRaiz").val()+"graficos/metasIndividual", function(data) {
+ 		 
+
+  		
+		pendencias_grafico.series = [{
+	        name: 'Pendências',
+	        data: data.dados.qtd,
+	        pointPlacement: 'on'
+	    }
+	    ];
+		
+		pendencias_grafico.xAxis = {
+        	 categories: data.dados2.equipe,
+			        tickmarkPlacement: 'on',
+			        lineWidth: 0
+	    };
+
+			var chart = new Highcharts.Chart(pendencias_grafico);
+  		});
 
   	
 
    }); 
   
+  
+
+
   </script>
   <script type="text/javascript"> 
 
 
-          function timedRefresh(timeoutPeriod) {
-             setTimeout("location.reload(true);", timeoutPeriod);
-         }
-          jQuery(document).ready(function () {
-              timedRefresh(15000);
-         });
+//           function timedRefresh(timeoutPeriod) {
+//              setTimeout("location.reload(true);", timeoutPeriod);
+//          }
+//           jQuery(document).ready(function () {
+//               timedRefresh(15000);
+//          });
        
   </script> 
   
@@ -323,6 +429,7 @@ var gaugeSLA4 = {
 </head>
 
 <body>
+
 
 <c:import url="menu.jsp"></c:import>
 	
@@ -447,6 +554,7 @@ var gaugeSLA4 = {
 					  		<br/>
 					  		<div class="col-md-6">
 								<div id="graficoPizza" style="min-width: 300px; height: 300px; max-width: 450px; "></div>
+								
 							</div>
 					  		
 					 		<div class="col-sm-3">
@@ -462,7 +570,6 @@ var gaugeSLA4 = {
 								    <label class="letras" id="pendencias">0</label>
 								  </div>
 								</div>
-						 		<div id="gauge-sla2" style="width: 200px; height: 134px;" ></div>
 							</div>
 							<div class="col-sm-3">
 								 <div class="panel panel-default">
@@ -477,7 +584,6 @@ var gaugeSLA4 = {
 								    <label class="letras" id="reabertosMes">0</label>
 								  </div>
 								</div>
-								<div id="gauge-sla4" style="width: 200px; height: 134px;"></div>
 							</div>
 							
 					 
@@ -490,6 +596,19 @@ var gaugeSLA4 = {
 					
 						 	
 						 </div>
+						 
+						 	<div class="rows">
+							
+								<div class="col-md-offset-3 col-sm-4">
+						 		<div id="gauge-sla2" style="width: 200px; height: 134px;" ></div>
+								
+								</div>
+								<div class="col-sm-4">
+								<div id="gauge-sla4" style="width: 200px; height: 134px;"></div>
+								
+								</div>
+							
+							</div>
 					 </div>
                    </div>
                </div> <!-- fim DIV col-md4 do Incidentes ROW -->
@@ -543,26 +662,35 @@ var gaugeSLA4 = {
 				<div class="col-md-6">
 
 				<div class="row">
-					  		<br/>
-					  		<div class="col-md-6">
-								<div id="graficoPizza" style="min-width: 300px; height: 300px; max-width: 450px; "></div>
-							</div>
-						<div class="list-group col-md-6">
+				
+											<div class="list-group col-md-6">
                    			<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
-								<strong>Pendências</strong>
+								<strong>Pendências por equipe</strong>
 					 		</a>
-					  		
+				
+					  		<div class="col-md-6">
+						  		<div id="pendencias_grafico" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto "></div>
+							</div>	
+							</div>
+
+				
+							<div class="list-group col-md-6">
+                   			<a href="#chamados" class="list-group-item active" " id="painel_incidente_titulo">
+								<strong>Pendências por tipo</strong>
+					 		</a>
+					 		<br/>
+					 		<br/>
 					 		<div class="col-sm-6">
 								 <div class="panel panel-default" >
 								  <div class="panel-heading">Fornecedor</div>
 								  <div class="panel-body paineis_indices" >
-								    <label class="letras" id="violados">0</label>
+								    <label class="letras" id="violados">3</label>
 								  </div>
 								</div>
 								<div class="panel panel-default">
 								  <div class="panel-heading">Informação de Cliente</div>
 								  <div class="panel-body paineis_indices">
-								    <label class="letras" id="pendencias">0</label>
+								    <label class="letras" id="pendencias">8</label>
 								  </div>
 								</div>
 						 		<div id="gauge-sla2" style="width: 200px; height: 134px;" ></div>
@@ -571,13 +699,13 @@ var gaugeSLA4 = {
 								 <div class="panel panel-default">
 								  <div class="panel-heading">Aberto chamado filho</div>
 								  <div class="panel-body paineis_indices">
-								    <label class="letras" id="requisicoesMes">0</label>
+								    <label class="letras" id="requisicoesMes">2</label>
 								  </div>
 								</div>
 								<div class="panel panel-default">
-								  <div class="panel-heading">Chamados Reaberto</div>
+								  <div class="panel-heading">Problemas</div>
 								  <div class="panel-body paineis_indices">
-								    <label class="letras" id="reabertosMes">0</label>
+								    <label class="letras" id="reabertosMes">16</label>
 								  </div>
 								</div>
 								<div id="gauge-sla4" style="width: 200px; height: 134px;"></div>
@@ -593,31 +721,6 @@ var gaugeSLA4 = {
                
 			</div> <!-- Fechamento ROL 01 -->
 			
-			<div class="row">
-       	<div class="col-md-6 clearfix">
-				<div class="list-group ">
-					<a href="#chamados" class="list-group-item active" id="painel_chamados_titulo">
-						<strong>Ordem de Serviços em andamento</strong>
-					</a>
-					<c:if test="${empty chamadosPainelPessoal}">
-						<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
-
-  					</c:if>
-  					<c:if test="${!empty chamadosPainelPessoal}">
-  											<div class="alert alert-success" role="alert"><strong>Nenhuma ocorrência nesta fila!</strong></div>
-  					
-						
-					</c:if>
-				</div>
-											
-				
-				</div> <!-- fim DIV col-md4 do NOC ROW -->			
-				
-				
-				</div>
-			
-			
-               
                
                
                </div><!-- fim DIV dos Paineis NOC, Chamados e Incidentes -->

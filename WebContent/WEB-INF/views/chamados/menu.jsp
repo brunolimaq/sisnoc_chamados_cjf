@@ -1,7 +1,7 @@
 
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-  <nav  class="navbar navbar-inverse  navbar-fixed-top">
+  <nav  class="navbar navbar-inverse navbar-fixed-top">
 <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="/chamados/listaChamados">Sisnoc Algar</a>
@@ -13,6 +13,7 @@
         <li><a href="/chamados/gmud">RDM</a></li>
         <li><a href="/chamados/ordemServicos">Ordens de Serviço</a></li>
         <li><a href="/chamados/problemas">Problemas</a></li>
+        <li><a href="/chamados/relatorios">Relatorios</a></li>
         
 <!--         <li><a href="#">Problemas <span class="badge"></span></a></li> -->
 <!--         <li><a href="#">GMUD</a></li> -->
@@ -50,7 +51,7 @@
 						</a>
 						<div class="dropdown-menu perfil">
 							<div class="col-sm-4 hidden-xs">
-								<img class="img-responsive img-rounded" src="http://api.adorable.io/avatars/100/watchuru.png"> 
+								<img class="img-responsive img-rounded" src="resources/images/logoalgar.png"> 
 								
 							</div>
 							<ul class="list-unstyled col-sm-8"> 

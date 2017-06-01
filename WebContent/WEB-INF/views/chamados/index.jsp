@@ -43,8 +43,6 @@
   $( document ).ready(function() {
 	  
 
-	  
-	
 		var gaugeSLA2 = {
 			
 			    chart: {
@@ -206,6 +204,8 @@ var gaugeSLA4 = {
  			}];
  			    var chart = new Highcharts.Chart(gaugeSLA4);
  			    
+ 			  			   
+ 	 			    
  		   var violados = data.dados.violados;
  		   $("#violados").text(violados);
  		   var requisicoesMes = data.dados.requisicoesMes;
@@ -284,12 +284,12 @@ var gaugeSLA4 = {
   	        name: 'Brands',
   	        data: [
   				{
-  				    name: 'Chamados',
+  				    name: 'Cha',
   				    y: chamados,
   				    sliced: true,
   				    selected: true
   				},
-  	            {name: 'Incidentes', y: incidentes, color: 'red'}
+  	            {name: 'Inc', y: incidentes, color: 'red'}
 
   	        ]
   	    }];
@@ -301,6 +301,11 @@ var gaugeSLA4 = {
 
    }); 
   
+  
+  
+  
+
+
   </script>
   <script type="text/javascript"> 
 
@@ -504,7 +509,7 @@ var gaugeSLA4 = {
 								     <a href="/chamados/pendencias"><label class="letras" id="pendencias">0</label></a>
 								  </div>
 								</div>
-						 		<div id="gauge-sla2" style="width: 200px; height: 134px;" ></div>
+<!-- 						 		<div id="gauge-sla2" style="width: 200px; height: 134px;" ></div> -->
 							</div>
 							<div class="col-sm-3">
 								 <div class="panel panel-default">
@@ -519,9 +524,8 @@ var gaugeSLA4 = {
 								     <a href="/chamados/pendencias"><label class="letras" id="reabertosMes">0</label></a>
 								  </div>
 								</div>
-								<div id="gauge-sla4" style="width: 200px; height: 134px;"></div>
+<!-- 								<div id="gauge-sla4" style="width: 200px; height: 134px;"></div> -->
 							</div>
-							
 					 
 <!-- 						 	<div class="col-md-offset-6 col-md-3"> -->
 <!-- 						 		<div id="gauge-sla2" style="width: 300px; height: 134px;" ></div> -->
@@ -529,9 +533,21 @@ var gaugeSLA4 = {
 <!-- 						 	<div class="col-md-3"> -->
 <!-- 								<div id="gauge-sla4" style="width: 300px; height: 134px;"></div> -->
 <!-- 							</div> -->
-					
 						 	
 						 </div>
+						 		<div class="rows">
+							
+								<div class="col-md-offset-3 col-sm-4">
+						 		<div id="gauge-sla2" style="width: 200px; height: 134px;" ></div>
+								
+								</div>
+								<div class="col-sm-4">
+								<div id="gauge-sla4" style="width: 200px; height: 134px;"></div>
+								
+								</div>
+							
+							</div>
+						 
 					 </div>
                    </div>
                </div> <!-- fim DIV col-md4 do Incidentes ROW -->

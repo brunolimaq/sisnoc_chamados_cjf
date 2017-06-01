@@ -305,7 +305,7 @@ private  final Connection connection;
 	
 	//Pendências
 	
-	public List<Chamado> listaPainelPessoalPendencias() throws ParseException {
+	public List<Chamado> listaPainelPessoalPendencias(String status) throws ParseException {
 		try {
 			
 			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
@@ -314,10 +314,21 @@ private  final Connection connection;
 			// tipo = "R";
 			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username;
+			String equipe = "";
+			String user_exclusao = "''";
 			if (usuarioLogado  instanceof UsuarioSistema ) {
-			   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
+				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
 			} else {
 			   username = usuarioLogado.toString();
+			}
+					
+			String[] splitEquipe = equipe.split(",");
+			
+			String listaEquipe = "\'\'";
+			
+			for (String eqp : splitEquipe) {
+				listaEquipe = listaEquipe +",\'" + eqp + "\'";
 			}
 			
 
@@ -329,12 +340,13 @@ private  final Connection connection;
 						+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
 						+"cat.persid = req.category "
 						+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+						+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
 					+"where "
 						+"cat.sym like 'INFRA%' "
-						+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
+						+"and stat.code in ("+status+") "
 						+"and cat.sym not in ('Infra.Tarefas Internas', 'INFRA.Ordem de Servico') "
 						+"and req.type != 'P'"
-						+"and usu.userid = '"+username+"'";
+						+"and vwg.last_name in ("+ listaEquipe + ") ";
 
 			PreparedStatement stmt = connection
 					.prepareStatement(sql_listaChamados);
@@ -353,7 +365,7 @@ private  final Connection connection;
 									+"req.id as ID, "
 									+"req.ref_num as chamados, "
 									+"usu.first_name as responsavel,"
-									+"vwg.last_name as equipe,"
+									+ "replace(vwg.last_name, 'Analistas ', '') as equipe, "
 									+"ctg.sym as grupo,"
 									+"req.type as tipo, "
 									+"req.summary as titulo, "

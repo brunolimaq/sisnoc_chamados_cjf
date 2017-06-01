@@ -34,6 +34,9 @@ public class GraficosPessoal implements GraficosPessoalService {
 	private int reabertosMes;
 	private int metaReabertos;
 	
+	private ArrayList<String[]> listaPendenteEquipe;
+	
+	
 	@Autowired
 	@MetasDao
 	PainelPessoalMetasDao metasDao;
@@ -46,9 +49,12 @@ public class GraficosPessoal implements GraficosPessoalService {
 	}
 	
 	
+	
+	
 	@Override
 	public void calcMetas() {
 		
+		System.out.println("calcula meta");
 		
 		
 		int countTotal = 0;
@@ -89,12 +95,14 @@ public class GraficosPessoal implements GraficosPessoalService {
 				chamados = metasDao.listaPainelPessoalMetas(perfil);
 				this.setReabertosMes(metasDao.listaPainelPessoalReabertos(perfil));
 				this.setPendencias(metasDao.listaPainelPessoalPendentes(perfil));
+				this.setListaPendenteEquipe(metasDao.listaPainelGestorPendentes());
 			} catch (ParseException e) {
 				
 				e.printStackTrace();
 			}
 		
 		
+			System.out.println("lista " + getListaPendenteEquipe());
 		
 			for (Chamado chamado : chamados) {
 				
@@ -201,5 +209,18 @@ public class GraficosPessoal implements GraficosPessoalService {
 
 	public void setPendencias(int pendencias) {
 		this.pendencias = pendencias;
+	}
+
+
+	
+	public ArrayList<String[]> getListaPendenteEquipe() {
+		return listaPendenteEquipe;
+	}
+
+
+
+
+	public void setListaPendenteEquipe(ArrayList<String[]> listaPendenteEquipe) {
+		this.listaPendenteEquipe = listaPendenteEquipe;
 	}
 }

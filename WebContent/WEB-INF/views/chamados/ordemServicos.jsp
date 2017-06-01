@@ -12,9 +12,14 @@
 <title>Chamados ${equipe} </title>
 
   
-  	 <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-  	 <link rel="stylesheet" type="text/css" href="resources/css/sisnoc.css" />
-  	 <script src="resources/js/jquery-2.1.4.js"></script>
+	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+	<link rel="stylesheet" href="resources/css/index.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/sisnoc.css" />
+	
+	<script src="resources/js/jquery-3.1.1.min.js"></script>
+	<script src="resources/js/highcharts.js"></script>
+	<script src="resources/js/highcharts-more.js"></script>
+	<script src="resources/js/solid-gauge.js"></script>
   	 
      
      	
@@ -218,6 +223,7 @@
 							<thead>
 								<tr class="painel_noc">
 									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Responsável</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
 									<td><center><strong>Status</strong></center></td>
 									<td><center><strong>Prazo</strong></center></td>
@@ -233,6 +239,7 @@
 										<tr class="SemAlerta" > 
 
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosOSGeralGrupo.id}" target="_blank" >${chamadosOSGeralGrupo.chamado}</a></td>
+										<td>${chamadosOSGeralGrupo.responsavel}</td>
 										<td>${chamadosOSGeralGrupo.titulo}</td>
 										
 										<c:if test="${chamadosOSGeralGrupo.statusDescricao == 'Aberto chamado filho'}">
@@ -295,6 +302,7 @@
 							<thead>
 								<tr class="painel_noc">
 									<td><center><strong>Chamado</strong></center></td>
+									<td><center><strong>Responsável</strong></center></td>
 									<td><center><strong>Descrição</strong></center></td>
 									<td><center><strong>Status</strong></center></td>
 									<td><center><strong>Prazo</strong></center></td>
@@ -310,6 +318,7 @@
 										<tr class="SemAlerta" > 
 
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${chamadosTarefaGeralGrupo.id}" target="_blank" >${chamadosTarefaGeralGrupo.chamado}</a></td>
+										<td>${chamadosTarefaGeralGrupo.responsavel}</td>
 										<td>${chamadosTarefaGeralGrupo.titulo}</td>
 										
 										<c:if test="${chamadosTarefaGeralGrupo.statusDescricao == 'Aberto chamado filho'}">

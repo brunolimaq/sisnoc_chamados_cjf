@@ -12,9 +12,14 @@
 <title>Chamados ${equipe} </title>
 
   
-  	 <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-  	 <link rel="stylesheet" type="text/css" href="resources/css/sisnoc.css" />
-  	 <script src="resources/js/jquery-2.1.4.js"></script>
+	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+	<link rel="stylesheet" href="resources/css/index.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/sisnoc.css" />
+	
+	<script src="resources/js/jquery-3.1.1.min.js"></script>
+	<script src="resources/js/highcharts.js"></script>
+	<script src="resources/js/highcharts-more.js"></script>
+	<script src="resources/js/solid-gauge.js"></script>
   	 
      
      	
@@ -60,7 +65,7 @@
 							<tbody>
 								<c:forEach items="${problemasAbertos}" var="problemasAbertos">	
 									<tr>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${problemasAbertos.id}" target="_blank" >${problemasAbertos.chamado}</a></td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${problemasAbertos.id}" target="_blank" >${problemasAbertos.chamado}</a></td>
 										<td>${problemasAbertos.equipe}</td>
 										<td>${problemasAbertos.titulo}</td>
 									</tr>
@@ -100,7 +105,7 @@
 							<tbody>
 								<c:forEach items="${problemasInvestigacao}" var="problemasInvestigacao">	
 									<tr>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${problemasInvestigacao.id}" target="_blank" >${problemasInvestigacao.chamado}</a></td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${problemasInvestigacao.id}" target="_blank" >${problemasInvestigacao.chamado}</a></td>
 										<td>${problemasInvestigacao.equipe}</td>
 										<td>${problemasInvestigacao.titulo}</td>
 									</tr>
@@ -134,7 +139,7 @@
 							<tbody>
 								<c:forEach items="${problemasCausaIdentificada}" var="problemasCausaIdentificada">	
 									<tr>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${problemasCausaIdentificada.id}" target="_blank" >${problemasCausaIdentificada.chamado}</a></td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${problemasCausaIdentificada.id}" target="_blank" >${problemasCausaIdentificada.chamado}</a></td>
 										<td>${problemasCausaIdentificada.equipe}</td>
 										<td>${problemasCausaIdentificada.titulo}</td>
 									</tr>
@@ -171,7 +176,7 @@
 							<tbody>
 								<c:forEach items="${problemasSolucaoImplatacao}" var="problemasSolucaoImplatacao">	
 									<tr>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${problemasSolucaoImplatacao.id}" target="_blank" >${problemasSolucaoImplatacao.chamado}</a></td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${problemasSolucaoImplatacao.id}" target="_blank" >${problemasSolucaoImplatacao.chamado}</a></td>
 										<td>${problemasSolucaoImplatacao.equipe}</td>
 										<td>${problemasSolucaoImplatacao.titulo}</td>
 									</tr>
@@ -207,7 +212,7 @@
 							<tbody>
 								<c:forEach items="${problemasEmRevisao}" var="problemasEmRevisao">	
 									<tr>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${problemasEmRevisao.id}" target="_blank" >${problemasEmRevisao.chamado}</a></td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${problemasEmRevisao.id}" target="_blank" >${problemasEmRevisao.chamado}</a></td>
 										<td>${problemasEmRevisao.equipe}</td>
 										<td>${problemasEmRevisao.titulo}</td>
 									</tr>
