@@ -21,6 +21,7 @@ import org.springframework.stereotype.Repository;
 import br.com.sisnoc.chamados.dao.util.ChamadosDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.negocio.CalculaSla;
+import br.com.sisnoc.chamados.negocio.CalculaSla2;
 import br.com.sisnoc.chamados.negocio.Popula;
 
 @Primary
@@ -301,7 +302,7 @@ public class PainelChamadosDao {
 			
 			
 			
-			String sql_listaLog = "select top 1 "
+			String sql_listaLog = "select "
 									+"req.id as ID, "
 									+"req.ref_num as chamados, "
 									+"usu.first_name as responsavel,"
@@ -310,7 +311,7 @@ public class PainelChamadosDao {
 									+"req.type as tipo, "
 									+"req.summary as titulo, "
 									+"log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time,"
-									+"'1495115766' as epoch,"
+									+"DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch,"
 									+ "stat.sym as statusDescricao, "
 									+ "log.type as status "
 								+"from "
@@ -322,7 +323,7 @@ public class PainelChamadosDao {
 									+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
 								+"where "
 									+"log.type in ('INIT','SLADELAY','SLARESUME','RE') "
-									+"and req.id in  (477265) "
+									+"and req.id in  (479123) "
 									+ "order by req.id, log.time_stamp";
 									//476918
 									//476872
@@ -351,7 +352,8 @@ public class PainelChamadosDao {
 					chamados.setTime(popula.populaTime(rs_listalog));
 					chamados.setEpoch(popula.populaEpoch(rs_listalog));
 					chamados.setGrupo(popula.populaGrupo(rs_listalog));
-					chamados.setTipo("R");
+					chamados.setTipo(popula.populaTipo(rs_listalog));
+					chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listalog));
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
 					
 					
@@ -367,7 +369,10 @@ public class PainelChamadosDao {
 				if(ListaChamados.isEmpty()){
 					return null;
 				} else {
-					return CalculaSla.SlaCjf(ListaChamados);
+					ArrayList<Chamado> listaCalculada = new ArrayList<Chamado>();
+					
+					listaCalculada.add(CalculaSla2.SlaCjf(ListaChamados));
+					return listaCalculada;
 				}
 
 			
