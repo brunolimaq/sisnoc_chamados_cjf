@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-07-04T18:14:07 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="satisfacao_por_equipe" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f7c6aa1c-7867-4382-99ab-f45535659f3f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sisnoc"/>
+	<parameter name="ano" class="java.lang.Integer"/>
+	<parameter name="mes" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[with a as(
+select sura.txt resposta, 
+replace(replace(vwg.last_name,'Analistas ',''),'Gestores ','') as equipe,
+dateadd(s,req.resolve_date,'1970-01-01 00:00:00') as data
+from mdb.dbo.call_req req
+join mdb.dbo.prob_ctg cat WITH(NOLOCK) on cat.persid = req.category
+join mdb.dbo.View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid 
+join mdb.dbo.survey sur WITH (NOLOCK) on sur.object_id = req.id
+join mdb.dbo.survey_question surq WITH (NOLOCK) on surq.owning_survey = sur.id
+join mdb.dbo.Survey_Answer sura WITH (NOLOCK) on sura.own_srvy_question = surq.id
+where 
+datepart(MONTH,dateadd(s,req.resolve_date,'1970-01-01 00:00:00'))  =  $P{mes} 
+and datepart(YEAR,dateadd(s,req.resolve_date,'1970-01-01 00:00:00'))  =  $P{ano} 
+and sura.selected is not null
+and sura.txt in ('Ruim','Bom','Ótimo')
+), total as (select count(1) as valor, equipe
+from a 
+group by equipe
+), bom as 
+(select count(1) as qtd, equipe
+from a 
+where resposta = 'Bom'
+group by equipe
+),otimo as (select count(1) as qtd, equipe
+from a 
+where  resposta = 'Ótimo'
+group by equipe
+),ruim as (select count(1) as qtd, equipe
+from a 
+where resposta = 'Ruim'
+group by equipe
+) select total.valor as 'Total', coalesce(bom.qtd,0) as 'Bom', coalesce(otimo.qtd,0) as 'Ótimo', coalesce(ruim.qtd,0) as 'Ruim', total.equipe
+from total
+left join bom on  total.equipe = bom.equipe
+left join otimo on  total.equipe = otimo.equipe
+left join ruim on  total.equipe = ruim.equipe
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]>
+	</queryString>
+	<field name="Total" class="java.lang.Integer"/>
+	<field name="Bom" class="java.lang.Integer"/>
+	<field name="Ótimo" class="java.lang.Integer"/>
+	<field name="Ruim" class="java.lang.Integer"/>
+	<field name="equipe" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="126" splitType="Stretch">
+			<staticText>
+				<reportElement x="205" y="10" width="409" height="30" forecolor="#0064A2" uuid="f90f6d71-cab4-4c5b-af5e-d68a2abebef5"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatorio de Chamados do Periodo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="449" y="40" width="100" height="30" uuid="8e89a3bc-9596-4485-aaf5-65d25d95ea5f"/>
+				<text><![CDATA[Gerado as:]]></text>
+			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement x="505" y="40" width="100" height="30" uuid="ecee7399-4dfe-422c-abf4-95ec73cdc86f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="80" width="401" height="30" forecolor="#0064A2" uuid="a74fe82b-fb17-4871-8e7e-8e9fb3d12be1"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Chamados referentes ao mes "+$P{mes}+" de "+$P{ano}]]></textFieldExpression>
+			</textField>
+			<image isLazy="true" onErrorType="Blank">
+				<reportElement x="20" y="1" width="183" height="83" uuid="221b33ee-cebf-45b7-9726-70ccd3cf3d3e"/>
+				<imageExpression><![CDATA["http://localhost:8080/chamados/resources/images/logo_algar.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="234" splitType="Stretch">
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="0" width="800" height="200" uuid="a483e8e5-1774-4b54-a80c-6b5ac2ccbc8d"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Bom"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{equipe}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Bom}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Otimo"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{equipe}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Ótimo}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Ruim"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{equipe}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Ruim}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="737" height="26" backcolor="#E6E6E6" uuid="6ecb2bee-ff6b-436a-b9d0-f7a9084dce65"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="737" y="4" width="63" height="26" backcolor="#E6E6E6" uuid="48cfa54c-d84b-4f0e-aa13-d811b34deb5a"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="20" y="7" width="183" height="20" uuid="8530a922-1cb3-4b0b-a8f5-58f592e9cf73"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Gerado em:"+new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

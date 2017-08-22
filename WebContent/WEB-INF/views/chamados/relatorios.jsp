@@ -67,6 +67,8 @@ alteraDiv = function (){
         $("#listaPor").hide();
         $("#listaMes").hide();
         $("#listaAno").hide();
+        $("#listaTipo").hide();
+        $("#responsavel").hide();
     }
     
     if($('#opcao').val() == 'rel_chamados'){
@@ -75,7 +77,9 @@ alteraDiv = function (){
         $("#listaEquipes").hide();
         $("#listaPor").hide();
         $("#listaMes").show();
-        $("#listaAno").show();    
+        $("#listaAno").show();
+        $("#listaTipo").show();
+        $("#responsavel").hide();
      }
     
     if($('#opcao').val() == 'vol_requisicoes'){
@@ -84,11 +88,37 @@ alteraDiv = function (){
         $("#listaEquipes").hide();
         $("#listaPor").hide();
         $("#listaMes").hide();
-        $("#listaAno").hide();    
+        $("#listaAno").hide();
+        $("#listaTipo").hide();
+        $("#responsavel").hide();
+     }
+    
+    if($('#opcao').val() == 'rel_Aberto7Dias'){
+
+    	$("#listaUsuarios").hide();
+        $("#listaEquipes").hide();
+        $("#listaPor").hide();
+        $("#listaMes").hide();
+        $("#listaAno").hide();
+        $("#listaTipo").hide();
+        $("#responsavel").show();
+        
+     }
+    
+    if($('#opcao').val() == 'rel_satisfacao'){
+
+
+    	$("#listaUsuarios").hide();
+        $("#listaEquipes").hide();
+        $("#listaPor").hide();
+        $("#listaMes").show();
+        $("#listaAno").show();
+        $("#listaTipo").hide();
+        $("#responsavel").hide();
+        
      }
     
 }
-
        
  </script>  	 
 
@@ -132,6 +162,8 @@ alteraDiv = function (){
 								  <option id="rel_reabertos" value="rel_reabertos">Chamados Reabertos</option>
 								  <option id="rel_chamados" value="rel_chamados">Chamados</option>
 								  <option id="vol_requisicoes" value="vol_requisicoes">Volumetria - Chamados</option>
+								  <option id="rel_Aberto7Dias" value="rel_Aberto7Dias">Chamados com pendências superior a uma semana</option>
+								  <option id="rel_satisfacao" value="rel_satisfacao">Satisfação por equipe - Atendimentos</option>
 								</select>
 					    	</div>
 						  </div>	
@@ -158,14 +190,13 @@ alteraDiv = function (){
 								</select>
 						  </div>	 
 						  </div> 
-						<div class="form-group"   style="display: none;" id="listaUsuarios" >
+						<div class="form-group"   style="display: none;" id="responsavel" >
 						    <div class="col-md-3">
-						    <label for="relatorios">Usuários:</label>
-								<select class="form-control" >
-								  <option>Jayro Roeder</option>
-								  <option>Bruno Queiroz</option>
-								  <option>Guilherme Barros</option>
-								  <option>Walison Morales</option>
+						    <label for="responsavel">Responsável:</label>
+								<select class="form-control"   id="responsavel" name="responsavel">
+								  <option value="TODOS">Todos</option>
+								  <option value="jayro.roeder">Jayro Roeder</option>
+								  <option value="bruno.queiroz">Bruno Queiroz</option>
 								</select>
 					    	</div>
 						  </div>	  
@@ -201,7 +232,24 @@ alteraDiv = function (){
 								</select>
 							</div>
 						</div>						  
-										  
+								
+						<div class="form-group"  style="display: none;" id="listaTipo" >
+						    <div class="col-md-2">
+							    <label for="tipo">Tipo chamado:</label>
+								<select class="form-control" id="tipo" name="tipo">
+								  <option value="TODOS">Todos</option>
+								  <option value="Incidente">Incidente</option>
+								  <option value="Orden de Servico">Ordem de Serviço</option>
+								  <option value="Chamado">Chamado</option>
+								  <option value="Problema">Problema</option>
+								  <option value="Tarefa Interna">Tarefa Interna</option>
+								  
+								</select>
+							</div>
+						</div>				 
+						
+						
+						 
   
 						  	  
 						  <div class="form-group">

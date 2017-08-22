@@ -442,7 +442,7 @@
 								<c:forEach items="${tarefaEquipeAndamento}" var="tarefaEquipeAndamento">	
 									<tr  class="${tarefaEquipeAndamento.alerta}">
 										<td>${tarefaEquipeAndamento.equipe}</td>
-										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${osEquipePendente.id}" target="_blank" >${osEquipePendente.chamado}</a></td>
+										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=cr+SKIPLIST=1+QBE.EQ.id=${tarefaEquipeAndamento.id}" target="_blank" >${tarefaEquipeAndamento.chamado}</a></td>
 										<td>${tarefaEquipeAndamento.titulo}</td>
 										
 										

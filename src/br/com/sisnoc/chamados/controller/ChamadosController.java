@@ -347,17 +347,49 @@ public class ChamadosController {
 		JasperReportsPdfView view = new JasperReportsPdfView();
 	    view.setJdbcDataSource(equipeDao.getDt());
 	    
+	    
 	    if (relatorios.getOpcao().equals("rel_chamados")){
 	    	
-		    view.setUrl("resources/Lista_chamados.jrxml");
+	    	if(relatorios.getTipo().equals("TODOS")){
+
+		    	view.setUrl("resources/Lista_chamados.jrxml");
+			    Map<String, Object> params = new HashMap<>();
+			    params.put("mes", relatorios.getMes());
+			    params.put("ano", relatorios.getAno());
+			    view.setApplicationContext(appContext);
+			    return new ModelAndView(view, params);
+
+	    	}else {
+	    		
+	    		System.out.println(relatorios.getMes());
+	    		System.out.println(relatorios.getAno());
+	    		System.out.println(relatorios.getTipo());
+	    		view.setUrl("resources/Lista_chamados2.jrxml");
+			    Map<String, Object> params = new HashMap<>();
+			    params.put("mes", relatorios.getMes());
+			    params.put("ano", relatorios.getAno());
+			    params.put("tipo",relatorios.getTipo());
+			    view.setApplicationContext(appContext);
+			    return new ModelAndView(view, params);
+	    		
+	    		
+	    	}
+	    	
+
+
+	    }
+	    
+	    if (relatorios.getOpcao().equals("rel_satisfacao")){
+
+	    	view.setUrl("resources/satisfacao_por_equipe.jrxml");
 		    Map<String, Object> params = new HashMap<>();
 		    params.put("mes", relatorios.getMes());
 		    params.put("ano", relatorios.getAno());
 		    view.setApplicationContext(appContext);
-
 		    return new ModelAndView(view, params);
-
+	    	
 	    }
+	    
 	    
 	    if (relatorios.getOpcao().equals("vol_requisicoes")){
 	    	
@@ -375,6 +407,25 @@ public class ChamadosController {
 
 		    return new ModelAndView(view);
 	    }
+	    
+	    if (relatorios.getOpcao().equals("rel_Aberto7Dias")){
+	    	
+	    	if(relatorios.getResponsavel().equals("TODOS")){
+	    		view.setUrl("resources/Abertos7dias.jrxml");
+			    view.setApplicationContext(appContext);
+			    return new ModelAndView(view);
+
+	    	}else {
+	    		
+	    		view.setUrl("resources/Abertos7diasUsu.jrxml");
+			    Map<String, Object> params = new HashMap<>();
+			    params.put("responsavel", relatorios.getResponsavel());
+			    view.setApplicationContext(appContext);
+			    return new ModelAndView(view, params);
+	    	}
+	    	
+    	
+		    	    }
 	    
 	    view.setUrl("resources/chamados_reabertos.jrxml");
 	    view.setApplicationContext(appContext);
