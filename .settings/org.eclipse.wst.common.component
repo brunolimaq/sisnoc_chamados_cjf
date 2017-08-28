@@ -4,6 +4,7 @@
         <wb-resource deploy-path="/" source-path="/WebContent"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/WebContent/resources"/>
         <property name="context-root" value="chamados"/>
         <property name="java-output-path" value="/chamados/target/classes"/>
     </wb-module>

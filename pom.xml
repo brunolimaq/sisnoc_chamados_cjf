@@ -7,29 +7,6 @@
   <artifactId>chamados</artifactId>
 <version>0.0.1-SNAPSHOT</version> 
   <packaging>war</packaging>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <warSourceDirectory>WebContent</warSourceDirectory>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
-    </plugins>
-    
-    
-  </build>
   
   	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,9 +29,40 @@
 		
 		<!-- JasperReports Fonts -->
 		<!-- <jasperreports-fonts.version>6.0.0</jasperreports-fonts.version> -->
+		<!-- Java Mail -->
+		<javax.mail.version>1.5.6</javax.mail.version>
+		
+		        <quartz.version>2.2.1</quartz.version>
+		
 		
 	</properties>
 	
+	  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <warSourceDirectory>WebContent</warSourceDirectory>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+          <source>${java.version}</source>
+			<target>${java.version}</target>
+          
+        </configuration>
+      </plugin>
+    </plugins>
+    
+    
+  </build>
 	
 	  <dependencies>
 	    <dependency>
@@ -232,11 +240,15 @@
     <artifactId>jasperreports</artifactId>
     <version>6.1.0</version>
 </dependency>
-		<dependency>
-  <groupId>ar.com.fdvs</groupId>
-  <artifactId>DynamicJasper-core-fonts</artifactId>
-  <version>1.0</version>
-</dependency>
+	<dependency>
+	  <groupId>ar.com.fdvs</groupId>
+	  <artifactId>DynamicJasper-core-fonts</artifactId>
+	  <version>1.0</version>
+	</dependency>
+
+<!-- JasperReports -->
+<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+
 
     <dependency>
         <groupId>org.springframework</groupId>
@@ -244,7 +256,13 @@
         <version>4.3.0.RELEASE</version>
     </dependency>
 
-		
+
+<!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
+<dependency>
+  <groupId>commons-net</groupId>
+  <artifactId>commons-net</artifactId>
+  <version>3.6</version>
+</dependency>
 <!-- 		<dependency> -->
 <!-- 		    <groupId>net.sf.jasperreports</groupId> -->
 <!-- 		    <artifactId>jasperreports-fonts</artifactId> -->
@@ -252,10 +270,29 @@
 <!-- 		    <scope>compile</scope> -->
 <!-- 		</dependency> -->
 		
+		
+<!-- Java Mail -->
+		<dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${javax.mail.version}</version>
+            <scope>compile</scope>
+        </dependency>
+<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+        <!-- Transaction dependency is required with Quartz integration -->
+
+<!--         Quartz framework -->
+<!--         <dependency> -->
+<!--             <groupId>org.quartz-scheduler</groupId> -->
+<!--             <artifactId>quartz</artifactId> -->
+<!--             <version>${quartz.version}</version> -->
+<!--         </dependency> -->
 
 
 		
 </dependencies>
+
+
 
 
   

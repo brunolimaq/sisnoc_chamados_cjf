@@ -1,6 +1,15 @@
 package br.com.sisnoc.chamados.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import javax.mail.MessagingException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +20,8 @@ import br.com.sisnoc.chamados.dao.PainelChamadosDao;
 import br.com.sisnoc.chamados.dao.PainelSemSlaDao;
 import br.com.sisnoc.chamados.dao.util.ChamadosDao;
 import br.com.sisnoc.chamados.dao.util.SemSlaDao;
+import br.com.sisnoc.chamados.mail.Mailer;
+import net.sf.jasperreports.engine.JRException;
 
 @Controller
 public class EquipesController {
@@ -24,7 +35,24 @@ public class EquipesController {
 	@SemSlaDao
 	private PainelSemSlaDao daoSemSla;
 
+	@Autowired
+	private Mailer mailer;
 	
+	@RequestMapping("/email")
+	public String email(Model model) throws ParseException, MessagingException{
+
+			
+		try {
+			mailer.enviarHTML("Relatório - Chamados Reabertos", "/br/com/sisnoc/chamados/service/chamados_reabertos.jrxml", "Relatorio_Reabertos.");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "chamados/ok";
+	}
 
 	@RequestMapping("/equipe_SO")
 	public String lista_windows(Model model) throws ParseException{

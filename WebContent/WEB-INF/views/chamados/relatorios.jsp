@@ -194,9 +194,28 @@ alteraDiv = function (){
 						    <div class="col-md-3">
 						    <label for="responsavel">Responsável:</label>
 								<select class="form-control"   id="responsavel" name="responsavel">
-								  <option value="TODOS">Todos</option>
-								  <option value="jayro.roeder">Jayro Roeder</option>
-								  <option value="bruno.queiroz">Bruno Queiroz</option>
+									<option value="TODOS">Todos</option>
+									<option value="alex.oliveira">Alex Italo</option>
+									<option value="bruno.luiz">Bruno Luiz</option>
+									<option value="israel.silva">Israel Lara</option>
+									<option value="weslei">Weslei Ferreira</option>
+									<option value="jefferson.sousa">Jefferson de Sousa</option>
+									<option value="fabiano.oliveira">Fabiano Pereira</option>
+									<option value="bruno.queiroz">Bruno Lima</option>
+									<option value="walison.morales">Walison dos Santos</option>
+									<option value="glauber.estacio">Glauber Estacio</option>
+									<option value="guilherme">Guilherme Moreira</option>
+									<option value="caio.cardoso">Caio Cardoso</option>
+									<option value="antonio.junior">Antonio N. Machado</option>
+									<option value="jayro.roeder">Jayro Roeder</option>
+									<option value="jose.alves">Jose Alessandro</option>
+									<option value="lucas.cavalcante">Lucas Ernesto</option>
+									<option value="renan.silva">Renan Oscar</option>
+									<option value="adriana">Adriana Morais</option>
+									<option value="joao.sardinha">João Victor </option>
+									<option value="fernando.suzuki">Fernando Suzuki</option>
+									<option value="felipe.pereira">Felipe Pereira</option>
+									<option value="bento.junior">Bento Junior</option>								  
 								</select>
 					    	</div>
 						  </div>	  
