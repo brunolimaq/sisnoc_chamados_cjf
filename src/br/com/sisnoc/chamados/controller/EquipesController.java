@@ -43,7 +43,8 @@ public class EquipesController {
 
 			
 		try {
-			mailer.enviarHTML("Relatório - Chamados Reabertos", "/br/com/sisnoc/chamados/service/chamados_reabertos.jrxml", "Relatorio_Reabertos.");
+//			mailer.enviarHTML("Relatório - Chamados com Pendências", "/br/com/sisnoc/chamados/service/Abertos7dias.jrxml", "Relatorio_PedAbertos7Dias.");
+			mailer.enviarVolumetria("Relatório - Volumetria de Requisições por semana", "/br/com/sisnoc/chamados/service/requisicoes_mensal_por_semanal.jrxml", "Relatorio_VolumetriaSemana.");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

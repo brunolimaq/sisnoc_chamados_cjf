@@ -186,12 +186,16 @@
 										<td>${chamadosPainelNoc.titulo}</td>
 									
 										
-										
+										<c:if test="${chamadosPainelNoc.statusDescricao == 'Pendente janela de mudança'}">
+											<td>Sem RDM<img src="resources/images/agulha.png" id="logo"></img> </td>
+										</c:if>
 										<c:if test="${chamadosPainelNoc.statusDescricao == 'Aberto chamado filho'}">
 											<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
 										</c:if>						
 										<c:if test="${chamadosPainelNoc.statusDescricao != 'Aberto chamado filho'}">
-											<td>${chamadosPainelNoc.sla}</td>
+											<c:if test="${chamadosPainelNoc.statusDescricao != 'Pendente janela de mudança'}">
+												<td>${chamadosPainelNoc.sla}</td>
+											</c:if>
 										</c:if>
 										
 										

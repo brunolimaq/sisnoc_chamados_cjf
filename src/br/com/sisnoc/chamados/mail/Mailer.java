@@ -73,10 +73,10 @@ public class Mailer {
 			  props.put("mail.host","correio.cjf.local"); 
 			  Session session = Session.getDefaultInstance(props);
 			  MimeMessage message = new MimeMessage(session);
-			  Address from = new InternetAddress("bruno.queiroz@cjf.jus.br");
-			  Address to = new InternetAddress("bruno.queiroz@cjf.jus.br");
-			  Address to2 = new InternetAddress("jayro.roeder@cjf.jus.br");
-			  Address to3 = new InternetAddress("walison.morales@cjf.jus.br");
+			  Address from = new InternetAddress("svc_sisnoc@cjf.jus.br");
+			  Address to = new InternetAddress("sesser@cjf.jus.br");
+			  Address to2 = new InternetAddress("sesinf@cjf.jus.br");
+			  Address to3 = new InternetAddress("infra.algar@cjf.jus.br");
 			  message.setFrom(from);
 			  message.addRecipient(RecipientType.TO, to);
 			  message.addRecipient(RecipientType.TO, to2);
@@ -92,7 +92,7 @@ public class Mailer {
 			  		+ "</head>"
 			  		+ "<body>"
 			  		+ "<blockquote class=\"blockquote text-left\">"
-			  		+ "<p class=\"mb-0\">Relatório de chamados reabertos do mês correntes. Favor se atentar as pendências de sua equipe.</p>"
+			  		+ "<p class=\"mb-0\">Relatório de chamados abertos a mais de 7 dias sem solução. Favor se atentar a data de <bold>última atualização.</bold></p>"
 			  		+ "<footer class=\"blockquote-footer\">SISNOC - <cite title=\"Source Title\">Vai além</cite></footer>"
 			  		+ "</blockquote>"
 			  		+ "<figure class=\"figure\">"
@@ -141,4 +141,85 @@ public class Mailer {
 					
 			
 		}	
+
+
+		@Async
+		public void enviarVolumetria(String titulo, String  relatorio, String OutputFilePDF) throws MessagingException, IOException, JRException {
+			  
+			 
+			  
+			  Properties props = new Properties();
+			  props.put("mail.host","correio.cjf.local"); 
+			  Session session = Session.getDefaultInstance(props);
+			  MimeMessage message = new MimeMessage(session);
+			  Address from = new InternetAddress("svc_sisnoc@cjf.jus.br");
+			  Address to = new InternetAddress("sesser@cjf.jus.br");
+			  Address to2 = new InternetAddress("sesinf@cjf.jus.br");
+			  Address to3 = new InternetAddress("infra.algar@cjf.jus.br");
+			  message.setFrom(from);
+			  message.addRecipient(RecipientType.TO, to);
+			  message.addRecipient(RecipientType.TO, to2);
+			  message.addRecipient(RecipientType.TO, to3);
+			  message.setSentDate(new Date());
+			  message.setSubject(titulo);
+			  
+			  String htmlMessage = "<html>"
+			  		+ "<head>"
+			  		+ "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">"
+			  		+ "<link rel=\"stylesheet\" href=\"resources/css/bootstrap.min.css\">"
+			  		+ "<title>Relatório</title>"
+			  		+ "</head>"
+			  		+ "<body>"
+			  		+ "<blockquote class=\"blockquote text-left\">"
+			  		+ "<p class=\"mb-0\">Volumetria de requisições por Semana.</bold></p>"
+			  		+ "<footer class=\"blockquote-footer\">SISNOC - <cite title=\"Source Title\">Vai além</cite></footer>"
+			  		+ "</blockquote>"
+			  		+ "<figure class=\"figure\">"
+			  		+ "<img src=\"http://sisnoc/chamados/resources/images/logo_algar.png\" class=\"figure-img img-fluid rounded\" alt=\"Algar Tech - Gente servindo Gente.\">"
+			  		+ "</br>"
+			  		+ "<figcaption class=\"figure-caption\">Algar Tech - Gente servindo Gente.</figcaption>"
+			  		+ "</figure>"
+			  		+ "</body>"
+			  		+ "</html>";
+			  
+
+			  Multipart multipart = new MimeMultipart();
+
+			  MimeBodyPart attachment0 = new MimeBodyPart();
+			  attachment0.setContent(htmlMessage,"text/html; charset=UTF-8");
+			  multipart.addBodyPart(attachment0);
+			  
+//			  //arquivo que será anexado
+//			  String pathname = "C:/Users/bruno.queiroz.CJF/git/sisnoc_chamados_cjf/WebContent/resources/logo_algar.png";//pode conter o caminho
+//			  File file = new File(pathname);
+//
+			  
+			  	
+			    InputStream template = getClass().getResourceAsStream(relatorio);
+			    JasperReport report = JasperCompileManager.compileReport(template);
+			    Map<String, Object> teste = new HashMap<String,Object>();
+			    
+			    
+			    JasperPrint print = JasperFillManager.fillReport(report,teste, equipeDao.getConnection());
+			    File pdf = File.createTempFile(OutputFilePDF, ".pdf");
+			    JasperExportManager.exportReportToPdfStream(print, new FileOutputStream(pdf));
+			 
+			    
+			  MimeBodyPart attachment1 = new MimeBodyPart();  
+			  attachment1.setDataHandler(new DataHandler(new FileDataSource(pdf)));
+			  attachment1.setFileName(pdf.getName());
+			  multipart.addBodyPart(attachment1);
+
+			  //adicionando a multipart como conteudo da mensagem 
+			  message.setContent(multipart);
+			  
+			  //enviando
+    			mailSender.send(message);
+
+			  System.out.println("E-mail enviado com sucesso!");
+					
+			
+		}	
+
+
 }
