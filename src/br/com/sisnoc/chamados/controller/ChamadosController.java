@@ -241,14 +241,15 @@ public class ChamadosController {
 		String rdmPainelExecucao = "IMPL";
 		String rdmPainelPlanejamento = "RFC";
 		String rdmPainelValidacao = "APP";
-		String rdmPainelOutros = "";
+		String rdmPainelExec = "VRFY";
+		//String rdmPainelOutros = "";
 		
 		model.addAttribute("chamadosRDMGeralAprovada", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelAprovada));
 		model.addAttribute("chamadosRDMGeralPlanejamento", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelPlanejamento));
 		model.addAttribute("chamadosRDMGeralValidacao", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelValidacao));
 
 		model.addAttribute("chamadosRDMGeralExecucao", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelExecucao));
-		model.addAttribute("chamadosRDMGeralOutros", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelOutros));
+		model.addAttribute("chamadosRDMGeralOutros", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelExec));
 		
 		ModelAndView mv = new ModelAndView("chamados/gmud");
 		return mv;

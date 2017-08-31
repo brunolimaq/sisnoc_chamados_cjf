@@ -65,10 +65,8 @@ public class PainelChamadosDao {
 						+"cat.persid = req.category "
 					+"where "
 						+"cat.sym like 'INFRA%' "
-						+"and cat.sym not like 'INFRA.Ordem de Servico' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and req.type in('"+tipo+"') "
 						+"and stat.code = 'OP' ";
 				

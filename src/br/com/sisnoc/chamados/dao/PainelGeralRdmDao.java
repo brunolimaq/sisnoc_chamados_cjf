@@ -71,6 +71,7 @@ private  final Connection connection;
 			//IMPL - Exeução
 			//RFC - Em Planejamento
 			//APP - Em validação
+			//VRFY - Executada
 			// Outros Null
 			
 			if (rdmPainel.equals("")){
@@ -90,7 +91,7 @@ private  final Connection connection;
 						+"join chgstat WITH (NOLOCK) on chg.status = chgstat.code " 
 						+"join ca_contact WITH (NOLOCK)  on ca_contact.contact_uuid = chg.assignee " 
 						+"join View_Group vwg WITH (NOLOCK)  on chg.group_id = vwg.contact_uuid "
-						+ "where chgstat.code not in ('APR', 'IMPL', 'RFC', 'APP') "
+						+ "where chgstat.code not in ('APR', 'IMPL', 'RFC', 'APP','VRFY') "
 						+"order by 5 DESC";
 			}else {
 				
