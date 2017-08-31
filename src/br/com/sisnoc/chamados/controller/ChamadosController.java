@@ -344,7 +344,7 @@ public class ChamadosController {
 	public ModelAndView relatorioListaChamados(Model model, Relatorios relatorios) throws ParseException{
 
 		
-		System.out.println("opcao"+ relatorios.getOpcao());
+		
 		JasperReportsPdfView view = new JasperReportsPdfView();
 	    view.setJdbcDataSource(equipeDao.getDt());
 	    
@@ -362,9 +362,7 @@ public class ChamadosController {
 
 	    	}else {
 	    		
-	    		System.out.println(relatorios.getMes());
-	    		System.out.println(relatorios.getAno());
-	    		System.out.println(relatorios.getTipo());
+	    	
 	    		view.setUrl("resources/Lista_chamados2.jrxml");
 			    Map<String, Object> params = new HashMap<>();
 			    params.put("mes", relatorios.getMes());

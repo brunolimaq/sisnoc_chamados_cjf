@@ -119,7 +119,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 	
 	public ArrayList<Chamado> listaPainelPessoalMetas(String perfil) throws ParseException {
 		
-		System.out.println(perfil + "entrou no metodo Metas");
+		
 		try {
 			
 			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
@@ -150,7 +150,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 					
 			if (perfil == "GESTOR"){
 				
-				System.out.println("passou pelo gestor");
+			
 				sql_listaChamados = "select "
 						+"req.ref_num as chamado, "
 						+"req.id as ID "
@@ -573,7 +573,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 			chamados.setTipoLegivel(popula.populaTipoLegivel(rs_listaChamados));
 			chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listaChamados));
 			chamados.setReaberto(popula.populaReaberto(rs_listaChamados));
-			System.out.println("Chamado reaberto" + chamados.getChamado() + "reaberto?" + chamados.getReaberto());
+			
 			ListaChamados.add(chamados);
 			
 		}

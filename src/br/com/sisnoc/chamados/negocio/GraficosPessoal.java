@@ -54,7 +54,7 @@ public class GraficosPessoal implements GraficosPessoalService {
 	@Override
 	public void calcMetas() {
 		
-		System.out.println("calcula meta");
+	
 		
 		
 		int countTotal = 0;
@@ -102,7 +102,7 @@ public class GraficosPessoal implements GraficosPessoalService {
 			}
 		
 		
-			System.out.println("lista " + getListaPendenteEquipe());
+			//System.out.println("lista " + getListaPendenteEquipe());
 		
 			for (Chamado chamado : chamados) {
 				

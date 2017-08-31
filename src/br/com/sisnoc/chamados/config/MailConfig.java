@@ -43,7 +43,7 @@ public class MailConfig {
 
 		mailSender.setJavaMailProperties(props);
 		
-		System.out.println("TESTE!!!");
+		
 		return mailSender;
 	}
 

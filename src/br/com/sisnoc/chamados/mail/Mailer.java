@@ -137,7 +137,7 @@ public class Mailer {
 			  //enviando
     			mailSender.send(message);
 
-			  System.out.println("E-mail enviado com sucesso!");
+			 // System.out.println("E-mail enviado com sucesso!");
 					
 			
 		}	
@@ -216,7 +216,7 @@ public class Mailer {
 			  //enviando
     			mailSender.send(message);
 
-			  System.out.println("E-mail enviado com sucesso!");
+			 // System.out.println("E-mail enviado com sucesso!");
 					
 			
 		}	
