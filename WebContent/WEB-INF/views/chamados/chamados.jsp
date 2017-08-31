@@ -187,7 +187,7 @@
 									
 										
 										<c:if test="${chamadosPainelNoc.statusDescricao == 'Pendente janela de mudança'}">
-											<td>Sem RDM<img src="resources/images/agulha.png" id="logo"></img> </td>
+											<td>Verificar RDM<img src="resources/images/agulha.png" id="logo"></img> </td>
 										</c:if>
 										<c:if test="${chamadosPainelNoc.statusDescricao == 'Aberto chamado filho'}">
 											<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>

@@ -51,6 +51,7 @@ public class PainelChamadosDao {
 			String sql_listaChamados = "";
 			String sql_listaChamadosFilhoAtd = "";
 			String sql_listaChamadosSemRDM = "";
+			String sql_listaChamadosRDMAtendida = "";
 			// tipo = "R";
 			
 			
@@ -110,7 +111,23 @@ public class PainelChamadosDao {
 							+ "and change is null";
 
 					
-					
+					sql_listaChamadosRDMAtendida = "select "
+							+"req.ref_num as chamado, "
+							+"req.id as ID "
+						+"from "
+							+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
+							+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
+							+"cat.persid = req.category "
+							+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+						+"where "
+							+"cat.sym like 'INFRA%' "
+							+"and cat.sym not like 'INFRA.Ordem de Servico' "
+							+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+							+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+							+"and cat.sym not like 'Infra.Tarefas Internas' "
+							+"and req.type != 'P' "
+							+"and stat.code = 'PNDCHG' "
+							+ "and 'VRFY' = (select status from chg where chg.id = req.change)";
 					
 					
 				}
@@ -250,8 +267,23 @@ public class PainelChamadosDao {
 				rs_sql_listaChamadosSemRDM.close();
 				
 			}
+		
+		if(!sql_listaChamadosRDMAtendida.equals("")){
 			
+			stmt = connection
+					.prepareStatement(sql_listaChamadosRDMAtendida);
+			ResultSet rs_sql_listaChamadosRDMAtendida = stmt.executeQuery();
 			
+			while (rs_sql_listaChamadosRDMAtendida.next()){
+
+				lista = lista +",\'" + rs_sql_listaChamadosRDMAtendida.getString("ID") + "\'";
+			}
+			
+			rs_sql_listaChamadosRDMAtendida.close();
+			
+		}
+			
+		
 			
 			String sql_listaLog = "select "
 									+"req.id as ID, "
