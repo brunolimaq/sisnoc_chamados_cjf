@@ -127,7 +127,7 @@ public class PainelChamadosDao {
 							+"and cat.sym not like 'Infra.Tarefas Internas' "
 							+"and req.type != 'P' "
 							+"and stat.code = 'PNDCHG' "
-							+ "and 'VRFY' = (select status from chg where chg.id = req.change)";
+							+"and (select status from chg where chg.id = req.change) in ('VRFY','CL','CNCL','RE','IMPD') ";
 					
 					
 				}
