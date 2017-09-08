@@ -50,7 +50,7 @@ private  final Connection connection;
 			
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-
+			String gerencia = ContextoUsuario.getGerencia();
 		
 		
 			

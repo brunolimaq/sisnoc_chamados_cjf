@@ -59,7 +59,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 			
 			// tipo = "R";
 			
-
+			String gerencia = ContextoUsuario.getGerencia();
 		
 			
 			
@@ -70,12 +70,12 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 						+"from  "
 						+"	mdb.dbo.call_req req WITH(NOLOCK)  "
 						+"	join mdb.dbo.cr_stat stat WITH(NOLOCK) on req.status = stat.code  "
-						+"	join mdb.dbo.prob_ctg cat2 WITH(NOLOCK) on cat2.persid = req.category  "
+						+"	join mdb.dbo.prob_ctg cat WITH(NOLOCK) on cat.persid = req.category  "
 						+"	join mdb.dbo.View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid  "
 						+"where  "
-						+"	cat2.sym like 'INFRA%'  "
+						+"cat.sym like '"+gerencia+"%' "
 						+"	and vwg.last_name not like 'Gestores%' "
-						+"	and cat2.sym not like 'Infra.Tarefas Internas'  "
+						+"	and cat.sym not like 'Infra.Tarefas Internas'  "
 						+"	and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK')  "
 						+"group by REPLACE( vwg.last_name,'Analistas ','')"; 
 
@@ -125,7 +125,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 			
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-			
+			String gerencia = ContextoUsuario.getGerencia();
 					
 			if (perfil == "GESTOR"){
 				
@@ -139,7 +139,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 						+"cat.persid = req.category "
 						+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and cat.sym not like 'INFRA.Ordem de Servico' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -159,7 +159,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 						+"cat.persid = req.category "
 						+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and cat.sym not like 'INFRA.Ordem de Servico' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -283,7 +283,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 			
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-		
+			String gerencia = ContextoUsuario.getGerencia();
 			
 			if (perfil == "GESTOR"){
 
@@ -298,7 +298,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 						+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 						+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and cat.sym not like 'INFRA.Ordem de Servico' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -325,7 +325,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 						+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 						+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and cat.sym not like 'INFRA.Ordem de Servico' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -385,7 +385,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 		
 		String username = ContextoUsuario.getUsername();
 		String listaEquipe = ContextoUsuario.getEquipes();
-	
+		String gerencia = ContextoUsuario.getGerencia();
 		
 		if (perfil == "GESTOR"){
 
@@ -398,7 +398,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 					+ "join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
 					+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 				+"where "
-					+"cat.sym like 'INFRA%' "
+					+"cat.sym like '"+gerencia+"%' "
 					+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') ";
 
 
@@ -414,7 +414,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 					+ "join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
 					+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 				+"where "
-					+"cat.sym like 'INFRA%' "
+					+"cat.sym like '"+gerencia+"%' "
 					+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 					
 					+"and usu.userid = '"+username+"'  ";
@@ -466,7 +466,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 
 		String username = ContextoUsuario.getUsername();
 		String listaEquipe = ContextoUsuario.getEquipes();
-		
+		String gerencia = ContextoUsuario.getGerencia();
 	
 			sql_listaChamados ="select " 
 					+"req.ref_num as chamados, "
@@ -487,7 +487,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 					+"join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid " 
 					+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid  "
 				+"where  "
-					+"cat.sym like 'INFRA%' " 
+					+"cat.sym like '"+gerencia+"%' " 
 					+"and cat.sym not like 'INFRA.Ordem de Servico' " 
 					+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' " 
 					+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' " 

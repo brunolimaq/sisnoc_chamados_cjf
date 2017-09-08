@@ -58,4 +58,14 @@ public class ContextoUsuario {
 				
 		return permissao;
 	}
+	
+	public static String getGerencia(){
+		
+		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String gerencia;
+		
+		gerencia = ( (UsuarioSistema)usuarioLogado).getUsuario().getGerencia();
+		
+		return gerencia;
+	}
 }

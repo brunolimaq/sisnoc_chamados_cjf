@@ -23,6 +23,7 @@ import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.negocio.CalculaSla;
 import br.com.sisnoc.chamados.negocio.CalculaSla2;
 import br.com.sisnoc.chamados.negocio.Popula;
+import br.com.sisnoc.chamados.service.ContextoUsuario;
 
 @Primary
 @Repository
@@ -53,7 +54,8 @@ public class PainelChamadosDao {
 			String sql_listaChamadosSemRDM = "";
 			String sql_listaChamadosRDMAtendida = "";
 			// tipo = "R";
-			
+			String gerencia = ContextoUsuario.getGerencia();
+	
 			
 			if(status.equals("aberto")){
 
@@ -65,7 +67,7 @@ public class PainelChamadosDao {
 						+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
 						+"cat.persid = req.category "
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
 						+"and req.type in('"+tipo+"') "
@@ -83,7 +85,7 @@ public class PainelChamadosDao {
 													+"cat.persid = req.category "
 													+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 												+"where "
-													+"cat.sym like 'INFRA%' "
+													+"cat.sym like '"+gerencia+"%' "
 													+"and cat.sym not like 'INFRA.Ordem de Servico' "
 													+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 													+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -101,7 +103,7 @@ public class PainelChamadosDao {
 							+"cat.persid = req.category "
 							+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 						+"where "
-							+"cat.sym like 'INFRA%' "
+							+"cat.sym like '"+gerencia+"%' "
 							+"and cat.sym not like 'INFRA.Ordem de Servico' "
 							+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 							+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -120,7 +122,7 @@ public class PainelChamadosDao {
 							+"cat.persid = req.category "
 							+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 						+"where "
-							+"cat.sym like 'INFRA%' "
+							+"cat.sym like '"+gerencia+"%' "
 							+"and cat.sym not like 'INFRA.Ordem de Servico' "
 							+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 							+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -144,7 +146,7 @@ public class PainelChamadosDao {
 									+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
 									+"cat.persid = req.category "
 								+"where "
-									+"cat.sym like 'INFRA%' "
+									+"cat.sym like '"+gerencia+"%' "
 									+"and cat.sym not like 'INFRA.Ordem de Servico' "
 									+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 									+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -163,13 +165,13 @@ public class PainelChamadosDao {
 									+"from "
 										+"call_req req WITH(NOLOCK) "
 										+"join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
-										+"join prob_ctg cat1 WITH(NOLOCK) on cat1.persid = req.category "
+										+"join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
 									+"where "
-										+"cat1.sym like 'INFRA%' "
-										+"and cat1.sym not like 'INFRA.Ordem de Servico' "
-										+"and cat1.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
-										+"and cat1.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-										+"and cat1.sym not like 'Infra.Tarefas Internas' "
+										+"cat.sym like '"+gerencia+"%' "
+										+"and cat.sym not like 'INFRA.Ordem de Servico' "
+										+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+										+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+										+"and cat.sym not like 'Infra.Tarefas Internas' "
 										+"and req.type in('"+tipo+"') "
 										+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') ";			
 				
@@ -182,14 +184,14 @@ public class PainelChamadosDao {
 										+"from "
 											+"call_req req WITH(NOLOCK) "
 											+"join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
-											+"join prob_ctg cat2 WITH(NOLOCK) on cat2.persid = req.category "
+											+"join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
 											+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
 										+"where "
-											+"cat2.sym like 'INFRA%' "
-											+"and cat2.sym not like 'INFRA.Ordem de Servico' "
-											+"and cat2.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
-											+"and cat2.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-											+"and cat2.sym not like 'Infra.Tarefas Internas' "
+											+"cat.sym like '"+gerencia+"%' "
+											+"and cat.sym not like 'INFRA.Ordem de Servico' "
+											+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+											+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+											+"and cat.sym not like 'Infra.Tarefas Internas' "
 											+"and req.type in('"+tipo+"') "
 											+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 											+"and vwg.last_name = '"+equipe+"'";	
@@ -204,14 +206,14 @@ public class PainelChamadosDao {
 										+"from "
 											+"call_req req WITH(NOLOCK) "
 											+"join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
-											+"join prob_ctg cat3 WITH(NOLOCK) on cat3.persid = req.category "
+											+"join prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
 											+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
 										+"where "
-											+"cat3.sym like 'INFRA%' "
-											+"and cat3.sym not like 'INFRA.Ordem de Servico' "
-											+"and cat3.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
-											+"and cat3.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
-											+"and cat3.sym not like 'Infra.Tarefas Internas' "
+											+"cat.sym like '"+gerencia+"%' "
+											+"and cat.sym not like 'INFRA.Ordem de Servico' "
+											+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+											+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+											+"and cat.sym not like 'Infra.Tarefas Internas' "
 											+"and req.type in('"+tipo+"') "
 											+"and stat.code in('WIP','PRBAPP') "
 											+"and vwg.last_name = '"+equipe+"'";	

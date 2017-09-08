@@ -54,7 +54,7 @@ private  final Connection connection;
 			
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-			
+			String gerencia = ContextoUsuario.getGerencia();
 
 			// chamados em andamento
 				sql_listaChamados = "select "
@@ -66,7 +66,7 @@ private  final Connection connection;
 						+"cat.persid = req.category "
 						+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and cat.sym not like 'INFRA.Ordem de Servico' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -98,7 +98,7 @@ private  final Connection connection;
 					+"cat.persid = req.category "
 					+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 				+"where "
-					+"cat.sym like 'INFRA%' "
+					+"cat.sym like '"+gerencia+"%' "
 					+"and cat.sym not like 'INFRA.Ordem de Servico' "
 					+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 					+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -135,7 +135,7 @@ private  final Connection connection;
 						+"cat.persid = req.category "
 						+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and cat.sym not like 'INFRA.Ordem de Servico' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -247,7 +247,7 @@ private  final Connection connection;
 						
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-			
+			String gerencia = ContextoUsuario.getGerencia();
 
 			String sql_atualizacaoOs = "select "
 					+ "MAX(datediff(dd,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate())) as diasatualizacao "
@@ -302,7 +302,7 @@ private  final Connection connection;
 			// tipo = "R";
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-			
+			String gerencia = ContextoUsuario.getGerencia();
 
 				sql_listaChamados = "select "
 						+"req.ref_num as chamado, "
@@ -314,7 +314,7 @@ private  final Connection connection;
 						+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 						+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and stat.code in ("+status+") "
 						+"and cat.sym not in ('Infra.Tarefas Internas', 'INFRA.Ordem de Servico') "
 						+"and req.type != 'P'"

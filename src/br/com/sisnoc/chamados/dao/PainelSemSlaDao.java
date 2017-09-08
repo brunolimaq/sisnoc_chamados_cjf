@@ -229,7 +229,7 @@ public List<Chamado> listaPainelPessoalOs(String categoria) throws ParseExceptio
 			
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-
+			String gerencia = ContextoUsuario.getGerencia();
 		
 		
 			
@@ -398,7 +398,7 @@ public List<Chamado> listaPainelPessoalOsPendente(String categoria) throws Parse
 		
 		String username = ContextoUsuario.getUsername();
 		String listaEquipe = ContextoUsuario.getEquipes();
-
+		String gerencia = ContextoUsuario.getGerencia();
 	
 	
 		
@@ -502,7 +502,7 @@ public List<Chamado> listaPainelPessoalEquipeOs(String categoria) throws ParseEx
 			
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-
+			String gerencia = ContextoUsuario.getGerencia();
 		
 			// OS em andamento
 			sql_listaRDM = "select "
@@ -679,7 +679,7 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 			
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-
+			String gerencia = ContextoUsuario.getGerencia();
 		
 			
 			
@@ -697,7 +697,8 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
 					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
-					+ "where ctg.sym like 'INFRA%' "
+					+ "where "
+					+"ctg.sym like '"+gerencia+"%' "
 					+ "and ctg.sym not like 'INFRA.Ordem de Servico' "
 					+ "and req.type in ('P') "
 					+ "and stat.code in ("+status+") " 
@@ -761,7 +762,7 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 			
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-
+			String gerencia = ContextoUsuario.getGerencia();
 		
 			
 			
@@ -779,7 +780,8 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
 					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
-					+ "where ctg.sym like 'INFRA%' "
+					+ "where "
+					+"ctg.sym like '"+gerencia+"%' "
 					+ "and ctg.sym not like 'INFRA.Ordem de Servico' "
 					+ "and req.type in ('P') "
 					+ "and stat.code in ('RSCH', 'OP', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK','WIP','PRBAPP') " 
@@ -847,7 +849,7 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 			
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-
+			String gerencia = ContextoUsuario.getGerencia();
 		
 			
 			
@@ -866,7 +868,8 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 					+ "join prob_ctg ctg WITH (NOLOCK)  on ctg.persid = req.category " 
 					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid  "
 					+ "join View_Group vwg WITH (NOLOCK)  on req.group_id = vwg.contact_uuid " 
-					+ "where ctg.sym like 'INFRA%' "
+					+ "where "
+					+"ctg.sym like '"+gerencia+"%' "
 					+ "and ctg.sym not like 'INFRA.Ordem de Servico' "
 					+ "and req.type in ('P') "
 					+ "and stat.code in ('RSCH', 'OP', 'PF', 'AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'ACK','WIP','PRBAPP') " 

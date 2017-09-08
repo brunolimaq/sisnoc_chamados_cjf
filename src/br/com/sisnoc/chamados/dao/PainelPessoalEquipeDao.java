@@ -54,7 +54,7 @@ private  final Connection connection;
 			Integer flagFilho = 0;
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-			
+			String gerencia = ContextoUsuario.getGerencia();
 			
 			if (perfil == "GESTOR"){
 				
@@ -71,7 +71,7 @@ private  final Connection connection;
 						+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 						+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and cat.sym not like 'INFRA.Ordem de Servico' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -113,7 +113,7 @@ private  final Connection connection;
 								+" join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 								+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
 							+"where "
-								+"cat.sym like 'INFRA%' "
+								+"cat.sym like '"+gerencia+"%' "
 								+"and cat.sym not like 'INFRA.Ordem de Servico' "
 								+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 								+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -149,7 +149,7 @@ private  final Connection connection;
 						+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 						+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and cat.sym not like 'INFRA.Ordem de Servico' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
@@ -268,7 +268,7 @@ private  final Connection connection;
 			// tipo = "R";
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
-			
+			String gerencia = ContextoUsuario.getGerencia();
 			
 			if (perfil == "GESTOR"){
 				
@@ -285,7 +285,7 @@ private  final Connection connection;
 						+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
 						+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
 					+"where "
-						+"cat.sym like 'INFRA%' "
+						+"cat.sym like '"+gerencia+"%' "
 						+"and cat.sym not like 'INFRA.Ordem de Servico' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
 						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "

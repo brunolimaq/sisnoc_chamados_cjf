@@ -52,6 +52,7 @@ private  final Connection connection;
 			String rdm = rdmPainel;
 			String username = ContextoUsuario.getUsername();
 			String listaEquipe = ContextoUsuario.getEquipes();
+			String gerencia = ContextoUsuario.getGerencia();
 
 			//APR - Aprovada
 			//IMPL - Exeução
