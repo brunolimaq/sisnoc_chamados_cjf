@@ -29,6 +29,7 @@ import br.com.sisnoc.chamados.dao.PainelPessoalRdmDao;
 import br.com.sisnoc.chamados.dao.PainelGeralRdmDao;
 
 import br.com.sisnoc.chamados.security.UsuarioSistema;
+import br.com.sisnoc.chamados.service.ContextoUsuario;
 
 
 
@@ -68,16 +69,10 @@ public class ChamadosController {
 		
 		
 		String perfil;
-		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username;
-		Collection<? extends GrantedAuthority> permissao = null;
-		String user_exclusao = "''";
-		if (usuarioLogado  instanceof UsuarioSistema ) {
-			   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-			   permissao = ( (UsuarioSistema)usuarioLogado).getUsuario().getAuthority();
-		} else {
-		   username = usuarioLogado.toString();
-		}
+		
+		Collection<? extends GrantedAuthority> permissao = ContextoUsuario.getPermissao();
+		
+		
 		
 		
 		
@@ -155,15 +150,7 @@ public class ChamadosController {
 		
 		
 		String perfil = "";
-		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = "";
-		Collection<? extends GrantedAuthority> permissao = null;
-		if (usuarioLogado  instanceof UsuarioSistema ) {
-			   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-			   permissao = ( (UsuarioSistema)usuarioLogado).getUsuario().getAuthority();
-		} else {
-		   username = usuarioLogado.toString();
-		}
+		Collection<? extends GrantedAuthority> permissao = ContextoUsuario.getPermissao();
 		
 		
 		

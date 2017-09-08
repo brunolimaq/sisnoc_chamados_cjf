@@ -22,6 +22,7 @@ import br.com.sisnoc.chamados.modelo.Mudanca;
 
 import br.com.sisnoc.chamados.negocio.Popula;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
+import br.com.sisnoc.chamados.service.ContextoUsuario;
 
 
 @Repository
@@ -47,25 +48,10 @@ private  final Connection connection;
 			ArrayList<Mudanca> ListaRDM = new ArrayList<Mudanca>();
 			String sql_listaRDM = "";
 			
-			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username;
-			String equipe = "";
+			
 			String rdm = rdmPainel;
-			
-			if (usuarioLogado  instanceof UsuarioSistema ) {
-				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-			} else {
-			   username = usuarioLogado.toString();
-			}
-					
-			String[] splitEquipe = equipe.split(",");
-			
-			String listaEquipe = "\'\'";
-			
-			for (String eqp : splitEquipe) {
-				listaEquipe = listaEquipe +",\'" + eqp + "\'";
-			}
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
 
 			//APR - Aprovada
 			//IMPL - Exeução

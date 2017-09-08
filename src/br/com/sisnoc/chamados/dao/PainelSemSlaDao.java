@@ -21,6 +21,7 @@ import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.negocio.CalculaSla;
 import br.com.sisnoc.chamados.negocio.Popula;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
+import br.com.sisnoc.chamados.service.ContextoUsuario;
 
 
 
@@ -226,25 +227,8 @@ public List<Chamado> listaPainelPessoalOs(String categoria) throws ParseExceptio
 			String sql_listaRDM = "";
 			String sql_listaRDM2 = "";
 			
-			// tipo = "R";
-			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username;
-			String equipe = "";
-			String user_exclusao = "''";
-			if (usuarioLogado  instanceof UsuarioSistema ) {
-				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-			} else {
-			   username = usuarioLogado.toString();
-			}
-					
-			String[] splitEquipe = equipe.split(",");
-			
-			String listaEquipe = "\'\'";
-			
-			for (String eqp : splitEquipe) {
-				listaEquipe = listaEquipe +",\'" + eqp + "\'";
-			}
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
 
 		
 		
@@ -412,25 +396,8 @@ public List<Chamado> listaPainelPessoalOsPendente(String categoria) throws Parse
 		String sql_listaRDM = "";
 		String sql_listaRDM2 = "";
 		
-		// tipo = "R";
-		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username;
-		String equipe = "";
-		String user_exclusao = "''";
-		if (usuarioLogado  instanceof UsuarioSistema ) {
-			   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-			   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-		} else {
-		   username = usuarioLogado.toString();
-		}
-				
-		String[] splitEquipe = equipe.split(",");
-		
-		String listaEquipe = "\'\'";
-		
-		for (String eqp : splitEquipe) {
-			listaEquipe = listaEquipe +",\'" + eqp + "\'";
-		}
+		String username = ContextoUsuario.getUsername();
+		String listaEquipe = ContextoUsuario.getEquipes();
 
 	
 	
@@ -533,25 +500,8 @@ public List<Chamado> listaPainelPessoalEquipeOs(String categoria) throws ParseEx
 			String sql_listaRDM = "";
 			String sql_listaRDM2 = "";
 			
-			// tipo = "R";
-			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username;
-			String equipe = "";
-			String user_exclusao = "''";
-			if (usuarioLogado  instanceof UsuarioSistema ) {
-				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-			} else {
-			   username = usuarioLogado.toString();
-			}
-					
-			String[] splitEquipe = equipe.split(",");
-			
-			String listaEquipe = "\'\'";
-			
-			for (String eqp : splitEquipe) {
-				listaEquipe = listaEquipe +",\'" + eqp + "\'";
-			}
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
 
 		
 			// OS em andamento
@@ -727,25 +677,8 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 			ArrayList<Chamado> ListaProblema = new ArrayList<Chamado>();
 			String sql_listaRDM = "";
 			
-			// tipo = "R";
-			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username;
-			String equipe = "";
-			String user_exclusao = "''";
-			if (usuarioLogado  instanceof UsuarioSistema ) {
-				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-			} else {
-			   username = usuarioLogado.toString();
-			}
-					
-			String[] splitEquipe = equipe.split(",");
-			
-			String listaEquipe = "\'\'";
-			
-			for (String eqp : splitEquipe) {
-				listaEquipe = listaEquipe +",\'" + eqp + "\'";
-			}
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
 
 		
 			
@@ -825,25 +758,9 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 			ArrayList<Chamado> ListaProblema = new ArrayList<Chamado>();
 			String sql_listaRDM = "";
 			
-			// tipo = "R";
-			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username;
-			String equipe = "";
-			String user_exclusao = "''";
-			if (usuarioLogado  instanceof UsuarioSistema ) {
-				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-			} else {
-			   username = usuarioLogado.toString();
-			}
-					
-			String[] splitEquipe = equipe.split(",");
 			
-			String listaEquipe = "\'\'";
-			
-			for (String eqp : splitEquipe) {
-				listaEquipe = listaEquipe +",\'" + eqp + "\'";
-			}
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
 
 		
 			
@@ -928,25 +845,8 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 			ArrayList<Chamado> ListaProblema = new ArrayList<Chamado>();
 			String sql_listaRDM = "";
 			
-			// tipo = "R";
-			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username;
-			String equipe = "";
-			String user_exclusao = "''";
-			if (usuarioLogado  instanceof UsuarioSistema ) {
-				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-			} else {
-			   username = usuarioLogado.toString();
-			}
-					
-			String[] splitEquipe = equipe.split(",");
-			
-			String listaEquipe = "\'\'";
-			
-			for (String eqp : splitEquipe) {
-				listaEquipe = listaEquipe +",\'" + eqp + "\'";
-			}
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
 
 		
 			

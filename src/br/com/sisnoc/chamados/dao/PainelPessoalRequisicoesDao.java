@@ -22,6 +22,7 @@ import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.negocio.CalculaSla;
 import br.com.sisnoc.chamados.negocio.Popula;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
+import br.com.sisnoc.chamados.service.ContextoUsuario;
 
 @Repository
 @DestaquesDao
@@ -48,16 +49,11 @@ private  final Connection connection;
 			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
 			String sql_listaChamados = "";
 			
-			// tipo = "R";
-			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username;
+		
 			Integer flagFilho = 0;
 			
-			if (usuarioLogado  instanceof UsuarioSistema ) {
-			   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-			} else {
-			   username = usuarioLogado.toString();
-			}
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
 			
 
 			// chamados em andamento
@@ -249,16 +245,8 @@ private  final Connection connection;
 		try {
 			
 						
-			// tipo = "R";
-			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username;
-			
-			
-			if (usuarioLogado  instanceof UsuarioSistema ) {
-			   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-			} else {
-			   username = usuarioLogado.toString();
-			}
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
 			
 
 			String sql_atualizacaoOs = "select "
@@ -312,24 +300,8 @@ private  final Connection connection;
 			String sql_listaChamados = "";
 			
 			// tipo = "R";
-			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username;
-			String equipe = "";
-			String user_exclusao = "''";
-			if (usuarioLogado  instanceof UsuarioSistema ) {
-				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-			} else {
-			   username = usuarioLogado.toString();
-			}
-					
-			String[] splitEquipe = equipe.split(",");
-			
-			String listaEquipe = "\'\'";
-			
-			for (String eqp : splitEquipe) {
-				listaEquipe = listaEquipe +",\'" + eqp + "\'";
-			}
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
 			
 
 				sql_listaChamados = "select "

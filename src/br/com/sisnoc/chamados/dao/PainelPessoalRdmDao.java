@@ -22,6 +22,7 @@ import br.com.sisnoc.chamados.modelo.Mudanca;
 
 import br.com.sisnoc.chamados.negocio.Popula;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
+import br.com.sisnoc.chamados.service.ContextoUsuario;
 
 
 @Repository
@@ -47,31 +48,11 @@ private  final Connection connection;
 			ArrayList<Mudanca> ListaRDM = new ArrayList<Mudanca>();
 			String sql_listaRDM = "";
 			
-			// tipo = "R";
-			Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username;
-			String equipe = "";
-			String user_exclusao = "''";
-			if (usuarioLogado  instanceof UsuarioSistema ) {
-				   username = ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-				   equipe = ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-			} else {
-			   username = usuarioLogado.toString();
-			}
-					
-			String[] splitEquipe = equipe.split(",");
-			
-			String listaEquipe = "\'\'";
-			
-			for (String eqp : splitEquipe) {
-				listaEquipe = listaEquipe +",\'" + eqp + "\'";
-			}
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
 
 		
-			if (username.equals("bruno.queiroz") || username.equals("walison.morales")){
-				
-				user_exclusao = "'antonio.junior'";
-			}
+		
 			
 			sql_listaRDM = "select " 
 						+"chg.id as ID , "
@@ -88,7 +69,6 @@ private  final Connection connection;
 						+"join ca_contact WITH (NOLOCK)  on ca_contact.contact_uuid = chg.assignee " 
 						+"join View_Group vwg WITH (NOLOCK)  on chg.group_id = vwg.contact_uuid "
 						+ "where chgstat.code in ('IMPL', 'APR','APP','RFC') "
-						+"and ca_contact.userid  not in ("+user_exclusao+") "
 						+"and vwg.last_name in ("+ listaEquipe + ") "
 						+"order by 6,5";
 

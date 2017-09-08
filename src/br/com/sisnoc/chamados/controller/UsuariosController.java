@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.sisnoc.chamados.dao.UsuariosDao;
 import br.com.sisnoc.chamados.modelo.Usuario;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
+import br.com.sisnoc.chamados.service.ContextoUsuario;
 
 @Controller
 public class UsuariosController {
@@ -31,15 +32,10 @@ public class UsuariosController {
 	@RequestMapping("/cadastro")
 	public String cadastro() throws SQLException{
 
-		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username;
-		if (usuarioLogado  instanceof UsuarioSistema ) {
-		   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-		} else {
-		   username = usuarioLogado .toString();
-		}
 		
-	
+		String username;
+		
+		username = ContextoUsuario.getUsername();
 		
 		
 		return "chamados/ok";
@@ -48,20 +44,14 @@ public class UsuariosController {
 	@RequestMapping("/perfil")
 	public ModelAndView perfil(Model model) {
 		
-		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	
 		String username;
 		String grupos;
 		Collection<? extends GrantedAuthority> permissoes = null;
-		if (usuarioLogado  instanceof UsuarioSistema ) {
-		   username= ( (UsuarioSistema)usuarioLogado).getUsuario().getNome();
-		   grupos =  ( (UsuarioSistema)usuarioLogado).getUsuario().getNomeEquipe();
-		   permissoes =  ( (UsuarioSistema)usuarioLogado).getUsuario().getAuthority();
-		} else {
-		   username = usuarioLogado .toString();
-		   grupos = usuarioLogado .toString();
-		   
-		}
-
+				
+		username = ContextoUsuario.getUsername();
+		grupos = ContextoUsuario.getEquipesRaw();
+		permissoes = ContextoUsuario.getPermissao();
 	
 		
 		model.addAttribute("nome", username);
