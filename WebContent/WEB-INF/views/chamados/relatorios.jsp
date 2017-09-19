@@ -69,6 +69,9 @@ alteraDiv = function (){
         $("#listaAno").hide();
         $("#listaTipo").hide();
         $("#responsavel").hide();
+        $("#listaMesInicial").hide();
+        $("#listaAnoInicial").hide();
+        $("#solicitante").hide();
     }
     
     if($('#opcao').val() == 'rel_chamados'){
@@ -80,6 +83,9 @@ alteraDiv = function (){
         $("#listaAno").show();
         $("#listaTipo").show();
         $("#responsavel").hide();
+        $("#listaMesInicial").hide();
+        $("#listaAnoInicial").hide();
+        $("#solicitante").hide();
      }
     
     if($('#opcao').val() == 'vol_requisicoes'){
@@ -91,6 +97,9 @@ alteraDiv = function (){
         $("#listaAno").hide();
         $("#listaTipo").hide();
         $("#responsavel").hide();
+        $("#listaMesInicial").hide();
+        $("#listaAnoInicial").hide();
+        $("#solicitante").hide();
      }
     
     if($('#opcao').val() == 'rel_Aberto7Dias'){
@@ -102,6 +111,9 @@ alteraDiv = function (){
         $("#listaAno").hide();
         $("#listaTipo").hide();
         $("#responsavel").show();
+        $("#listaMesInicial").hide();
+        $("#listaAnoInicial").hide();
+        $("#solicitante").hide();
         
      }
     
@@ -115,7 +127,41 @@ alteraDiv = function (){
         $("#listaAno").show();
         $("#listaTipo").hide();
         $("#responsavel").hide();
-        
+        $("#listaMesInicial").hide();
+        $("#listaAnoInicial").hide();
+        $("#solicitante").hide();
+     }
+    
+    
+    if($('#opcao').val() == 'rel_estatistica'){
+
+
+    	$("#listaUsuarios").hide();
+        $("#listaEquipes").hide();
+        $("#listaPor").hide();
+        $("#listaMes").hide();
+        $("#listaAno").hide();
+        $("#listaTipo").hide();
+        $("#responsavel").hide();
+        $("#listaInicial").show();
+        $("#listaFinal").show();
+        $("#solicitante").hide();
+
+     }
+    
+    if($('#opcao').val() == 'rel_estatistica_solicitante'){
+
+
+    	$("#listaUsuarios").hide();
+        $("#listaEquipes").hide();
+        $("#listaPor").hide();
+        $("#listaMes").hide();
+        $("#listaAno").hide();
+        $("#listaTipo").hide();
+        $("#responsavel").hide();
+        $("#listaInicial").show();
+        $("#listaFinal").show();
+        $("#solicitante").show();
      }
     
 }
@@ -164,6 +210,8 @@ alteraDiv = function (){
 								  <option id="vol_requisicoes" value="vol_requisicoes">Volumetria - Chamados</option>
 								  <option id="rel_Aberto7Dias" value="rel_Aberto7Dias">Chamados com pendências superior a uma semana</option>
 								  <option id="rel_satisfacao" value="rel_satisfacao">Satisfação por equipe - Atendimentos</option>
+								  <option id="rel_estatistica" value="rel_estatistica">Estatística de atendimento - Fila VIP</option>
+								  <option id="rel_estatistica_solicitante" value="rel_estatistica_solicitante">Estatística de atendimento - Por solicitante	</option>
 								</select>
 					    	</div>
 						  </div>	
@@ -194,6 +242,36 @@ alteraDiv = function (){
 						    <div class="col-md-3">
 						    <label for="responsavel">Responsável:</label>
 								<select class="form-control"   id="responsavel" name="responsavel">
+									<option value="TODOS">Todos</option>
+									<option value="alex.oliveira">Alex Italo</option>
+									<option value="bruno.luiz">Bruno Luiz</option>
+									<option value="israel.silva">Israel Lara</option>
+									<option value="weslei">Weslei Ferreira</option>
+									<option value="jefferson.sousa">Jefferson de Sousa</option>
+									<option value="fabiano.oliveira">Fabiano Pereira</option>
+									<option value="bruno.queiroz">Bruno Lima</option>
+									<option value="walison.morales">Walison dos Santos</option>
+									<option value="glauber.estacio">Glauber Estacio</option>
+									<option value="guilherme">Guilherme Moreira</option>
+									<option value="caio.cardoso">Caio Cardoso</option>
+									<option value="antonio.junior">Antonio N. Machado</option>
+									<option value="jayro.roeder">Jayro Roeder</option>
+									<option value="jose.alves">Jose Alessandro</option>
+									<option value="lucas.cavalcante">Lucas Ernesto</option>
+									<option value="renan.silva">Renan Oscar</option>
+									<option value="adriana">Adriana Morais</option>
+									<option value="joao.sardinha">João Victor </option>
+									<option value="fernando.suzuki">Fernando Suzuki</option>
+									<option value="felipe.pereira">Felipe Pereira</option>
+									<option value="bento.junior">Bento Junior</option>								  
+								</select>
+					    	</div>
+						  </div>	
+						  
+						  <div class="form-group"   style="display: none;" id="solicitante" >
+						    <div class="col-md-3">
+						    <label for="solicitante">Solicitante:</label>
+								<select class="form-control"   id="solicitante" name="solicitante">
 									<option value="TODOS">Todos</option>
 									<option value="alex.oliveira">Alex Italo</option>
 									<option value="bruno.luiz">Bruno Luiz</option>
@@ -250,7 +328,64 @@ alteraDiv = function (){
 								  <option value="2014">2014</option>
 								</select>
 							</div>
-						</div>						  
+						</div>		
+						
+						  <div class="form-group"  style="display: none;" id="listaInicial" >
+						    <div class="col-md-2">
+							    <label for="mesInicial">Mês Inicial:</label>
+								<select class="form-control" id="mesInicial" name="mesInicial">
+								  <option value="1">Janeiro</option>
+								  <option value="2">Feveiro</option>
+								  <option value="3">Março</option>
+								  <option value="4">Abril</option>
+								  <option value="5">Maio</option>
+								  <option value="6">Junho</option>
+								  <option value="7">Julho</option>
+								  <option value="8">Agosto</option>								  								  
+								  <option value="9">Setembro</option>
+								  <option value="10">Outubro</option>
+								  <option value="11">Novembro</option>
+								  <option value="12">Dezembro</option>								  
+								</select>
+							</div>
+							 <div class="col-md-2">
+							    <label for="anoInicial">Ano Inicial:</label>
+								<select class="form-control" id="anoInicial" name="anoInicial">
+								  <option value="2017">2017</option>
+								  <option value="2016">2016</option>
+								  <option value="2015">2015</option>
+								  <option value="2014">2014</option>
+								</select>
+							</div>
+						</div>		
+						<div class="form-group"  style="display: none;" id="listaFinal" >
+							 <div class="col-md-2">
+							    <label for="mesFinal">Mês Final:</label>
+								<select class="form-control" id="mesFinal" name="mesFinal">
+								  <option value="1">Janeiro</option>
+								  <option value="2">Feveiro</option>
+								  <option value="3">Março</option>
+								  <option value="4">Abril</option>
+								  <option value="5">Maio</option>
+								  <option value="6">Junho</option>
+								  <option value="7">Julho</option>
+								  <option value="8">Agosto</option>								  								  
+								  <option value="9">Setembro</option>
+								  <option value="10">Outubro</option>
+								  <option value="11">Novembro</option>
+								  <option value="12">Dezembro</option>								  
+								</select>
+							</div>
+						    <div class="col-md-2">
+							    <label for="anoFinal">Ano Final:</label>
+								<select class="form-control" id="anoFinal" name="anoFinal">
+								  <option value="2017">2017</option>
+								  <option value="2016">2016</option>
+								  <option value="2015">2015</option>
+								  <option value="2014">2014</option>
+								</select>
+							</div>
+						</div>							  
 								
 						<div class="form-group"  style="display: none;" id="listaTipo" >
 						    <div class="col-md-2">

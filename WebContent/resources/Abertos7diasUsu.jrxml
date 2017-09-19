@@ -114,7 +114,7 @@ and usu.userid  = $P{responsavel}]]>
 		<band height="89" splitType="Stretch">
 			<image isLazy="true" onErrorType="Blank">
 				<reportElement x="20" y="1" width="183" height="83" uuid="d2024cf5-ce3a-4db2-8a25-634466e62295"/>
-				<imageExpression><![CDATA["http://localhost:8080/chamados/resources/images/logo_algar.png"]]></imageExpression>
+				<imageExpression><![CDATA["http://sisnoc/chamados/resources/images/logo_algar.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="200" y="20" width="520" height="43" forecolor="#0068A7" uuid="909cdce0-55ce-44dd-b1aa-3ddff6a83139"/>

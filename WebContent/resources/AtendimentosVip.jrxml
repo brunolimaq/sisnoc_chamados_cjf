@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-09-13T20:07:54 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AtendimentosVip" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71e18d92-93be-49fa-9fde-2a50e2e9795b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="225"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="766"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sisnoc"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<subDataset name="TemposDosChamados" uuid="16df5c56-3dbd-4897-b9ab-6449dad195ef">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sisnoc"/>
+		<parameter name="Inicio" class="java.lang.String"/>
+		<parameter name="Fim" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[with a as(
+select 
+req.ref_num as chamado,
+req.summary as titulo,
+1 as prioridade,
+ case 
+                when upper(cat.sym) = upper('INFRA.Ordem de Servico') then 'Orden de Servico'
+                when upper(cat.sym) = upper('Infra.Tarefas Internas') then 'Tarefa Interna'
+				when cat.sym like 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum%' then 'Deploy Comum'
+				when cat.sym like 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva%' then 'Deploy Corretivo'
+                when  req.type = 'R' then 'Chamado'
+                when  req.type = 'P' then 'Problema'
+                when  req.type = 'I' then 'Incidente'
+				end as categoria,
+replace(stat.sym,'Pendente','Pend.') as status,
+usu.userid as responsavel,
+(resolve_date-open_date) as total,
+dateadd(s,open_date,'1970-01-01 00:00:00') as abertura,
+afe.userid as afetado,
+rela.userid as relator,
+replace(replace(vwg.last_name,'Analistas ',''),'Gestores ','') as equipe,
+(SELECT [mdb].[dbo].[ALG_calcula_sla_atendimento] (req.ref_num)) as sla,
+(SELECT [mdb].[dbo].[ALG_calcula_tempo_pend_sol] (req.ref_num,'Pendente informação do solicitante')) as pend_sol,
+(SELECT [mdb].[dbo].[ALG_calcula_tempo_pend_sol] (req.ref_num,'Aberto chamado filho')) as pend_filho,
+(SELECT [mdb].[dbo].[ALG_calcula_tempo_pend_sol] (req.ref_num,'Pendente janela de mudança')) as pend_mud,
+(SELECT [mdb].[dbo].[ALG_calcula_tempo_pend_sol] (req.ref_num,'Pendente fornecedor')) as pend_for
+from mdb.dbo.call_req req
+join mdb.dbo.prob_ctg cat WITH(NOLOCK) on cat.persid = req.category
+join mdb.dbo.View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid 
+left join mdb.dbo.ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee 
+left join mdb.dbo.ca_contact afe WITH (NOLOCK)  on afe.contact_uuid = req.customer
+left join mdb.dbo.ca_contact rela WITH (NOLOCK)  on rela.contact_uuid = req.log_agent
+join mdb.dbo.cr_stat stat WITH(NOLOCK) on req.status = stat.code
+where 
+cat.sym like 'INFRA%'
+and resolve_date is not null
+and cast(datepart(YEAR,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar)+cast(datepart(MONTH,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar) >= $P{Inicio} 
+and cast(datepart(YEAR,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar)+cast(datepart(MONTH,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar) <= $P{Fim} 
+and rela.userid in 
+('diogo.araujo'
+,'marruda'
+,'edilbert'
+,'jones'
+,'lbarbosa'
+,'glaucio.southier'
+,'frederico'
+,'roberto')
+) select 
+count(1) Quantidade,
+(select mdb.dbo.ALG_calcula_tempo(avg(total))) total_minutos,
+(select mdb.dbo.ALG_calcula_tempo(avg(cast(SUBSTRING(sla,12,50) as int)*60))) media_atendimento_minutos,
+(select mdb.dbo.ALG_calcula_tempo((select avg(cast(SUBSTRING(pend_sol,12,50) as int)) from a  where cast(SUBSTRING(pend_sol,12,50) as int) > 0))) as media2_pend_sol_minutos,
+(select mdb.dbo.ALG_calcula_tempo((select avg(cast(SUBSTRING(pend_filho,12,50) as int)) from a  where cast(SUBSTRING(pend_filho,12,50) as int) > 0))) as media2_pend_filho_minutos,
+(select mdb.dbo.ALG_calcula_tempo((select avg(cast(SUBSTRING(pend_mud,12,50) as int)) from a  where cast(SUBSTRING(pend_mud,12,50) as int) > 0))) as media2_pend_mud_minutos,
+(select mdb.dbo.ALG_calcula_tempo((select avg(cast(SUBSTRING(pend_for,12,50) as int)) from a  where cast(SUBSTRING(pend_for,12,50) as int) > 0))) as media2_pend_for_minutos,
+(select count(1) from a  where cast(SUBSTRING(pend_sol,12,50) as int) > 0) as qtd_pend_sol,
+(select count(1) from a  where cast(SUBSTRING(pend_filho,12,50) as int) > 0) as qtd_pend_filho,
+(select count(1) from a  where cast(SUBSTRING(pend_mud,12,50) as int) > 0) as qtd_pend_mud,
+(select count(1) from a  where cast(SUBSTRING(pend_for,12,50) as int) > 0) as qtd_pend_for,
+(select top 1 chamado from a order by  cast(SUBSTRING(pend_sol,12,50) as int) desc) as max_pend_sol,
+(select top 1 chamado from a order by  cast(SUBSTRING(pend_filho,12,50) as int) desc) as max_pend_filho,
+(select top 1 chamado from a order by  cast(SUBSTRING(pend_mud,12,50) as int) desc) as max_pend_mud,
+(select top 1 chamado from a order by  cast(SUBSTRING(pend_for,12,50) as int) desc) as max_pend_for,
+(select mdb.dbo.ALG_calcula_tempo((select top 1 cast(SUBSTRING(pend_sol,12,50) as int) from a order by  cast(SUBSTRING(pend_sol,12,50) as int) desc))) as max_val_pend_sol,
+(select mdb.dbo.ALG_calcula_tempo((select top 1 cast(SUBSTRING(pend_filho,12,50) as int) from a order by  cast(SUBSTRING(pend_filho,12,50) as int) desc))) as max_val_pend_filho,
+(select mdb.dbo.ALG_calcula_tempo((select top 1 cast(SUBSTRING(pend_mud,12,50) as int) from a order by  cast(SUBSTRING(pend_mud,12,50) as int) desc))) as max_val_pend_mud,
+(select mdb.dbo.ALG_calcula_tempo((select top 1 cast(SUBSTRING(pend_for,12,50) as int) from a order by  cast(SUBSTRING(pend_for,12,50) as int) desc))) as max_val_pend_for
+from a ;]]>
+		</queryString>
+		<field name="Quantidade" class="java.lang.Integer"/>
+		<field name="total_minutos" class="java.lang.String"/>
+		<field name="media_atendimento_minutos" class="java.lang.String"/>
+		<field name="media2_pend_sol_minutos" class="java.lang.String"/>
+		<field name="media2_pend_filho_minutos" class="java.lang.String"/>
+		<field name="media2_pend_mud_minutos" class="java.lang.String"/>
+		<field name="media2_pend_for_minutos" class="java.lang.String"/>
+		<field name="qtd_pend_sol" class="java.lang.Integer"/>
+		<field name="qtd_pend_filho" class="java.lang.Integer"/>
+		<field name="qtd_pend_mud" class="java.lang.Integer"/>
+		<field name="qtd_pend_for" class="java.lang.Integer"/>
+		<field name="max_pend_sol" class="java.lang.String"/>
+		<field name="max_pend_filho" class="java.lang.String"/>
+		<field name="max_pend_mud" class="java.lang.String"/>
+		<field name="max_pend_for" class="java.lang.String"/>
+		<field name="max_val_pend_sol" class="java.lang.String"/>
+		<field name="max_val_pend_filho" class="java.lang.String"/>
+		<field name="max_val_pend_mud" class="java.lang.String"/>
+		<field name="max_val_pend_for" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="medias" uuid="fdd305b6-fc10-45f5-96d9-c911cbed5e6f">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sisnoc"/>
+		<parameter name="Inicio" class="java.lang.String"/>
+		<parameter name="Fim" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[with a as(
+select 
+req.ref_num as chamado,
+req.summary as titulo,
+1 as prioridade,
+ case 
+                when upper(cat.sym) = upper('INFRA.Ordem de Servico') then 'Orden de Servico'
+                when upper(cat.sym) = upper('Infra.Tarefas Internas') then 'Tarefa Interna'
+				when cat.sym like 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum%' then 'Deploy Comum'
+				when cat.sym like 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva%' then 'Deploy Corretivo'
+                when  req.type = 'R' then 'Chamado'
+                when  req.type = 'P' then 'Problema'
+                when  req.type = 'I' then 'Incidente'
+				end as categoria,
+replace(stat.sym,'Pendente','Pend.') as status,
+usu.userid as responsavel,
+dateadd(s,open_date,'1970-01-01 00:00:00') as abertura,
+afe.userid as afetado,
+rela.userid as relator,
+replace(replace(vwg.last_name,'Analistas ',''),'Gestores ','') as equipe
+from mdb.dbo.call_req req
+join mdb.dbo.prob_ctg cat WITH(NOLOCK) on cat.persid = req.category
+join mdb.dbo.View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid 
+left join mdb.dbo.ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee 
+left join mdb.dbo.ca_contact afe WITH (NOLOCK)  on afe.contact_uuid = req.customer
+left join mdb.dbo.ca_contact rela WITH (NOLOCK)  on rela.contact_uuid = req.log_agent
+join mdb.dbo.cr_stat stat WITH(NOLOCK) on req.status = stat.code
+where 
+cat.sym like 'INFRA%'
+and resolve_date is not null
+and rela.userid  in
+('diogo.araujo'
+,'marruda'
+,'edilbert'
+,'jones'
+,'lbarbosa'
+,'glaucio.southier'
+,'frederico'
+,'roberto')
+and cast(datepart(YEAR,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar)+cast(datepart(MONTH,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar) >= $P{Inicio}  
+and cast(datepart(YEAR,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar)+cast(datepart(MONTH,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar) <=  $P{Fim}
+), b as (select 
+convert(varchar, abertura, 103) as data_abertura,
+count(1) as qtd
+from a 
+group by convert(varchar, abertura, 103))
+select avg(x.qtd) as Media, max(x.qtd) as Maximo, sum(x.qtd) as Total, (select  top 1 y.data_abertura from b y where y.qtd =  max(x.qtd)) as maxData from b x ;]]>
+		</queryString>
+		<field name="Media" class="java.lang.Integer"/>
+		<field name="Maximo" class="java.lang.Integer"/>
+		<field name="Total" class="java.lang.Integer"/>
+		<field name="maxData" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="Inicio" class="java.lang.String"/>
+	<parameter name="Fim" class="java.lang.String"/>
+	<parameter name="InicioLegivel" class="java.lang.String"/>
+	<parameter name="FimLegivel" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[with a as(
+select 
+req.ref_num as chamado,
+req.summary as titulo,
+1 as prioridade,
+ case 
+                when upper(cat.sym) = upper('INFRA.Ordem de Servico') then 'Orden de Servico'
+                when upper(cat.sym) = upper('Infra.Tarefas Internas') then 'Tarefa Interna'
+				when cat.sym like 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção comum%' then 'Deploy Comum'
+				when cat.sym like 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva%' then 'Deploy Corretivo'
+                when  req.type = 'R' then 'Chamado'
+                when  req.type = 'P' then 'Problema'
+                when  req.type = 'I' then 'Incidente'
+				end as categoria,
+replace(stat.sym,'Pendente','Pend.') as status,
+usu.userid as responsavel,
+dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00')) as abertura,
+afe.userid as afetado,
+rela.userid as relator,
+replace(replace(vwg.last_name,'Analistas ',''),'Gestores ','') as equipe
+from mdb.dbo.call_req req
+join mdb.dbo.prob_ctg cat WITH(NOLOCK) on cat.persid = req.category
+join mdb.dbo.View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid 
+left join mdb.dbo.ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee 
+left join mdb.dbo.ca_contact afe WITH (NOLOCK)  on afe.contact_uuid = req.customer
+left join mdb.dbo.ca_contact rela WITH (NOLOCK)  on rela.contact_uuid = req.log_agent
+join mdb.dbo.cr_stat stat WITH(NOLOCK) on req.status = stat.code
+where 
+cat.sym like 'INFRA%'
+and resolve_date is not null
+and rela.userid  in
+('diogo.araujo'
+,'marruda'
+,'edilbert'
+,'jones'
+,'lbarbosa'
+,'glaucio.southier'
+,'frederico'
+,'roberto')
+and cast(datepart(YEAR,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar)+cast(datepart(MONTH,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar) >= $P{Inicio}  
+and cast(datepart(YEAR,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar)+cast(datepart(MONTH,dateadd(hh,DATEPART(tz,SYSDATETIMEOFFSET())/60,dateadd(s,open_date,'1970-01-01 00:00:00'))) as varchar) <= $P{Fim}  
+), b as (
+select 
+datepart(HOUR,abertura) hora_abertura,
+count(1) as qtd
+from a 
+group by datepart(HOUR,abertura)
+)select distinct qtd*100/(select sum(qtd) from b) as procentagem, qtd, hora_abertura from b;]]>
+	</queryString>
+	<field name="procentagem" class="java.lang.Integer"/>
+	<field name="qtd" class="java.lang.String"/>
+	<field name="hora_abertura" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="11" width="520" height="29" forecolor="#0068A7" uuid="ba8d15b6-3887-4c9b-a6a7-f520997b97e3"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estatisticas de atendimentos dos chamados da Fila Vip]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="440" y="55" width="230" height="20" forecolor="#1A77B0" uuid="a6a62e98-502f-4443-b761-b112b5918a79"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Intervalo: "+$P{InicioLegivel}+" - "+$P{FimLegivel}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="11" y="0" width="159" height="84" uuid="e77eff51-d1ac-4fda-ae0e-4c36385207d1"/>
+				<imageExpression><![CDATA["http://sisnoc/chamados/resources/images/logo_algar.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="378">
+			<staticText>
+				<reportElement x="80" y="160" width="114" height="20" forecolor="#0068A7" uuid="676309a7-bda1-4303-89fb-08b390aa7cf4"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Chamados por dia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="180" width="133" height="20" forecolor="#0068A7" uuid="7afc78a6-eec6-4110-873b-34e7add39830"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Maximo de Chamados:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="200" width="133" height="20" forecolor="#0068A7" uuid="0970421a-3e88-4749-bd0e-01c631248859"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="196" y="11" width="400" height="140" uuid="2f1d49de-a473-470f-a3d1-c25dc8f7eeb5"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="TemposDosChamados" uuid="326c7e0f-cace-40ad-80e6-7398b5acc8d9">
+						<datasetParameter name="Inicio">
+							<datasetParameterExpression><![CDATA[$P{Inicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="Fim">
+							<datasetParameterExpression><![CDATA[$P{Fim}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="140" width="400">
+						<textField>
+							<reportElement x="0" y="20" width="80" height="20" uuid="513cce94-7eba-41d6-89ae-5b0a8c725c90">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{total_minutos}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="40" width="80" height="20" uuid="4c8cc864-49b4-4b1a-8602-041ca60a4d6a"/>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{media_atendimento_minutos}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="60" width="80" height="20" uuid="0cd4a7c7-9678-4ed5-9e2a-88bec3766a74">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{media2_pend_sol_minutos}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="80" width="80" height="20" uuid="15025284-9a39-4c5e-8595-831494026dc4">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{media2_pend_filho_minutos}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="100" width="80" height="20" uuid="88a8e2e4-7b27-4e02-9d3c-e43d38f1a383">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{media2_pend_mud_minutos}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="120" width="80" height="20" uuid="c456016f-6a28-474b-95fb-5d6e66e98e91">
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{media2_pend_for_minutos}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="81" y="60" width="80" height="20" uuid="32e2e05c-6fc5-4d41-8adf-3faaff61e3e9">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{qtd_pend_sol}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="81" y="80" width="80" height="20" uuid="8027f53a-df27-4c06-8947-f007886cdf17"/>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{qtd_pend_filho}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="81" y="100" width="80" height="20" uuid="c0788de3-d499-4936-b60f-372aa0af374e"/>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{qtd_pend_mud}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="81" y="120" width="80" height="20" uuid="4c69e0a7-ab0e-4029-a768-1ed072c63e77"/>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{qtd_pend_for}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="180" y="60" width="166" height="20" uuid="9a1558e7-1ae1-4b6d-a551-cda219f4381b">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Left">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{max_pend_sol}+" - "+$F{max_val_pend_sol}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="180" y="80" width="166" height="20" uuid="2b7bfb39-0d63-4775-af66-e104dbeb4574"/>
+							<textElement textAlignment="Left">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{max_pend_filho}+" - "+$F{max_val_pend_filho}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="180" y="100" width="166" height="20" uuid="a8536552-e27f-4a2e-b2e2-f650f7affea8"/>
+							<textElement textAlignment="Left">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{max_pend_mud}+" - "+$F{max_val_pend_mud}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="180" y="120" width="166" height="20" uuid="80bc4b7e-64d9-4dba-9a83-225df419f88e"/>
+							<textElement textAlignment="Left">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{max_pend_for}+" - "+$F{max_val_pend_for}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="81" y="20" width="80" height="20" uuid="a5657003-1dde-489b-a728-64724aaca421">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{Quantidade}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="81" y="40" width="80" height="20" uuid="af5103ff-07f8-4d49-ab8b-53eef10e56cb">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{Quantidade}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="0" y="0" width="80" height="20" forecolor="#125D87" uuid="a5deca1b-89bd-48dc-92e1-7c3c952f9390">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Media Tempo]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="81" y="0" width="80" height="20" forecolor="#125D87" uuid="612085d9-f61e-4501-a122-2d9a30f22c30">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Center">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Universo]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="180" y="0" width="108" height="20" forecolor="#125D87" uuid="e39d71de-92b7-4c34-8591-ceafc1211255">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+							</reportElement>
+							<textElement textAlignment="Left">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Pior Tempo]]></text>
+						</staticText>
+						<line>
+							<reportElement x="161" y="0" width="1" height="140" uuid="cfec39be-7402-4180-86cc-752b1ec2110e"/>
+						</line>
+						<line>
+							<reportElement x="80" y="0" width="1" height="140" uuid="f7d45def-b086-49f5-b1c8-b15843e154be"/>
+						</line>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement stretchType="RelativeToTallestObject" x="196" y="160" width="138" height="60" uuid="4ed6fcf5-79b9-4775-bc8e-0d44f1b6fe20"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="medias" uuid="182c6fb3-a071-4861-9675-414f55b2504e">
+						<datasetParameter name="Inicio">
+							<datasetParameterExpression><![CDATA[$P{Inicio}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="Fim">
+							<datasetParameterExpression><![CDATA[$P{Fim}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="60" width="138">
+						<textField>
+							<reportElement x="0" y="0" width="40" height="20" uuid="64769be1-6ad6-4aa2-863b-f0f4df1d95c5">
+								<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							</reportElement>
+							<textElement>
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{Media}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="20" width="100" height="20" uuid="9c9c89ee-81b4-4925-84ee-38bd046e38fa"/>
+							<textElement>
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{Maximo}+" - "+$F{maxData}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="0" y="40" width="40" height="20" uuid="4e08fb4a-593f-487a-856d-616dedfac339"/>
+							<textElement>
+								<font size="12" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="4" y="30" width="190" height="20" forecolor="#0068A7" uuid="68782d06-0241-4435-a8d0-692ad6461913"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[*Media total de Atendimento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="50" width="190" height="20" forecolor="#0068A7" uuid="4311cff7-2359-4e9a-a6ef-47d1b44943a6"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aberto/Designado/Andamento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="70" width="190" height="20" forecolor="#0068A7" uuid="8ab31935-002d-4272-ac19-9954a8f01e74"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[**Pendente Solicitante:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="90" width="190" height="20" forecolor="#0068A7" uuid="12700d2b-c56d-4b2d-9455-9e32cfd83284"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[**Pendente Chamado Filho:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="110" width="190" height="20" forecolor="#0068A7" uuid="4afe86d8-a06f-4a39-b072-000ab837b92c"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[**Pendente Mudança:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="130" width="190" height="20" forecolor="#0068A7" uuid="06688277-a70b-4fbd-a976-38ef792402ac"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[**Pendente Fornecedor:]]></text>
+			</staticText>
+			<barChart>
+				<chart isShowLegend="false" evaluationTime="Report">
+					<reportElement x="340" y="160" width="460" height="200" uuid="52f36911-2865-46ae-bac2-9866c4356014"/>
+					<chartTitle color="#0068A7">
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["% abertura de chamados em cada hora do dia"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{hora_abertura}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{procentagem}]]></valueExpression>
+						<labelExpression><![CDATA[$F{qtd}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot/>
+					<itemLabel/>
+					<categoryAxisLabelExpression><![CDATA["Faixa Horária"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<labelFont/>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisLabelExpression><![CDATA["Porcentagem"]]></valueAxisLabelExpression>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<staticText>
+				<reportElement x="11" y="303" width="291" height="14" forecolor="#FC0400" uuid="1dbc4b9c-9ae6-4278-8d25-2843268c667a"/>
+				<text><![CDATA[*Considera Todos os Chamados, Contabiliza 24h]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="317" width="311" height="43" forecolor="#FC0400" uuid="f33995b5-ee48-415e-a79e-0131c4ead139">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[**Considera somante os chamados que ficaram no respectivo status, contabiliza somenta as horas uteis contratuais - Ex.: 08:00 as 21:00 (Aplicação e Banco de dados)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<summary>
+		<band height="45" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="580" y="15" width="100" height="15" uuid="b85d3c7c-2e2e-4349-803b-5e3e5f256ff7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="692" y="15" width="100" height="15" uuid="1b45b262-4993-40fb-b680-44c534575585"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="480" y="15" width="100" height="15" uuid="7df21353-9848-47d4-ac1a-78bcbacd4c3f"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gerado em: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="670" y="15" width="19" height="15" uuid="951c1b9a-b645-4a2e-8365-c9060de3640b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ as ]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

@@ -60,7 +60,7 @@ order by chamado]]>
 		<band height="79" splitType="Stretch">
 			<image>
 				<reportElement x="-11" y="0" width="171" height="79" uuid="8b1c6d41-2f08-4f58-8086-0c61fa5836de"/>
-				<imageExpression><![CDATA["http://www5.cjf.jus.br/chamados/resources/logo_algar.png"]]></imageExpression>
+				<imageExpression><![CDATA["http://sisnoc/chamados/resources/images/logo_algar.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="180" y="10" width="409" height="30" forecolor="#0064A2" uuid="773c90d7-b71b-4784-960f-c51dbf05f91c"/>

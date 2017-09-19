@@ -21,6 +21,11 @@ public class Relatorios {
 	private Integer mes;
 	private Integer ano;
 	private String opcao;
+	private String anoInicial;
+	private String anoFinal;
+	private String mesInicial;
+	private String mesFinal;
+	private String solicitante;
 	
 	public String getResponsavel() {
 		return responsavel;
@@ -111,6 +116,36 @@ public class Relatorios {
 	}
 	public void setOpcao(String opcao) {
 		this.opcao = opcao;
+	}
+	public String getAnoInicial() {
+		return anoInicial;
+	}
+	public void setAnoInicial(String anoInicial) {
+		this.anoInicial = anoInicial;
+	}
+	public String getAnoFinal() {
+		return anoFinal;
+	}
+	public void setAnoFinal(String anoFinal) {
+		this.anoFinal = anoFinal;
+	}
+	public String getMesInicial() {
+		return mesInicial;
+	}
+	public void setMesInicial(String mesInicial) {
+		this.mesInicial = mesInicial;
+	}
+	public String getMesFinal() {
+		return mesFinal;
+	}
+	public void setMesFinal(String mesFinal) {
+		this.mesFinal = mesFinal;
+	}
+	public String getSolicitante() {
+		return solicitante;
+	}
+	public void setSolicitante(String solicitante) {
+		this.solicitante = solicitante;
 	}
 	
 	

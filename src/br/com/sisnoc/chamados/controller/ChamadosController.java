@@ -376,6 +376,40 @@ public class ChamadosController {
 	    	
 	    }
 	    
+	    if (relatorios.getOpcao().equals("rel_estatistica")){
+
+	    	view.setUrl("resources/AtendimentosVip.jrxml");
+	    	String InicioParametro = relatorios.getAnoInicial()+relatorios.getMesInicial(); 
+		    String FimParametro = relatorios.getAnoFinal()+relatorios.getMesFinal();
+		    String InicioParametroTela = relatorios.getMesInicial()+ "/" + relatorios.getAnoInicial();
+		    String FimParametroTela = relatorios.getMesFinal()+ "/" + relatorios.getAnoFinal();
+		    System.out.println("Incio " + InicioParametro + "|||" + "Fim " + FimParametro);
+		    
+	    	Map<String, Object> params = new HashMap<>();
+		    params.put("Inicio", InicioParametro);
+		    params.put("Fim", FimParametro);
+		    params.put("InicioLegivel", InicioParametroTela);
+		    params.put("FimLegivel", FimParametroTela);
+		    view.setApplicationContext(appContext);
+		    return new ModelAndView(view, params);
+		    
+		    
+	    	
+	    }
+	    
+	    if (relatorios.getOpcao().equals("rel_estatistica_solicitante")){
+
+	    	view.setUrl("resources/satisfacao_por_equipe.jrxml");
+		    Map<String, Object> params = new HashMap<>();
+		    params.put("mesInicial", relatorios.getMesInicial());
+		    params.put("anoInicial", relatorios.getAnoInicial());
+		    params.put("mesFinal", relatorios.getMesFinal());
+		    params.put("anoFinal", relatorios.getAnoFinal());
+		    params.put("solicitante", relatorios.getSolicitante());
+		    view.setApplicationContext(appContext);
+		    return new ModelAndView(view, params);
+	    	
+	    }
 	    
 	    if (relatorios.getOpcao().equals("vol_requisicoes")){
 	    	

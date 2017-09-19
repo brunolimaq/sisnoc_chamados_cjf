@@ -92,7 +92,7 @@ left join ruim on  total.equipe = ruim.equipe
 			</textField>
 			<image isLazy="true" onErrorType="Blank">
 				<reportElement x="20" y="1" width="183" height="83" uuid="221b33ee-cebf-45b7-9726-70ccd3cf3d3e"/>
-				<imageExpression><![CDATA["http://localhost:8080/chamados/resources/images/logo_algar.png"]]></imageExpression>
+				<imageExpression><![CDATA["http://sisnoc/chamados/resources/images/logo_algar.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

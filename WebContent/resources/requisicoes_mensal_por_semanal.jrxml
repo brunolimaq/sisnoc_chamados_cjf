@@ -470,7 +470,7 @@ order by semana]]>
 				</staticText>
 				<image>
 					<reportElement x="20" y="5" width="183" height="83" uuid="1af58071-4416-4622-95b8-342502e7f109"/>
-					<imageExpression><![CDATA["http://www5.cjf.jus.br/chamados/resources/logo_algar.png"]]></imageExpression>
+					<imageExpression><![CDATA["http://sisnoc/chamados/resources/images/logo_algar.png"]]></imageExpression>
 				</image>
 				<textField pattern="HH:mm">
 					<reportElement x="480" y="40" width="100" height="30" uuid="6f9e339a-96ac-4f9c-bcc3-b0427ad514ee"/>

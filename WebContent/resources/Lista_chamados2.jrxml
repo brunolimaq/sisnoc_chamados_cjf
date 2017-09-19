@@ -87,7 +87,7 @@ order by chamado]]>
 			</textField>
 			<image isLazy="true" onErrorType="Blank">
 				<reportElement x="20" y="1" width="183" height="83" uuid="e1e1ae9b-e487-4f4f-835f-124b1fab0e78"/>
-				<imageExpression><![CDATA["http://localhost:8080/chamados/resources/images/logo_algar.png"]]></imageExpression>
+				<imageExpression><![CDATA["http://sisnoc/chamados/resources/images/logo_algar.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
