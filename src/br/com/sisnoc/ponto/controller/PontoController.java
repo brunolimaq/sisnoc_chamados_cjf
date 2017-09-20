@@ -6,34 +6,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.sisnoc.ponto.dao.RegistraBatidasDao;
 
 @Controller
+@RequestMapping("/ponto")
 public class PontoController {
 
 	@Autowired
 	private RegistraBatidasDao daoPonto;
 	
-	@RequestMapping("")
-	public String bateEntradaJornada(Model model) throws ParseException{
+	@RequestMapping("/entrada")
+	public ModelAndView bateEntradaJornada(Model model) throws ParseException{
 		
-		return "#";
+		daoPonto.entrada();
+		
+		ModelAndView mv = new ModelAndView("redirect:/");
+		return mv;
+		
 	}
 	
-	@RequestMapping("")
+	@RequestMapping("/saida")
 	public String bateSaidaJornada(Model model) throws ParseException{
 		
 		return "#";
 	}
 	
-	@RequestMapping("")
+	@RequestMapping("/entradaIntervalo")
 	public String bateEntradaIntervalo(Model model) throws ParseException{
 		
 		return "#";
 	}
 	
-	@RequestMapping("")
+	@RequestMapping("/saidaIntervalo")
 	public String bateSaidaIntervalo(Model model) throws ParseException{
 		
 		return "#";

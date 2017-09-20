@@ -15,44 +15,44 @@ import br.com.sisnoc.chamados.service.ContextoUsuario;
 import br.com.sisnoc.ponto.dao.util.BatidasDao;
 
 
-@Primary
+
 @Repository
 @BatidasDao
 public class RegistraBatidasDao {
 
 	private  final Connection connection;
 
-	
 	@Autowired
-	public RegistraBatidasDao(@Qualifier("datasourceSQL") DataSource datasource) {
+	public RegistraBatidasDao(@Qualifier("datasourceMySql") DataSource datasource) {
 		try {
 			this.connection = datasource.getConnection();
+				
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
 	
+	
 	public Boolean entrada(){
 		
 		String idUsuario = ContextoUsuario.getID();
 		
-		String insert_ponto = "insert into sisnoc2.ponto "
-				+ "(seqBatida,"
-				+ "idUsuario,"
-				+ "datetime,"
+		String insert_ponto = "insert into ponto "
+				+ "( seqBatida, "
+				+ "idUsuario, "
+				+ "datetime, "
 				+ "tipo "
-				+ ")values( "
-				+ "1,"
-				+ idUsuario+","
-				+ "CURRENT_TIMESTAMP(),"
-				+ "'entrada_jornada');";
+				+ ") values ( "
+				+ "1, "
+				+ idUsuario+", "
+				+ "CURRENT_TIMESTAMP(), "
+				+ "'entrada_jornada' ) ";
+		
+		System.out.println(insert_ponto);
 		
 		PreparedStatement stmt;
 		try {
-			stmt = connection
-					.prepareStatement(insert_ponto);
-			stmt.executeUpdate();
 			
 			stmt = connection.prepareStatement(insert_ponto);
 			stmt.executeUpdate();
@@ -84,10 +84,7 @@ public class RegistraBatidasDao {
 
 		PreparedStatement stmt;
 		try {
-			stmt = connection
-					.prepareStatement(insert_ponto);
-			stmt.executeUpdate();
-			
+						
 			stmt = connection.prepareStatement(insert_ponto);
 			stmt.executeUpdate();
 			
@@ -118,10 +115,7 @@ public class RegistraBatidasDao {
 
 		PreparedStatement stmt;
 		try {
-			stmt = connection
-					.prepareStatement(insert_ponto);
-			stmt.executeUpdate();
-			
+					
 			stmt = connection.prepareStatement(insert_ponto);
 			stmt.executeUpdate();
 			
@@ -139,23 +133,20 @@ public class RegistraBatidasDao {
 		String idUsuario = ContextoUsuario.getID();
 		
 		String insert_ponto = "insert into sisnoc2.ponto "
-				+ "(seqBatida,"
-				+ "idUsuario,"
-				+ "datetime,"
+				+ "(seqBatida, "
+				+ "idUsuario, "
+				+ "datetime, "
 				+ "tipo "
-				+ ")values( "
-				+ "1,"
-				+ idUsuario+","
-				+ "CURRENT_TIMESTAMP(),"
-				+ "'saida_jornada');";
+				+ ") values ( "
+				+ "1, "
+				+ idUsuario+", "
+				+ "CURRENT_TIMESTAMP(), "
+				+ "'saida_jornada'); ";
 		
 
 		PreparedStatement stmt;
 		try {
-			stmt = connection
-					.prepareStatement(insert_ponto);
-			stmt.executeUpdate();
-			
+		
 			stmt = connection.prepareStatement(insert_ponto);
 			stmt.executeUpdate();
 			

@@ -44,7 +44,7 @@ public class UsuariosDao {
 
 	
 		String sql_login = "select "
-		+ "u.idUsuario" 
+		+ "u.idUsuario, " 
 		+" u.loginUsuario, "
 		+" u.senhaUsuario, "
 		+" u.emailUsuario, "
