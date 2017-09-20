@@ -14,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @Entity
 public class Usuario {
 	
+	private String ID;
 	private String nome;
 	private String loginUsuario;
 	private String senhaUsuario;
@@ -95,6 +96,12 @@ public class Usuario {
 	}
 	public void setGerencia(String gerencia) {
 		this.gerencia = gerencia;
+	}
+	public String getID() {
+		return ID;
+	}
+	public void setID(String iD) {
+		ID = iD;
 	}
 
 }

@@ -19,6 +19,16 @@ public class ContextoUsuario {
 		return username;
 	}
 	
+	public static String getID(){
+		
+		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String ID;
+		
+		ID = ( (UsuarioSistema)usuarioLogado).getUsuario().getID();
+		
+		return ID;
+	}
+	
 	public static String getEquipes(){
 		
 		Object usuarioLogado = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

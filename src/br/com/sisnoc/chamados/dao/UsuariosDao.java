@@ -43,7 +43,8 @@ public class UsuariosDao {
 
 
 	
-		String sql_login = "select " 
+		String sql_login = "select "
+		+ "u.idUsuario" 
 		+" u.loginUsuario, "
 		+" u.senhaUsuario, "
 		+" u.emailUsuario, "
@@ -70,7 +71,7 @@ public class UsuariosDao {
 
 		while (rs.next()){
 			
-			
+			usuario.setID(rs.getString("idUsuario"));
 			usuario.setNome(rs.getString("loginUsuario"));
 			usuario.setSenhaUsuario(rs.getString("senhaUsuario"));
 			usuario.setNomeEquipe(rs.getString("equipe"));
