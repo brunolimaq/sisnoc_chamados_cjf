@@ -46,9 +46,9 @@
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
 			<li ><a href="/chamados/ponto/entrada">Entrada Turno<span class="dropdown-item badge"></span></a></li>
-			<li ><a href="#">Saída Intervalo<span class="dropdown-item disabled badge"></span></a></li>
-			<li ><a href="#">Entrada Intervalo<span class="dropdown-item disabled badge"></span></a></li>
-       		<li ><a href="#">Saída Turno<span class="dropdown-item disabled badge"></span></a></li>
+			<li ><a href="/chamados/ponto/saidaIntervalo">Saída Intervalo<span class="dropdown-item disabled badge"></span></a></li>
+			<li ><a href="/chamados/ponto/entradaIntervalo">Entrada Intervalo<span class="dropdown-item disabled badge"></span></a></li>
+       		<li ><a href="/chamados/ponto/saida">Saída Turno<span class="dropdown-item disabled badge"></span></a></li>
             </ul>
         </li>
       </ul>

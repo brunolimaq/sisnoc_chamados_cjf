@@ -21,7 +21,11 @@ public class PontoController {
 	@RequestMapping("/entrada")
 	public ModelAndView bateEntradaJornada(Model model) throws ParseException{
 		
-		daoPonto.entrada();
+		Boolean batida = daoPonto.entrada();
+		
+		if(batida){
+			System.out.println("Bateu o pondo Entrada Jornada");
+		}
 		
 		ModelAndView mv = new ModelAndView("redirect:/");
 		return mv;
@@ -29,20 +33,38 @@ public class PontoController {
 	}
 	
 	@RequestMapping("/saida")
-	public String bateSaidaJornada(Model model) throws ParseException{
+	public ModelAndView bateSaidaJornada(Model model) throws ParseException{
 		
-		return "#";
+		Boolean batida = daoPonto.saida();
+		
+		if(batida){
+			System.out.println("Bateu o pondo Saida Jornada");
+		}
+		ModelAndView mv = new ModelAndView("redirect:/");
+		return mv;
 	}
 	
 	@RequestMapping("/entradaIntervalo")
-	public String bateEntradaIntervalo(Model model) throws ParseException{
+	public ModelAndView bateEntradaIntervalo(Model model) throws ParseException{
 		
-		return "#";
+		Boolean batida = daoPonto.entradaIntervalo();
+		
+		if(batida){
+			System.out.println("Bateu o pondo Entrada Intervalo");
+		}
+		ModelAndView mv = new ModelAndView("redirect:/");
+		return mv;
 	}
 	
 	@RequestMapping("/saidaIntervalo")
-	public String bateSaidaIntervalo(Model model) throws ParseException{
+	public ModelAndView bateSaidaIntervalo(Model model) throws ParseException{
 		
-		return "#";
+		Boolean batida = daoPonto.saidaIntervalo();
+		
+		if(batida){
+			System.out.println("Bateu o pondo Saida Intervalo");
+		}
+		ModelAndView mv = new ModelAndView("redirect:/");
+		return mv;
 	}
 }
