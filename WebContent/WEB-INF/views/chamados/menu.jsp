@@ -42,14 +42,14 @@
         
         
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Ponto
+         <!--  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Ponto
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
 			<li ><a href="/chamados/ponto/entrada">Entrada Turno<span class="dropdown-item badge"></span></a></li>
 			<li ><a href="/chamados/ponto/saidaIntervalo">Saída Intervalo<span class="dropdown-item disabled badge"></span></a></li>
 			<li ><a href="/chamados/ponto/entradaIntervalo">Entrada Intervalo<span class="dropdown-item disabled badge"></span></a></li>
        		<li ><a href="/chamados/ponto/saida">Saída Turno<span class="dropdown-item disabled badge"></span></a></li>
-            </ul>
+            </ul> -->
         </li>
       </ul>
       

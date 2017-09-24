@@ -22,7 +22,7 @@ public class SegurancaController {
         
 		
 		if (principal !=null) {
-			return "redirect:/";
+			return "redirect:/listaChamados";
 		}
 		return "chamados/login";
 	}
