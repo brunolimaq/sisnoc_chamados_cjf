@@ -144,7 +144,7 @@ private  final Connection connection;
 						+"and stat.code in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK') "
 						+"and usu.userid = '"+username+"'"
 						+"and (datediff(hh,DATEADD(hh,-3,DATEADD(SS,req.last_mod_dt,'19700101')), getdate()) > 22"
-						+"or req.last_mod_by != (select contact_uuid from ca_contact where userid = '"+username+"'))";
+						+"or req.last_mod_by != (select contact_uuid from ca_contact where inactive=0 and userid = '"+username+"'))";
 
 			 stmt = connection
 					.prepareStatement(sql_listaChamados);
