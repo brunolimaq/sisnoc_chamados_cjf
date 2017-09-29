@@ -8,7 +8,7 @@
     </div>
     <div>
       <ul class="nav navbar-nav">
-        <li><a href="/chamados/">Painel</a></li>
+        <li><a href="/chamados/painel">Painel</a></li>
         <li><a href="/chamados/pendencias">Pendências <span class="badge">${countPendencias}</span></a></li>
         <li><a href="/chamados/gmud">RDM</a></li>
         <li><a href="/chamados/ordemServicos">Ordens de Serviço</a></li>

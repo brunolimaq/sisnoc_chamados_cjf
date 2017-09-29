@@ -94,6 +94,56 @@ public class ChamadosController {
 				model.addAttribute("chamadosRDMGeralAprovada", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelAprovada));
 
 				
+				ModelAndView mv = new ModelAndView("chamados/chamados");
+				return mv;
+
+			}
+		}
+		
+		perfil = "";
+		model.addAttribute("chamadosPainelPessoal", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelPessoalDestaques());
+
+		model.addAttribute("chamadosPainelEquipe", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoDestaques(perfil));
+		
+		model.addAttribute("chamadosRDMPessoal", ((PainelPessoalRdmDao) rdmDao).listaPainelPessoalRdm());
+		
+		model.addAttribute("atualizacaoOS", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelAtualizacaoOS());
+		
+		ModelAndView mv = new ModelAndView("chamados/chamados");
+		return mv;
+	}
+	
+	@RequestMapping("/painel")
+	public ModelAndView painel(Model model) throws ParseException{
+		
+		
+		
+		String perfil;
+		
+		Collection<? extends GrantedAuthority> permissao = ContextoUsuario.getPermissao();
+		
+		
+		
+		
+		
+		for (GrantedAuthority autorizacao : permissao) {
+			
+			if (autorizacao.toString().equals("GESTOR")){
+
+				perfil = "GESTOR";
+				String rdmPainelAprovada = "APR";
+
+				model.addAttribute("chamadosPainelEquipe", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoDestaques(perfil));
+				
+				
+				model.addAttribute("chamadosPainelPessoal", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoPendentes(perfil));
+				
+				
+				model.addAttribute("chamadosRDMPessoal", ((PainelPessoalRdmDao) rdmDao).listaPainelPessoalRdm());
+				
+				model.addAttribute("chamadosRDMGeralAprovada", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelAprovada));
+
+				
 				ModelAndView mv = new ModelAndView("chamados/indexGestor");
 				return mv;
 
