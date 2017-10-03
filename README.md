@@ -8,7 +8,7 @@ Um chamdo quando está faltando 15, 30, 60 minutos, 2 horas ou 4 horas tem alert
 
 Os chamados ficam separados por equipe.
 
-Em breve o Layout será disponibilizado. 
+![alt text](https://github.com/brunolimaq/sisnoc_chamados_cjf/blob/master/imagens/GMUD.jpeg)
 
 
 
