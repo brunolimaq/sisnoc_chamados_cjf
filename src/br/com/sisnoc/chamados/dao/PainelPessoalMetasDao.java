@@ -25,6 +25,7 @@ import br.com.sisnoc.chamados.negocio.Popula;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
 import br.com.sisnoc.chamados.service.ContextoUsuario;
 import br.com.sisnoc.chamados.service.GraficoService;
+import br.com.sisnoc.chamados.service.Util;
 
 @Repository
 @MetasDao
@@ -146,7 +147,9 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 						+"and cat.sym not like 'Infra.Tarefas Internas' "
 						+"and req.type != 'P' "
 						+"and stat.code in ('RE','CL') "
-						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
+						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= 1483550444";
+				
+				//apagado
 				
 			} else {
 
@@ -167,7 +170,9 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 						+"and req.type != 'P' "
 						+"and stat.code in ('RE','CL') "
 						+"and usu.userid = '"+username+"' "
-						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
+						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= 1483550444";
+
+						//+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) ";
 
 
 
@@ -247,7 +252,7 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 					ListaChamados.add(chamados);
 					count++;
 				}
-			
+				System.out.println(count);
 				
 				rs_listalog.close();
 				stmt.close();
@@ -256,7 +261,16 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 					return null;
 				} else {
 					
-					return CalculaSla.SlaCjf(ListaChamados);
+					Util utilitarios = new Util();
+					
+					ArrayList<Chamado> lista2 = new ArrayList<Chamado>();
+					
+					System.out.println(utilitarios.horaAtual() + " Inicio calculo metas ");
+					lista2 = CalculaSla.SlaCjf(ListaChamados);
+					System.out.println(utilitarios.horaAtual() + " Fim calculo metas ");
+					
+						
+					return lista2 ;
 				
 					
 				}
@@ -306,7 +320,8 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 						+"and cat.sym not like 'INFRA.Incidente.Monitoramento de Infraestrutura' "
 						+"and req.type != 'P' "
 						+"and stat.code in ('RE','CL') "
-						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
+						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= 1483550444"						
+						//+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
 						+ "and log.action_desc like 'registrar texto da solução' "
 						+ "group by req.ref_num ,req.id ";
 
@@ -334,7 +349,8 @@ public ArrayList<String[]> listaPainelGestorPendentes() throws ParseException {
 						+"and req.type != 'P' "
 						+"and stat.code in ('RE','CL') "
 						+"and usu.userid = '"+username+"' "
-						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
+						+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= 1483550444"
+						//+"and resolve_date  + DATEPART(tz,SYSDATETIMEOFFSET())*60 >= DATEDIFF(s, '1970-01-01 00:00:00',CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(getdate())-1),getdate()),101)) "
 						+ "and log.action_desc like 'registrar texto da solução' "
 						+ "group by req.ref_num ,req.id ";
 

@@ -1,9 +1,12 @@
 package br.com.sisnoc.chamados.negocio;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 
+import org.exolab.castor.types.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,10 +20,13 @@ import br.com.sisnoc.chamados.dao.util.MetasDao;
 import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
 import br.com.sisnoc.chamados.service.GraficosPessoalService;
+import br.com.sisnoc.chamados.service.Util;
 
 
 @Service
 public class GraficosPessoal implements GraficosPessoalService {
+	
+	Util utilitarios = new Util();
 	
 	private int meta2h;
 	private int meta4h;
@@ -92,10 +98,26 @@ public class GraficosPessoal implements GraficosPessoalService {
 		
 			
 			try {
+			
+
+				System.out.println(utilitarios.horaAtual() + " Inicio MetasDAO - Chamados");
 				chamados = metasDao.listaPainelPessoalMetas(perfil);
+				System.out.println(utilitarios.horaAtual() + " FIM MetasDAO - Chamados");
+				
+				
+				System.out.println(utilitarios.horaAtual() + " Inicio Reabertos ");
 				this.setReabertosMes(metasDao.listaPainelPessoalReabertos(perfil));
+				System.out.println(utilitarios.horaAtual() + " Fim Reabertos ");
+				
+				System.out.println(utilitarios.horaAtual() + " Inicio Pendencias ");
 				this.setPendencias(metasDao.listaPainelPessoalPendentes(perfil));
+				System.out.println(utilitarios.horaAtual() + " Fim Pendencias ");
+				
+				System.out.println(utilitarios.horaAtual() + " Inicio PendenciaEquipe ");
 				this.setListaPendenteEquipe(metasDao.listaPainelGestorPendentes());
+				System.out.println(utilitarios.horaAtual() + " Fim PendenciaEquipe ");
+				
+				
 			} catch (ParseException e) {
 				
 				e.printStackTrace();
@@ -103,7 +125,7 @@ public class GraficosPessoal implements GraficosPessoalService {
 		
 		
 			//System.out.println("lista " + getListaPendenteEquipe());
-		
+			System.out.println(utilitarios.horaAtual() + " Inicio LOOP ");
 			for (Chamado chamado : chamados) {
 				
 				countTotal++;
@@ -125,7 +147,8 @@ public class GraficosPessoal implements GraficosPessoalService {
 				
 				 
 				} 
-				 
+			System.out.println(utilitarios.horaAtual() + " Fim LOOP ");
+	 
 			
 			
 				this.setMeta2h((countMeta2h*100)/countTotal);

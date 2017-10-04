@@ -45,16 +45,15 @@
   
   
  <script type="text/javascript">
-  //Metas de 2 e 4 horas
 
-  $( document ).ready(function() {
-	  
+ 
+ $( document ).ready(function() {
 
 		var gaugeSLA2 = {
 			
 			    chart: {
 			        type: 'solidgauge',
-                    renderTo: 'gauge-sla2'
+                 renderTo: 'gauge-sla2'
 
 			    },
 			    
@@ -121,130 +120,82 @@
 			    },
 			
 			    series: [{}]
-			};
+		};
 			
-var gaugeSLA4 = {
+		var gaugeSLA4 = {
+			
+		    chart: {
+		        type: 'solidgauge',
+	            renderTo: 'gauge-sla4'
+
+		    },
+		    
+		    exporting: {
+		    	enabled: false
+		    },
+
 		
-	    chart: {
-	        type: 'solidgauge',
-            renderTo: 'gauge-sla4'
-
-	    },
-	    
-	    exporting: {
-	    	enabled: false
-	    },
-
-	
-	    title: null,
-	
-	    pane: {
-	        center: ['50%', '85%'],
-	        size: '140%',
-	        startAngle: -90,
-	        endAngle: 90,
-	        background: {
-	            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
-	            innerRadius: '60%',
-	            outerRadius: '100%',
-	            shape: 'arc'
-	        }
-	    },
-	
-	    tooltip: {
-	        enabled: false
-
-	    },
-	
-	    // the value axis
-	    yAxis: {
-	        stops: [
-	            [0.8, '#DF5353'], // red
-	            [0.85, '#DDDF0D'], // yellow
-	            [0.9, '#55BF3B'] // green
-	        ],
-	        lineWidth: 0,
-	        minorTickInterval: null,
-	        tickAmount: 2,
-	        title: {
-	            y: -50,
-	            text: 'Meta 4 horas'
-	        },
-	        labels: {
-	            y: 16
-	        },
-	        min: 0,
-	        max: 100,
-
-	    },
-	
-	    plotOptions: {
-	        solidgauge: {
-	            dataLabels: {
-	                y: 5,
-	                borderWidth: 0,
-	                useHTML: true
-	            }
-	        }
-	    },
-	    credits: {
-	        enabled: false
-	    },
-	
-	    series: [{}]
-	};
-
-
-
-	$.getJSON($("#input-urlRaiz").val()+"graficos/metasIndividual", function(data) {
-	  
-		gaugeSLA2.series = [{
-			  data: [data.dados.meta2],
-		      dataLabels: {
-		          format: '<div style="text-align:center"><span style="font-size:18px;color:' +
-		              ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
-		                 '<span style="font-size:9px;color:silver">% mês</span></div>'
-		      }
+		    title: null,
 		
-			}];
- 		    var chart = new Highcharts.Chart(gaugeSLA2);
+		    pane: {
+		        center: ['50%', '85%'],
+		        size: '140%',
+		        startAngle: -90,
+		        endAngle: 90,
+		        background: {
+		            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+		            innerRadius: '60%',
+		            outerRadius: '100%',
+		            shape: 'arc'
+		        }
+		    },
+		
+		    tooltip: {
+		        enabled: false
+		   	 },
+		
+		    // the value axis
+		    yAxis: {
+		        stops: [
+		            [0.8, '#DF5353'], // red
+		            [0.85, '#DDDF0D'], // yellow
+		            [0.9, '#55BF3B'] // green
+		        ],
+		        lineWidth: 0,
+		        minorTickInterval: null,
+		        tickAmount: 2,
+		        title: {
+		            y: -50,
+		            text: 'Meta 4 horas'
+		        },
+		        labels: {
+		            y: 16
+		        },
+		        min: 0,
+		        max: 100,
 
+		    },
+		
+		    plotOptions: {
+		        solidgauge: {
+		            dataLabels: {
+		                y: 5,
+		                borderWidth: 0,
+		                useHTML: true
+		            }
+		        }
+		    },
+		    credits: {
+		        enabled: false
+		    },
+		
+		    series: [{}]
+		};
 
- 		   gaugeSLA4.series = [{
- 			  data: [data.dados.meta4],
- 		      dataLabels: {
- 		          format: '<div style="text-align:center"><span style="font-size:18px;color:' +
- 		              ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
- 		                 '<span style="font-size:9px;color:silver">% mês</span></div>'
- 		      }
-
- 			}];
- 			    var chart = new Highcharts.Chart(gaugeSLA4);
- 			    
- 			  			   
- 	 			    
- 		   var violados = data.dados.violados;
- 		   $("#violados").text(violados);
- 		   var requisicoesMes = data.dados.requisicoesMes;
- 		   $("#requisicoesMes").text(requisicoesMes);
- 		   var reabertosMes = data.dados.reabertosMes;
-		   $("#reabertosMes").text(reabertosMes);
- 		   var pendencias = data.dados.pendencias;
-		   $("#pendencias").text(pendencias);
-
-
-		});
-});
-  
-
-  $( document ).ready(function() {   
-	 
-	  
-	  
 		var pendencias_grafico =  {
 
 			    chart: {
-                    renderTo: 'pendencias_grafico',
+                 renderTo: 'pendencias_grafico',
 			        polar: true,
 			        type: 'line'
 			    },
@@ -284,109 +235,127 @@ var gaugeSLA4 = {
 			    },
 
 			    series: [{}]
+		};
 
-			};
-
-		
+	  	Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+	  	    return {
+	  	        radialGradient: {
+	  	            cx: 0.5,
+	  	            cy: 0.3,
+	  	            r: 0.7
+	  	        },
+	  	        stops: [
+	  	            [0, color],
+	  	            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+	  	        ]
+	  	    };
+	  	});
 	
-	
-
-  	Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
-  	    return {
-  	        radialGradient: {
-  	            cx: 0.5,
-  	            cy: 0.3,
-  	            r: 0.7
-  	        },
-  	        stops: [
-  	            [0, color],
-  	            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-  	        ]
-  	    };
-  	});
-  	
-  	
-
-  	
-
-  	// Build the chart
-  	var graficoPizza = {
-  	    chart: {
-              renderTo: 'graficoPizza',
-  	        plotBackgroundColor: null,
-  	        plotBorderWidth: null,
-  	        plotShadow: false,
-  	        type: 'pie'
-  	    },
-  	    tooltip: {
-  	        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-  	    },
-	    exporting: {
-	    	enabled: false
-	    },
-  	    title: { 
-  	    text: '.'},
-  	    plotOptions: {
-  	        pie: {
-  	            allowPointSelect: true,
-  	            cursor: 'pointer',
-  	            dataLabels: {
-  	                enabled: true,
-  	                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-  	                style: {
-  	                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-  	                },
-  	                connectorColor: 'silver'
-  	            }
-  	        }
-  	    },
-  	    credits: {
-  	        enabled: false
-  	    },
-  	    series: [{ }]
-  	};
-
- 
-  	$.getJSON($("#input-urlRaiz").val()+"graficos/metasIndividual", function(data) {
-  		 
-  		var chamados = data.dados.chamadosMes.pop();
-  		var incidentes = data.dados.incidentesMes.pop();
-		var pendencias = data.dados.pendencias.pop();
-  		var violados = data.dados.violados.pop();
-  		var reabertos = data.dados.reabertosMes.pop();
-		
-  		graficoPizza.series = [{
-  	        name: 'Brands',
-  	        data: [
-  				{
-  				    name: 'Cha',
-  				    y: chamados,
-  				    sliced: true,
-  				    selected: true
-  				},
-  	            {name: 'Inc', y: incidentes, color: 'red'},
-  	            {name: 'Pend', y: pendencias, color: 'yellow'},
-  	            {name: 'Viol', y: violados, color: 'black'},
-  	            {name: 'Reab', y: reabertos, color: 'green'}
-
-
-
-  				
-
-  	        ]
-  	    }];
-  		
-  		
-  			   var chart = new Highcharts.Chart(graficoPizza);
-  		});
-
-
+	  	var graficoPizza = {
+	  	    chart: {
+	              renderTo: 'graficoPizza',
+	  	        plotBackgroundColor: null,
+	  	        plotBorderWidth: null,
+	  	        plotShadow: false,
+	  	        type: 'pie'
+	  	    },
+	  	    tooltip: {
+	  	        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	  	    },
+		    exporting: {
+		    	enabled: false
+		    },
+	  	    title: { 
+	  	    text: '.'},
+	  	    plotOptions: {
+	  	        pie: {
+	  	            allowPointSelect: true,
+	  	            cursor: 'pointer',
+	  	            dataLabels: {
+	  	                enabled: true,
+	  	                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+	  	                style: {
+	  	                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+	  	                },
+	  	                connectorColor: 'silver'
+	  	            }
+	  	        }
+	  	    },
+	  	    credits: {
+	  	        enabled: false
+	  	    },
+	  	    series: [{ }]
+	  	};
 
 	$.getJSON($("#input-urlRaiz").val()+"graficos/metasIndividual", function(data) {
- 		 
+	  
+		gaugeSLA2.series = [{
+			  data: [data.dados.meta2],
+		      dataLabels: {
+		          format: '<div style="text-align:center"><span style="font-size:18px;color:' +
+		              ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+		                 '<span style="font-size:9px;color:silver">% mês</span></div>'
+		      }
+		}];
+	    var chart = new Highcharts.Chart(gaugeSLA2);
 
-  		
-		pendencias_grafico.series = [{
+
+		gaugeSLA4.series = [{
+			  data: [data.dados.meta4],
+		      dataLabels: {
+		          format: '<div style="text-align:center"><span style="font-size:18px;color:' +
+		              ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+		                 '<span style="font-size:9px;color:silver">% mês</span></div>'
+		      }
+		}];
+
+	    var chart = new Highcharts.Chart(gaugeSLA4);
+			    
+			  			   
+	 			    
+		   var violados = data.dados.violados;
+		   $("#violados").text(violados);
+		   var requisicoesMes = data.dados.requisicoesMes;
+		   $("#requisicoesMes").text(requisicoesMes);
+		   var reabertosMes = data.dados.reabertosMes;
+		   $("#reabertosMes").text(reabertosMes);
+		   var pendencias = data.dados.pendencias;
+		   $("#pendencias").text(pendencias);
+	
+		
+
+		var chamados = data.dados.chamadosMes.pop();
+		var incidentes = data.dados.incidentesMes.pop();
+		var pendencias = data.dados.pendencias.pop();
+		var violados = data.dados.violados.pop();
+		var reabertos = data.dados.reabertosMes.pop();
+		
+		graficoPizza.series = [{
+	        name: 'Brands',
+	        data: [
+				{
+				    name: 'Cha',
+				    y: chamados,
+				    sliced: true,
+				    selected: true
+				},
+	            {name: 'Inc', y: incidentes, color: 'red'},
+	            {name: 'Pend', y: pendencias, color: 'yellow'},
+	            {name: 'Viol', y: violados, color: 'black'},
+	            {name: 'Reab', y: reabertos, color: 'green'}
+
+
+
+				
+
+	        ]
+	    }];
+		
+		
+			   var chart = new Highcharts.Chart(graficoPizza);
+
+
+			pendencias_grafico.series = [{
 	        name: 'Pendências',
 	        data: data.dados.qtd,
 	        pointPlacement: 'on'
@@ -394,18 +363,18 @@ var gaugeSLA4 = {
 	    ];
 		
 		pendencias_grafico.xAxis = {
-        	 categories: data.dados2.equipe,
+     	 categories: data.dados2.equipe,
 			        tickmarkPlacement: 'on',
 			        lineWidth: 0
 	    };
 
 			var chart = new Highcharts.Chart(pendencias_grafico);
-  		});
 
-  	
+	});
 
-   }); 
-  
+	  
+	
+ }); 
   
 
 
