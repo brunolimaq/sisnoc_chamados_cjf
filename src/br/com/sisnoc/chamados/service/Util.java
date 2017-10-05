@@ -14,4 +14,11 @@ public class Util {
 		return dataFormatada;
 		
 	}
+	
+	public long epochAtual(){
+		
+		long epoch = System.currentTimeMillis()/1000;
+		return epoch;
+		
+	}
 }

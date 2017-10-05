@@ -6,6 +6,8 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import br.com.sisnoc.chamados.modelo.Chamado;
+import br.com.sisnoc.chamados.service.Util;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 public class CalculaSla {
 
@@ -33,7 +35,12 @@ public class CalculaSla {
 		Integer slaFinal = 0;
 		
 		Chamado ultimoLog = new Chamado();
+		Util utilitarios = new Util();
 		
+		Integer tempoCalculaAcumulado = 0;
+		Integer tempoCalculaSLARestante = 0;
+		long iniCalculaAcumulado = 0;
+		long iniCalculaSLARestante = 0;
 		
 		ArrayList<Chamado> listaChamados = new ArrayList<Chamado>();
 		
@@ -98,18 +105,24 @@ public class CalculaSla {
 				if(ultimoLog.getStatus().equals("resume")){
 					//int epoch = (int) (System.currentTimeMillis()/1000);
 					
+					iniCalculaAcumulado = utilitarios.epochAtual();
 					tempoAcumulado =  tempoAcumulado + calculaAcumulado(slaInicial, slaFinal, (long)tempoInicial, (long) epoch, 28800, ultimoLog.getTipo(),ultimoLog.getGrupo());
+					tempoCalculaAcumulado = (int) (tempoCalculaAcumulado + utilitarios.epochAtual() -  iniCalculaAcumulado);
 					//System.out.println("1");
 					ultimoLog.setSla(""+tempoAcumulado);
 					Chamado validado = new Chamado();
+					iniCalculaSLARestante = utilitarios.epochAtual();
 					validado = calculaSLARestante(tempoAcumulado, ultimoLog);
+					tempoCalculaSLARestante = (int) (tempoCalculaSLARestante + utilitarios.epochAtual() - iniCalculaSLARestante);
 					listaChamados.add(validado);
 					
 				}else if(ultimoLog.getStatus().equals("stop")){
 					
 					ultimoLog.setSla(""+tempoAcumulado);
 					Chamado validado = new Chamado();
+					iniCalculaSLARestante = utilitarios.epochAtual();
 					validado = calculaSLARestante(tempoAcumulado, ultimoLog);
+					tempoCalculaSLARestante = (int) (tempoCalculaSLARestante + utilitarios.epochAtual() - iniCalculaSLARestante);
 					listaChamados.add(validado);
 				}
 				
@@ -130,7 +143,9 @@ public class CalculaSla {
 					}
 										
 				} else if(logChamado.getStatus().equals("stop")){
+					iniCalculaAcumulado = utilitarios.epochAtual();
 					tempoAcumulado = tempoAcumulado + calculaAcumulado(slaInicial, slaFinal, (long)tempoInicial, (long)tempoParada, 28800,logChamado.getTipo(),logChamado.getGrupo());
+					tempoCalculaAcumulado = (int) (tempoCalculaAcumulado + utilitarios.epochAtual() -  iniCalculaAcumulado);
 					//System.out.println("2");
 				}
 			}
@@ -141,11 +156,15 @@ public class CalculaSla {
 		if(ultimoLog.getStatus().equals("resume")){
 			Integer epoch = ultimoLog.getEpoch();
 			//int epoch = (int) (System.currentTimeMillis()/1000);
+			iniCalculaAcumulado = utilitarios.epochAtual();
 			tempoAcumulado = tempoAcumulado + calculaAcumulado(slaInicial, slaFinal, (long)tempoInicial, (long) epoch, 28800, ultimoLog.getTipo(),ultimoLog.getGrupo());
+			tempoCalculaAcumulado = (int) (tempoCalculaAcumulado + utilitarios.epochAtual() -  iniCalculaAcumulado);
 			//System.out.println("3");
 			ultimoLog.setSla(""+tempoAcumulado);
 			Chamado validado = new Chamado();
+			iniCalculaSLARestante = utilitarios.epochAtual();
 			validado = calculaSLARestante(tempoAcumulado, ultimoLog);
+			tempoCalculaSLARestante = (int) (tempoCalculaSLARestante + utilitarios.epochAtual() - iniCalculaSLARestante);
 
 			listaChamados.add(validado);
 			
@@ -156,13 +175,15 @@ public class CalculaSla {
 			
 			ultimoLog.setSla(""+tempoAcumulado);
 			Chamado validado = new Chamado();
+			iniCalculaSLARestante = utilitarios.epochAtual();
 			validado = calculaSLARestante(tempoAcumulado, ultimoLog);
+			tempoCalculaSLARestante = (int) (tempoCalculaSLARestante + utilitarios.epochAtual() - iniCalculaSLARestante);
 			listaChamados.add(validado);
 
 		}
 		
-		
-		
+		//System.out.println("Metodo calculaAcumulado: "+tempoCalculaAcumulado);
+		//System.out.println("Metodo calculaSLARestante: "+tempoCalculaSLARestante);
 		return listaChamados;
 	}
 
@@ -294,13 +315,14 @@ public class CalculaSla {
 		Calendar stgInicio = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		
 		Integer acum = 0;
-		Integer varifica = 0;
-		Integer varifica2 = 0;
+//		Integer varifica = 0;
+//		Integer varifica2 = 0;
 //		System.out.println("inicio" + ti);
 //		System.out.println("Fim" + tf);
 		while(ti <= tf){
-			ti++;
-			varifica++;
+			// modificado para precisão de 10 segundos de ti++ para ti = ti+10;
+			ti = ti+10;
+//			varifica++;
 			stgInicio.setTimeInMillis((long) ti*1000);
 			stgTempo = Integer.parseInt(stgInicio.get(Calendar.HOUR_OF_DAY)+""+stgInicio.get(Calendar.MINUTE));
 			stgDw = stgInicio.get(Calendar.DAY_OF_WEEK);
@@ -314,10 +336,11 @@ public class CalculaSla {
 			
 			//System.out.println();
 			if(stgTempo >= slaIni && stgTempo <= slaFim){
-				varifica2++;
+//				varifica2++;
 				
 				if(stgDw != 1 && stgDw != 7){
-					acum++;
+					// modificado para precisão de 10 segundos de acum++ para acum = acum+10;
+					acum = acum + 10;
 					
 					
 						if(stgTempo >= slaMax){ //acumulado mais que 8 horas

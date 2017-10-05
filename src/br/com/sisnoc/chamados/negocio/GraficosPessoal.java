@@ -100,22 +100,22 @@ public class GraficosPessoal implements GraficosPessoalService {
 			try {
 			
 
-				System.out.println(utilitarios.horaAtual() + " Inicio MetasDAO - Chamados");
+				//System.out.println(utilitarios.horaAtual() + " Inicio MetasDAO - Chamados");
 				chamados = metasDao.listaPainelPessoalMetas(perfil);
-				System.out.println(utilitarios.horaAtual() + " FIM MetasDAO - Chamados");
+				//System.out.println(utilitarios.horaAtual() + " FIM MetasDAO - Chamados");
 				
 				
-				System.out.println(utilitarios.horaAtual() + " Inicio Reabertos ");
+				//System.out.println(utilitarios.horaAtual() + " Inicio Reabertos ");
 				this.setReabertosMes(metasDao.listaPainelPessoalReabertos(perfil));
-				System.out.println(utilitarios.horaAtual() + " Fim Reabertos ");
+				//System.out.println(utilitarios.horaAtual() + " Fim Reabertos ");
 				
-				System.out.println(utilitarios.horaAtual() + " Inicio Pendencias ");
+				//System.out.println(utilitarios.horaAtual() + " Inicio Pendencias ");
 				this.setPendencias(metasDao.listaPainelPessoalPendentes(perfil));
-				System.out.println(utilitarios.horaAtual() + " Fim Pendencias ");
+				//System.out.println(utilitarios.horaAtual() + " Fim Pendencias ");
 				
-				System.out.println(utilitarios.horaAtual() + " Inicio PendenciaEquipe ");
+				//System.out.println(utilitarios.horaAtual() + " Inicio PendenciaEquipe ");
 				this.setListaPendenteEquipe(metasDao.listaPainelGestorPendentes());
-				System.out.println(utilitarios.horaAtual() + " Fim PendenciaEquipe ");
+				//System.out.println(utilitarios.horaAtual() + " Fim PendenciaEquipe ");
 				
 				
 			} catch (ParseException e) {
@@ -124,8 +124,8 @@ public class GraficosPessoal implements GraficosPessoalService {
 			}
 		
 		
-			//System.out.println("lista " + getListaPendenteEquipe());
-			System.out.println(utilitarios.horaAtual() + " Inicio LOOP ");
+			
+			//System.out.println(utilitarios.horaAtual() + " Inicio LOOP ");
 			for (Chamado chamado : chamados) {
 				
 				countTotal++;
@@ -147,7 +147,7 @@ public class GraficosPessoal implements GraficosPessoalService {
 				
 				 
 				} 
-			System.out.println(utilitarios.horaAtual() + " Fim LOOP ");
+			//System.out.println(utilitarios.horaAtual() + " Fim LOOP ");
 	 
 			
 			
