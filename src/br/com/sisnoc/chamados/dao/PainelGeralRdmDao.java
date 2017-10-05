@@ -5,14 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 
@@ -21,8 +22,8 @@ import br.com.sisnoc.chamados.dao.util.RDMDao;
 import br.com.sisnoc.chamados.modelo.Mudanca;
 
 import br.com.sisnoc.chamados.negocio.Popula;
-import br.com.sisnoc.chamados.security.UsuarioSistema;
 import br.com.sisnoc.chamados.service.ContextoUsuario;
+import br.com.sisnoc.chamados.service.Util;
 
 
 @Repository
@@ -130,8 +131,34 @@ private  final Connection connection;
 					mudancas.setStatusDescricao(popula.populaStatusDescricao(rs_listaChamado));
 					mudancas.setResponsavel(popula.populResponsavel(rs_listaChamado));
 					mudancas.setCcm(popula.populaCCM(rs_listaChamado));
+					mudancas.setAlerta("0");
+					
+					if (rdm.equals("APR")){
+					
+						Util utilitarios = new Util();
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+						Date data = sdf.parse(mudancas.getAgendamento());
+						
+						if((data.getTime()/1000) < (utilitarios.epochAtual()-3600)){
+							
+							mudancas.setAlerta("1"); //RDM falta 1 hora para execução da RDM
+						}
+						
+						if((data.getTime()/1000) < utilitarios.epochAtual()){
+							
+							mudancas.setAlerta("2"); //RDM com data violada
+						}
+						
+					}
+					
+				
+					
+					
+				
 
 					ListaRDM.add(mudancas);
+					
+					
 					count++;
 				}
 			

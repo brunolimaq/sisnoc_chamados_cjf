@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="resources/css/index.css">
 	<link rel="stylesheet" type="text/css" href="resources/css/sisnoc.css" />
 	
+	
 	<script src="resources/js/jquery-3.1.1.min.js"></script>
 	<script src="resources/js/highcharts.js"></script>
 	<script src="resources/js/highcharts-more.js"></script>
@@ -26,12 +27,12 @@
  <script type="text/javascript"> 
 
 
-         function timedRefresh(timeoutPeriod) {
-            setTimeout("location.reload(true);", timeoutPeriod);
-        }
-         jQuery(document).ready(function () {
-             timedRefresh(15000);
-        });
+//          function timedRefresh(timeoutPeriod) {
+//             setTimeout("location.reload(true);", timeoutPeriod);
+//         }
+//          jQuery(document).ready(function () {
+//              timedRefresh(15000);
+//         });
        
   </script>  	  
 
@@ -174,7 +175,7 @@
   					</c:if>
   					<c:if test="${!empty chamadosRDMGeralAprovada}">
 					 
-						<table class="table table-bordered table-hover">
+						<table class="table table-bordered">
 							<thead>
 								<tr class="painel_rdm_aprovada">
 									<td><center><strong>Número</strong></center></td>
@@ -186,7 +187,7 @@
 							</thead>
 							<tbody>
 								<c:forEach items="${chamadosRDMGeralAprovada}" var="chamadosRDMGeralAprovada">	
-									<tr>
+									<tr class="violado_${chamadosRDMGeralAprovada.alerta}">
 										<td><a href="http://sacsti/CAisd/pdmweb.exe?OP=SEARCH+FACTORY=chg+SKIPLIST=1+QBE.EQ.id=${chamadosRDMGeralAprovada.id}" target="_blank" >${chamadosRDMGeralAprovada.mudanca}</a>
 										</td>
 										<td>${chamadosRDMGeralAprovada.responsavel}</td>

@@ -11,6 +11,7 @@ public class Mudanca {
 	private String loginResponsavel;
 	private String equipe;
 	private String ccm;
+	private String alerta;
 	
 	
 	public String getId() {
@@ -66,6 +67,12 @@ public class Mudanca {
 	}
 	public void setCcm(String ccm) {
 		this.ccm = ccm;
+	}
+	public String getAlerta() {
+		return alerta;
+	}
+	public void setAlerta(String alerta) {
+		this.alerta = alerta;
 	}
 
 	
