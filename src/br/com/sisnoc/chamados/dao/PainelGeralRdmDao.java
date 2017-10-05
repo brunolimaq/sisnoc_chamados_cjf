@@ -139,7 +139,7 @@ private  final Connection connection;
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 						Date data = sdf.parse(mudancas.getAgendamento());
 						
-						if((data.getTime()/1000) < (utilitarios.epochAtual()-3600)){
+						if(((data.getTime()/1000)-3600) < utilitarios.epochAtual()){
 							
 							mudancas.setAlerta("1"); //RDM falta 1 hora para execução da RDM
 						}
