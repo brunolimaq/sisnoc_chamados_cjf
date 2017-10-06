@@ -131,13 +131,20 @@ private  final Connection connection;
 					mudancas.setStatusDescricao(popula.populaStatusDescricao(rs_listaChamado));
 					mudancas.setResponsavel(popula.populResponsavel(rs_listaChamado));
 					mudancas.setCcm(popula.populaCCM(rs_listaChamado));
-					mudancas.setAlerta("0");
+					mudancas.setAlerta("9");
+					
+				
 					
 					if (rdm.equals("APR")){
-					
+						
 						Util utilitarios = new Util();
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 						Date data = sdf.parse(mudancas.getAgendamento());
+					
+						if(((data.getTime()/1000)-43200) < utilitarios.epochAtual()){
+							
+							mudancas.setAlerta("0"); //RDM das próximas 12 horas
+						}
 						
 						if(((data.getTime()/1000)-3600) < utilitarios.epochAtual()){
 							
@@ -150,6 +157,8 @@ private  final Connection connection;
 						}
 						
 					}
+					
+					
 					
 				
 					
