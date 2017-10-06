@@ -13,6 +13,7 @@
         <li><a href="/chamados/gmud">RDM</a></li>
         <li><a href="/chamados/ordemServicos">Ordens de Serviço</a></li>
         <li><a href="/chamados/problemas">Problemas</a></li>
+        <li><a href="/chamados/vip">VIP</a></li>
         <li><a href="/chamados/relatorios">Relatorios</a></li>
         
 <!--         <li><a href="#">Problemas <span class="badge"></span></a></li> -->
