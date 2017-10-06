@@ -40,17 +40,17 @@
 	<bean id="datasourceSQL" class="org.apache.commons.dbcp.BasicDataSource" primary="true"  >
 		<qualifier value="datasourceSQL" />
 	    <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-	    <property name="url" value="jdbc:sqlserver://iguana:1433;databaseName=mdb"/>
-	    <property name="username" value="monitoracao"/>
-	    <property name="password" value="monitoracao"/>
+	    <property name="url" value="jdbc:sqlserver://####:####;databaseName=###"/>
+	    <property name="username" value="#####"/>
+	    <property name="password" value="#####"/>
 	</bean>
 	
 	<bean id="datasourceMySql" class="org.apache.commons.dbcp.BasicDataSource" >
 		<qualifier value="datasourceMySql" />
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-	    <property name="url" value="jdbc:mysql://tiziu-d/sisnoc2"/>
-	    <property name="username" value="s_sisnoc2"/>
-	    <property name="password" value="s_sisnoc2"/>
+	    <property name="url" value="jdbc:mysql://####/#####"/>
+	    <property name="username" value="#####"/>
+	    <property name="password" value="#####"/>
 	</bean>
 
 
