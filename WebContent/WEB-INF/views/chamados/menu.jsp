@@ -15,6 +15,8 @@
         <li><a href="/chamados/problemas">Problemas</a></li>
         <li><a href="/chamados/vip">VIP</a></li>
         <li><a href="/chamados/relatorios">Relatorios</a></li>
+        <li><a href="/chamados/listaChamadosSac">Painel SAC</a></li>
+        
         
 <!--         <li><a href="#">Problemas <span class="badge"></span></a></li> -->
 <!--         <li><a href="#">GMUD</a></li> -->
