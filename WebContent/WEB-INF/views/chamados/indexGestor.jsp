@@ -45,36 +45,8 @@
   
   
  <script type="text/javascript">
- var window_focus;
-
-	$(window).focus(function() {
-	    window_focus = true;
-	}).blur(function() {
-	    window_focus = false;
-	});
-
-
+ 
  $( document ).ready(function() {
-	 
-	 
-	 
-
-		
-			 <c:if test="${alerta == true}">
-			  if(!window_focus){
-				    Notification.requestPermission(function() {
-				        var notification = new Notification("SISNOC", {
-				            icon: 'http://i.stack.imgur.com/dmHl0.png',
-				            body: "Chamados em andamento, olhe o SISNOC!!"
-				        });
-				        notification.onclick = function() {
-				            window.open("http://sisnoc/chamados");
-				        }
-				    });
-			  }	
-			</c:if>
-			  document.addEventListener("visibilitychange", handleVisibilityChange, false);
-
 	 
 	 var gaugeSLA2 = {
 			
