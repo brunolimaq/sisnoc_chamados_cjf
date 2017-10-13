@@ -47,12 +47,14 @@ public class UsuariosController {
 	
 		String username;
 		String grupos;
+		
 		Collection<? extends GrantedAuthority> permissoes = null;
-				
+		
 		username = ContextoUsuario.getUsername();
 		grupos = ContextoUsuario.getEquipesRaw();
 		permissoes = ContextoUsuario.getPermissao();
 	
+		
 		
 		model.addAttribute("nome", username);
 		model.addAttribute("grupos", grupos);

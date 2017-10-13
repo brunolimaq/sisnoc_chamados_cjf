@@ -83,6 +83,7 @@ public class ChamadosController {
 			status = "aberto";
 			model.addAttribute("chamadosPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"R"));
 			model.addAttribute("incidentesPainelNoc", ((PainelChamadosDao) daoChamados).listaPainelChamados(equipe, status,"I"));
+			model.addAttribute("menuSAC", 1);
 			ModelAndView mv = new ModelAndView("chamados/chamados");
 		return mv;
 	}
@@ -205,7 +206,7 @@ public class ChamadosController {
 				
 				model.addAttribute("chamadosViolados", metasDao.listaPainelPessoalMetas(perfil));
 				model.addAttribute("chamadosReabertos", metasDao.listaPainelPessoalReabertosLista(perfil));
-				
+				model.addAttribute("menuSAC", 1);
 				
 				ModelAndView mv = new ModelAndView("chamados/pendenciasGestor");
 				return mv;
@@ -239,7 +240,7 @@ public class ChamadosController {
 		
 		model.addAttribute("chamadosViolados", metasDao.listaPainelPessoalMetas(perfil));
 		model.addAttribute("chamadosReabertos", metasDao.listaPainelPessoalReabertosLista(perfil));
-		
+		model.addAttribute("menuSAC", 1);
 		
 		ModelAndView mv = new ModelAndView("chamados/pendenciasGestor");
 		return mv;
