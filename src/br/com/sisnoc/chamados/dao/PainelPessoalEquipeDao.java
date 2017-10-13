@@ -259,6 +259,72 @@ private  final Connection connection;
 	}
 	
 	
+	public Boolean chamadosEmAndamento(String perfil) throws ParseException {
+		try {
+			
+			ArrayList<Chamado> ListaChamados = new ArrayList<Chamado>();
+			String sql_listaChamados = "";
+			
+			
+			Integer flagFilho = 0;
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
+			String gerencia = ContextoUsuario.getGerencia();
+			
+			if (perfil == "GESTOR"){
+				
+				username = "";
+			}
+			// chamados em andamento
+				sql_listaChamados = "select "
+						+"req.ref_num as chamado, "
+						+"req.id as ID "
+					+"from "
+						+"call_req req WITH(NOLOCK) join cr_stat stat WITH(NOLOCK) on "
+						+"req.status = stat.code join prob_ctg cat WITH(NOLOCK) on "
+						+"cat.persid = req.category "
+						+"join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+						+"join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
+					+"where "
+						+"cat.sym like '"+gerencia+"%' "
+						+"and cat.sym not like 'INFRA.Ordem de Servico' "
+						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Documentacao' "
+						+"and cat.sym not like 'INFRA.Solicitacao.Atividades.Tarefas Internas' "
+						+"and cat.sym not like 'Infra.Tarefas Internas' "
+						+"and stat.code in ('OP','WIP','PRBAPP') "
+						+"and usu.userid != '"+username+"' "
+						+"and vwg.last_name in ("+ listaEquipe + ") ";
+
+			 
+			PreparedStatement stmt = connection
+					.prepareStatement(sql_listaChamados);
+			ResultSet rs_listaChamados = stmt.executeQuery();
+			
+			
+			int countTeste = 0;
+			while (rs_listaChamados.next()){
+				countTeste++;
+			}
+			
+			
+				rs_listaChamados.close();
+				stmt.close();
+
+				
+				if(countTeste == 0){
+					return false;
+				}else {
+					return true;
+				}
+				
+
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
 	public List<Chamado> listaPainelGrupoPendentes(String perfil) throws ParseException {
 		try {
 			

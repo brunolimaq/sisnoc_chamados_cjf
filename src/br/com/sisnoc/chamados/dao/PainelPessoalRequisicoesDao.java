@@ -220,7 +220,12 @@ private  final Connection connection;
 					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listalog));
 					chamados.setFlagFilho(flagFilho);
 					
-
+					if(countTeste > 0){
+					chamados.setAlerta2("Andamento");
+					} else{
+					chamados.setAlerta2("Pendente");
+					}
+					
 					ListaChamados.add(chamados);
 					count++;
 				}

@@ -52,6 +52,7 @@ public class Chamado {
 	private String statusReal;
 	private String tipoLegivel;
 	private String statusDescricao;
+	private String alerta2;
 
 	public String getStatusReal() {
 		return statusReal;
@@ -467,6 +468,17 @@ public class Chamado {
 	public void setReaberto(int reaberto) {
 		this.reaberto = reaberto;
 	}
+
+
+	public String getAlerta2() {
+		return alerta2;
+	}
+
+
+	public void setAlerta2(String alerta2) {
+		this.alerta2 = alerta2;
+	}
+
 
 
 	

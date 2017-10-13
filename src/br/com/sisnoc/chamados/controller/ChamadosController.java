@@ -1,8 +1,10 @@
 package br.com.sisnoc.chamados.controller;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -19,9 +21,11 @@ import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsxView;
 
+import br.com.sisnoc.chamados.dao.JdbcChamadoDao;
 import br.com.sisnoc.chamados.dao.PainelChamadosDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalRequisicoesDao;
 import br.com.sisnoc.chamados.dao.PainelSemSlaDao;
+import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.modelo.Relatorios;
 import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalMetasDao;
@@ -62,6 +66,10 @@ public class ChamadosController {
 	
 	@Autowired
 	private PainelPessoalMetasDao metasDao;
+	
+	@Autowired
+	private JdbcChamadoDao dao;
+	
 	
 	@RequestMapping("/")
 	public ModelAndView principal(Model model) throws ParseException{
@@ -109,21 +117,26 @@ public class ChamadosController {
 				
 				model.addAttribute("chamadosRDMGeralAprovada", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelAprovada));
 
-				
+				model.addAttribute("alerta", equipeDao.chamadosEmAndamento(perfil));
+				System.out.println(equipeDao.chamadosEmAndamento(perfil) + "Andamentos?");
 				ModelAndView mv = new ModelAndView("chamados/indexGestor");
 				return mv;
 
 			}
 		}
-		
+		ArrayList<Chamado> listaChamadosPainelPessoal = new ArrayList<Chamado>();
+
+	
 		perfil = "";
 		model.addAttribute("chamadosPainelPessoal", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelPessoalDestaques());
+
 
 		model.addAttribute("chamadosPainelEquipe", ((PainelPessoalEquipeDao) equipeDao).listaPainelGrupoDestaques(perfil));
 		
 		model.addAttribute("chamadosRDMPessoal", ((PainelPessoalRdmDao) rdmDao).listaPainelPessoalRdm());
 		
 		model.addAttribute("atualizacaoOS", ((PainelPessoalRequisicoesDao) destaquesDao).listaPainelAtualizacaoOS());
+		
 		
 		ModelAndView mv = new ModelAndView("chamados/index");
 		return mv;
@@ -549,6 +562,30 @@ public class ChamadosController {
 
 
 	
+	
+	@RequestMapping("/listaChamadosSac")
+	public String listaSac(Model model) throws ParseException{
+
+		//Chamados Filhos
+		
+		model.addAttribute("chamadosFilhos", dao.listaFilhos());
+		model.addAttribute("chamadosFilhosCarinha", dao.listaFilhosCarinha());
+		
+		//Geração Paineis 
+		
+		model.addAttribute("chamadosPainelMon", dao.listaPainelMonSac());
+		model.addAttribute("chamadosPainelSol", dao.listaPainelSolSac());
+		model.addAttribute("chamadosPainelInc", dao.listaPainelIncSac());
+
+		//Geração das Listas
+		model.addAttribute("chamadosSac", dao.listaSac());
+		
+		//Count de Chamados
+		model.addAttribute("countSac", dao.getCount_sac());
+
+
+		return "chamadosSac/chamados";
+	}
 	
 	
 	

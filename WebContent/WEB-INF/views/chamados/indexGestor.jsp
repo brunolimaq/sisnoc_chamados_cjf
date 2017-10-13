@@ -45,11 +45,38 @@
   
   
  <script type="text/javascript">
+ var window_focus;
 
- 
+	$(window).focus(function() {
+	    window_focus = true;
+	}).blur(function() {
+	    window_focus = false;
+	});
+
+
  $( document ).ready(function() {
+	 
+	 
+	 
 
-		var gaugeSLA2 = {
+		
+			 <c:if test="${alerta == true}">
+			  if(!window_focus){
+				    Notification.requestPermission(function() {
+				        var notification = new Notification("SISNOC", {
+				            icon: 'http://i.stack.imgur.com/dmHl0.png',
+				            body: "Chamados em andamento, olhe o SISNOC!!"
+				        });
+				        notification.onclick = function() {
+				            window.open("http://sisnoc/chamados");
+				        }
+				    });
+			  }	
+			</c:if>
+			  document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+	 
+	 var gaugeSLA2 = {
 			
 			    chart: {
 			        type: 'solidgauge',
@@ -382,24 +409,23 @@
   <script type="text/javascript"> 
 
 
-//           function timedRefresh(timeoutPeriod) {
-//              setTimeout("location.reload(true);", timeoutPeriod);
-//          }
-//           jQuery(document).ready(function () {
-//               timedRefresh(15000);
-//          });
+          function timedRefresh(timeoutPeriod) {
+             setTimeout("location.reload(true);", timeoutPeriod);
+         }
+          jQuery(document).ready(function () {
+              timedRefresh(15000);
+         });
        
   </script> 
   
   
+  				
 
   
   
 </head>
 
 <body>
-
-
 <c:import url="menu.jsp"></c:import>
 	
 <div class="panel panel-primary">
@@ -448,7 +474,8 @@
 											<td><img src="resources/images/filho.png" id="logo"></img> atendido</td>
 										</c:if>						
 										<c:if test="${chamadosPainelEquipe.statusDescricao != 'Aberto chamado filho'}">
-											<td>${chamadosPainelEquipe.sla}</td>
+											<td>${chamadosPainelEquipe.alerta2}</td>
+<%-- 											<td>${chamadosPainelEquipe.sla}</td> --%>
 										</c:if>
 											
 										<c:if test="${chamadosPainelEquipe.grupo == 'INFRA.Solicitação.Aplicação.Deploy de Aplicação.Manutenção corretiva'}">	

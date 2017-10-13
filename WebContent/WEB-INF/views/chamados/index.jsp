@@ -40,7 +40,32 @@
   <script type="text/javascript">
   //Metas de 2 e 4 horas
 
+	
   $( document ).ready(function() {
+	  
+	  <c:if test="${alerta == true}">
+	  
+	  
+	  function handleVisibilityChange() {
+		  if(document.hidden) {
+			  Notification.requestPermission(function() {
+			        var notification = new Notification("SISNOC", {
+			            icon: 'http://i.stack.imgur.com/dmHl0.png',
+			            body: "Chamados em andamento, olhe o SISNOC!!"
+			        });
+			        notification.onclick = function() {
+			            window.open("http://sisnoc/chamados");
+			        }
+			    });
+			  } else {
+		    // the page is visible
+		  }
+		}
+
+		document.addEventListener("visibilitychange", handleVisibilityChange, false);
+	 
+	</c:if>
+
 	  
 
 		var gaugeSLA2 = {
