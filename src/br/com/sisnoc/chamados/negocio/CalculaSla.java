@@ -82,8 +82,22 @@ public class CalculaSla {
 				slaInicial = 1300;
 				slaFinal = 2200;
 				
-			}else{
-				
+			//horario do equipe de segurança
+			}else if(logChamado.getEquipe().equals("Analistas Segurança")){
+				if(logChamado.getGrupo().equals("SEGURANÇA.Solicitações.Auditoria")){
+					
+					slaInicial = 1200;
+					slaFinal = 1900;
+					
+				}else{
+					
+					slaInicial = 900;
+					slaFinal = 2100;
+					
+				}
+				//fim do horario da equipe de segurança
+			}
+			else {
 				slaInicial = 1200;
 				slaFinal = 2100;
 			}
@@ -431,12 +445,151 @@ public class CalculaSla {
 			
 			sla = 3600 - tempoAcumulado; //1 hora
 			
-		}else{
+		}else if(validado.getEquipe().equals("Analistas Segurança")){
+			
+			String teste = validado.getGrupo().substring(22, 28);
+			
+			if(validado.getGrupo().equals("SEGURANÇA.Incidente.Desempenho")){
+				
+				sla = 3600 - tempoAcumulado;
+				
+			}else if(validado.getGrupo().equals("SEGURANÇA.Incidente.Indisponibilidade")){
+				
+				sla = 1800 - tempoAcumulado;
+				
+			}else if(teste.equals("Outros") || teste.equals("Antisp") || teste.equals("Antivi") || teste.equals("Audito") || teste.equals("Correl")){
+				
+				sla = 86400 - tempoAcumulado;
+				
+			}else {
+				
+				sla = 3600 - tempoAcumulado;
+			}
+		}
+		
+		
+		else{
 		
 			sla = 28800 - tempoAcumulado; //8 horas
 
 		} 
 		
+		
+		
+		
+		
+		if(validado.getEquipe().equals("Analistas Segurança")){
+			
+			String teste = validado.getGrupo().substring(22, 28);
+			
+			if(validado.getGrupo().equals("SEGURANÇA.Incidente.Indisponibilidade")){
+				
+				if(tempoAcumulado < 450){ //menor que 7
+					validado.setMeta_2("progress-bar-warning");
+					validado.setMeta_6("progress-bar-success");
+					validado.setMeta_24("progress-bar-success");
+					
+				}else if(tempoAcumulado < 900){ //menor que 15 
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-warning");
+					validado.setMeta_24("progress-bar-success");
+					
+				}else if(tempoAcumulado < 1350){ // menor que 22 
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-danger");
+					validado.setMeta_24("progress-bar-warning");
+					
+				}else {
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-danger");
+					validado.setMeta_24("progress-bar-danger");
+				}
+				
+			}else if(teste.equals("Outros") || teste.equals("Antisp") || teste.equals("Antivi") || teste.equals("Audito") || teste.equals("Correl")){
+				
+				sla = 86400 - tempoAcumulado;
+				if(tempoAcumulado < 7200){ //menor que 2 horas 
+					validado.setMeta_2("progress-bar-success");
+					validado.setMeta_6("progress-bar-success");
+					validado.setMeta_24("progress-bar-success");
+					
+				}else if(tempoAcumulado < 10800){ // menor que 3 horas
+					
+					validado.setMeta_2("progress-bar-warning");
+					validado.setMeta_6("progress-bar-success");
+					validado.setMeta_24("progress-bar-success");
+					
+				}else if(tempoAcumulado < 14400){ // menor que 4h 
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-success");
+					validado.setMeta_24("progress-bar-success");
+				}else if(tempoAcumulado < 18000){ // Menor que 5h 
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-warning");
+					validado.setMeta_24("progress-bar-success");
+				
+				}else if(tempoAcumulado < 21600){ // menor que 6h
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-danger");
+					validado.setMeta_24("progress-bar-success");
+					
+				}else if(tempoAcumulado < 28800){ // menor que 8h
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-danger");
+					validado.setMeta_24("progress-bar-warning");
+					
+				}else {// estourou todas as metas
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-danger");
+					validado.setMeta_24("progress-bar-danger");
+					
+				}
+				
+			}else {
+				
+				if(tempoAcumulado < 450){ //menor que 7
+					validado.setMeta_2("progress-bar-success");
+					validado.setMeta_6("progress-bar-success");
+					validado.setMeta_24("progress-bar-success");
+					
+				}else if(tempoAcumulado < 900){ //menor que 15 
+					
+					validado.setMeta_2("progress-bar-warning");
+					validado.setMeta_6("progress-bar-success");
+					validado.setMeta_24("progress-bar-success");
+					
+				}else if(tempoAcumulado < 1350){ // menor que 22 
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-warning");
+					validado.setMeta_24("progress-bar-success");
+					
+				}else if(tempoAcumulado < 2700){ // menor que 45
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-warning");
+					validado.setMeta_24("progress-bar-success");
+				}else if(tempoAcumulado < 3600){ // menor que 1h
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-danger");
+					validado.setMeta_24("progress-bar-warning");
+				}else {// estourou todas as metas
+					
+					validado.setMeta_2("progress-bar-danger");
+					validado.setMeta_6("progress-bar-danger");
+					validado.setMeta_24("progress-bar-danger");
+					
+				}
+			}
+		} else
 		//System.out.println("sla: "+sla);
 		//System.out.println("##########################################");
 		 if(validado.getTipo().equals("I")){

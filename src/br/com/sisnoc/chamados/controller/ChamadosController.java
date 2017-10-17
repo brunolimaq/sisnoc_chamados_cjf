@@ -118,8 +118,8 @@ public class ChamadosController {
 				
 				model.addAttribute("chamadosRDMGeralAprovada", ((PainelGeralRdmDao) rdmGeral).listaPainelPessoalRdmGeral(rdmPainelAprovada));
 
-				model.addAttribute("alerta", equipeDao.chamadosEmAndamento(perfil));
-				System.out.println(equipeDao.chamadosEmAndamento(perfil) + "Andamentos?");
+				//model.addAttribute("alerta", equipeDao.chamadosEmAndamento(perfil));
+				//System.out.println(equipeDao.chamadosEmAndamento(perfil) + "Andamentos?");
 				ModelAndView mv = new ModelAndView("chamados/indexGestor");
 				return mv;
 
