@@ -241,6 +241,8 @@ public class ChamadosController {
 		model.addAttribute("chamadosViolados", metasDao.listaPainelPessoalMetas(perfil));
 		model.addAttribute("chamadosReabertos", metasDao.listaPainelPessoalReabertosLista(perfil));
 		model.addAttribute("menuSAC", 1);
+		model.addAttribute("countPendencias", destaquesDao.getCountPendencias());
+		System.out.println(destaquesDao.getCountPendencias());
 		
 		ModelAndView mv = new ModelAndView("chamados/pendenciasGestor");
 		return mv;
@@ -587,6 +589,18 @@ public class ChamadosController {
 
 		return "chamadosSac/chamados";
 	}
+	
+	@RequestMapping("/vip")
+	public String listaVip(Model model) throws ParseException{
+		
+		String status = "naoencerrados";
+		model.addAttribute("listaVipNaoEncerrados", osDao.listaVIPEncerrados(status));
+		status = "encerrados";
+		model.addAttribute("listaVipEncerrados", osDao.listaVIPEncerrados(status));
+
+		return "chamados/vip";
+	}
+	
 	
 	
 	

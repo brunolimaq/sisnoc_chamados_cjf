@@ -120,7 +120,24 @@ public class Popula {
 		// TODO Auto-generated method stub
 		return rs.getInt("reaberturas");
 	}
+
+	public String populaAfetado(ResultSet rs)  throws SQLException,  ParseException {
+		// TODO Auto-generated method stub
+		return rs.getString("afetado");
+	}
 	
+
+	public String populaRelator(ResultSet rs)  throws SQLException,  ParseException {
+		// TODO Auto-generated method stub
+		return rs.getString("relator");
+	}
+
+	public String populaCategoria(ResultSet rs) throws SQLException,  ParseException {
+		// TODO Auto-generated method stub
+		return rs.getString("categoria");
+	}
+	
+		
 	
 	
 	

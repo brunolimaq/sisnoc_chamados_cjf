@@ -841,6 +841,164 @@ public List<Chamado> listaPainelGeralProblema(String status) throws ParseExcepti
 	}
 	
 	
+	
+	public List<Chamado> listaVIPEncerrados(String status) throws ParseException {
+		try {
+			
+			ArrayList<Chamado> ListaVipEncerrados = new ArrayList<Chamado>();
+			String sql_listaRDM = "";
+			
+			
+			String username = ContextoUsuario.getUsername();
+			String listaEquipe = ContextoUsuario.getEquipes();
+			String gerencia = ContextoUsuario.getGerencia();
+		
+			if(status == "encerrados"){
+			
+			sql_listaRDM = "select top 30 "
+					+ "req.id as ID, "
+					+ "req.ref_num as chamados, "
+					+ "usu.first_name as responsavel, "
+					+ "replace(vwg.last_name, 'Analistas ', '') as equipe, "
+					+ "ctg.sym as grupo, "
+					+ "req.type as tipo, "
+					+ "req.summary as titulo, "
+					+ "log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time, "
+					+ "DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch, "
+					+ "stat.sym as statusDescricao, "
+					+ "log.type as status, "
+					+ "usu.userid as responsavel, "
+					+ "dateadd(s,open_date,'1970-01-01 00:00:00') as abertura, "
+					+ "afe.userid as afetado, "
+					+ "case "
+					+ "when  req.type = 'R' then 'Chamado' "
+					+ "when  req.type = 'P' then 'Problema' "
+					+ "when  req.type = 'I' then 'Incidente' "
+					+ "end as categoria, "
+					+ "rela.userid as relator "
+					+ "from "
+					+ "call_req req WITH(NOLOCK) "
+					+ "join mdb.dbo.prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
+					+ "join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
+					+ "join prob_ctg ctg WITH(NOLOCK) on ctg.persid = req.category "
+					+ "join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
+					+ "left join mdb.dbo.ca_contact afe WITH (NOLOCK)  on afe.contact_uuid = req.customer "
+					+ "left join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+					+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
+					+ "left join mdb.dbo.ca_contact rela WITH (NOLOCK)  on rela.contact_uuid = req.log_agent "
+					+ "where "
+					+ "cat.sym like 'INFRA%' "
+					+ "and log.type in ('INIT','SLADELAY','SLARESUME','RE') "
+					+ "and resolve_date is not null "
+					+ "and rela.userid  in "
+					+ "('diogo.araujo' "
+					+ ",'marruda' "
+					+ ",'edilbert' "
+					+ ",'jones' "
+					+ ",'lbarbosa' "
+					+ ",'glaucio.southier' "
+					+ ",'frederico' "
+					+ ",'roberto' "
+					+ ",'fernando.suzuki') "
+					+ "order by abertura DESC ";
+					
+			}
+			
+			if(status == "naoencerrados"){
+				
+				sql_listaRDM = "select "
+						+ "req.id as ID, "
+						+ "req.ref_num as chamados, "
+						+ "usu.first_name as responsavel, "
+						+ "replace(vwg.last_name, 'Analistas ', '') as equipe, "
+						+ "ctg.sym as grupo, "
+						+ "req.type as tipo, "
+						+ "req.summary as titulo, "
+						+ "log.time_stamp + DATEPART(tz,SYSDATETIMEOFFSET())*60 as time, "
+						+ "DATEDIFF(s, '1970-01-01 00:00:00', GETDATE()) as epoch, "
+						+ "stat.sym as statusDescricao, "
+						+ "log.type as status, "
+						+ "usu.userid as responsavel, "
+						+ "dateadd(s,open_date,'1970-01-01 00:00:00') as abertura, "
+						+ "afe.userid as afetado, "
+						+ "case "
+						+ "when  req.type = 'R' then 'Chamado' "
+						+ "when  req.type = 'P' then 'Problema' "
+						+ "when  req.type = 'I' then 'Incidente' "
+						+ "end as categoria, "
+						+ "rela.userid as relator "
+						+ "from "
+						+ "call_req req WITH(NOLOCK) "
+						+ "join mdb.dbo.prob_ctg cat WITH(NOLOCK) on cat.persid = req.category "
+						+ "join cr_stat stat WITH(NOLOCK) on req.status = stat.code "
+						+ "join prob_ctg ctg WITH(NOLOCK) on ctg.persid = req.category "
+						+ "join View_Group vwg  WITH (NOLOCK) on req.group_id = vwg.contact_uuid "
+						+ "left join mdb.dbo.ca_contact afe WITH (NOLOCK)  on afe.contact_uuid = req.customer "
+						+ "left join ca_contact usu WITH (NOLOCK)  on usu.contact_uuid = req.assignee "
+						+ "join act_log log WITH (NOLOCK)  on log.call_req_id = req.persid "
+						+ "left join mdb.dbo.ca_contact rela WITH (NOLOCK)  on rela.contact_uuid = req.log_agent "
+						+ "where "
+						+ "cat.sym like 'INFRA%' "
+						+ "and log.type in ('AEUR' , 'AWTVNDR', 'FIP', 'PNDCHG' , 'PO', 'PRBANCOMP', 'RSCH', 'PF', 'ACK', 'WIP','PRBAPP' )"
+						+ "and rela.userid  in "
+						+ "('diogo.araujo' "
+						+ ",'marruda' "
+						+ ",'edilbert' "
+						+ ",'jones' "
+						+ ",'lbarbosa' "
+						+ ",'glaucio.southier' "
+						+ ",'frederico' "
+						+ ",'roberto' "
+						+ ",'fernando.suzuki') "
+						+ "order by abertura DESC ";
+						
+				}
+						
+			PreparedStatement stmt = connection
+					.prepareStatement(sql_listaRDM);				
+			
+			stmt = connection
+					.prepareStatement(sql_listaRDM);
+			ResultSet rs_listavip = stmt.executeQuery();
+
+			Popula popula = new Popula();
+			
+			
+			
+			
+			
+			//Corre o ResultSet
+			Integer count = 0;
+				while (rs_listavip.next()){
+					// adiciona um chamado na lista
+				
+					Chamado chamados = new Chamado();
+					chamados.setId(popula.populaID(rs_listavip));
+					chamados.setEquipe(popula.populaEquipe(rs_listavip));
+					chamados.setChamado(popula.populaChamados(rs_listavip));
+					chamados.setTipo(popula.populaTipo(rs_listavip));
+					chamados.setStatusDescricao(popula.populaStatusDescricao(rs_listavip));
+					chamados.setAfetado(popula.populaAfetado(rs_listavip));
+					chamados.setRelator(popula.populaRelator(rs_listavip));
+					chamados.setCategoria(popula.populaCategoria(rs_listavip));
+					chamados.setDescricao(popula.populaStatusDescricao(rs_listavip));
+					
+					ListaVipEncerrados.add(chamados);
+					count++;
+				}
+			
+				
+				rs_listavip.close();
+				stmt.close();
+
+				return	ListaVipEncerrados;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
 	public List<Chamado> listaPainelPessoalEquipeProblema() throws ParseException {
 		try {
 			

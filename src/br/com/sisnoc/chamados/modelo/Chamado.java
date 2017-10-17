@@ -53,6 +53,8 @@ public class Chamado {
 	private String tipoLegivel;
 	private String statusDescricao;
 	private String alerta2;
+	private String afetado;
+	private String relator;
 
 	public String getStatusReal() {
 		return statusReal;
@@ -477,6 +479,26 @@ public class Chamado {
 
 	public void setAlerta2(String alerta2) {
 		this.alerta2 = alerta2;
+	}
+
+
+	public String getAfetado() {
+		return afetado;
+	}
+
+
+	public void setAfetado(String afetado) {
+		this.afetado = afetado;
+	}
+
+
+	public String getRelator() {
+		return relator;
+	}
+
+
+	public void setRelator(String relator) {
+		this.relator = relator;
 	}
 
 

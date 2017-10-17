@@ -29,7 +29,9 @@ import br.com.sisnoc.chamados.service.ContextoUsuario;
 public class PainelPessoalRequisicoesDao {
 
 	
-private  final Connection connection;
+	private  final Connection connection;
+	private Integer countPendencias = 0;
+
 
 	
 	@Autowired
@@ -40,8 +42,6 @@ private  final Connection connection;
 			throw new RuntimeException(e);
 		}
 	}
-
-	private Integer countPendencias;
 	
 	public List<Chamado> listaPainelPessoalDestaques() throws ParseException {
 		try {
