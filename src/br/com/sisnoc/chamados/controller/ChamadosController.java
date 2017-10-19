@@ -21,7 +21,6 @@ import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsxView;
 
-import br.com.sisnoc.chamados.dao.JdbcChamadoDao;
 import br.com.sisnoc.chamados.dao.PainelChamadosDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalRequisicoesDao;
 import br.com.sisnoc.chamados.dao.PainelSemSlaDao;
@@ -67,8 +66,6 @@ public class ChamadosController {
 	@Autowired
 	private PainelPessoalMetasDao metasDao;
 	
-	@Autowired
-	private JdbcChamadoDao dao;
 	
 	
 	@RequestMapping("/")
@@ -566,29 +563,6 @@ public class ChamadosController {
 
 	
 	
-	@RequestMapping("/listaChamadosSac")
-	public String listaSac(Model model) throws ParseException{
-
-		//Chamados Filhos
-		
-		model.addAttribute("chamadosFilhos", dao.listaFilhos());
-		model.addAttribute("chamadosFilhosCarinha", dao.listaFilhosCarinha());
-		
-		//Geração Paineis 
-		
-		model.addAttribute("chamadosPainelMon", dao.listaPainelMonSac());
-		model.addAttribute("chamadosPainelSol", dao.listaPainelSolSac());
-		model.addAttribute("chamadosPainelInc", dao.listaPainelIncSac());
-
-		//Geração das Listas
-		model.addAttribute("chamadosSac", dao.listaSac());
-		
-		//Count de Chamados
-		model.addAttribute("countSac", dao.getCount_sac());
-
-
-		return "chamadosSac/chamados";
-	}
 	
 	@RequestMapping("/vip")
 	public String listaVip(Model model) throws ParseException{

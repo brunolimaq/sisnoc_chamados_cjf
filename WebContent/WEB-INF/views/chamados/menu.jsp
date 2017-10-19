@@ -25,7 +25,6 @@
 	        <li><a href="/chamados/problemas">Problemas</a></li>
 	        <li><a href="/chamados/vip">VIP</a></li>
 	        <li><a href="/chamados/relatorios">Relatorios</a></li>
-	        <li><a href="/chamados/listaChamadosSac">Painel SAC</a></li>
 	        <li class="dropdown">
 	          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipes
 	          <span class="caret"></span></a>
