@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 public class Usuario {
 	
 	private String ID;
+	
 	private String nome;
 	private String loginUsuario;
 	private String senhaUsuario;
@@ -32,10 +36,10 @@ public class Usuario {
 		this.nome = nome;
 	}
 	public String getEmail() {
-		return loginUsuario;
+		return getLoginUsuario();
 	}
 	public void setEmail(String email) {
-		this.loginUsuario= email;
+		this.setLoginUsuario(email);
 	}
 
 	public String getSenhaUsuario() {
@@ -102,6 +106,16 @@ public class Usuario {
 	}
 	public void setID(String iD) {
 		ID = iD;
+	}
+	public void setPermisao(Collection<? extends GrantedAuthority> collection) {
+		// TODO Auto-generated method stub
+		
+	}
+	public String getLoginUsuario() {
+		return loginUsuario;
+	}
+	public void setLoginUsuario(String loginUsuario) {
+		this.loginUsuario = loginUsuario;
 	}
 
 }

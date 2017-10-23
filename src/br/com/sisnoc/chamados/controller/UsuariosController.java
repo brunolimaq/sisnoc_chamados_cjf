@@ -16,7 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import br.com.sisnoc.chamados.dao.UsuariosDao;
+import br.com.sisnoc.chamados.dao.UsuariosLocalDao;
 import br.com.sisnoc.chamados.modelo.Usuario;
+import br.com.sisnoc.chamados.modelo.UsuarioLocal;
 import br.com.sisnoc.chamados.security.UsuarioSistema;
 import br.com.sisnoc.chamados.service.ContextoUsuario;
 
@@ -26,7 +28,8 @@ public class UsuariosController {
 	@Autowired
 	private UsuariosDao dao;
 	
-	
+	@Autowired
+	private UsuariosLocalDao daoLocal;
 	
 	
 	@RequestMapping("/cadastro")
@@ -64,6 +67,38 @@ public class UsuariosController {
 		
 		return mv;
 		
+	}
+	
+	
+	
+	@RequestMapping("/cadastroUsuario")
+	public ModelAndView cadastroUsuario(Model model) {
+		
+		
+		try {
+			model.addAttribute("equipes", daoLocal.buscaEquipes());
+			model.addAttribute("gerencia", daoLocal.buscaGerencia());
+			model.addAttribute("permissoes", daoLocal.buscaPermissoes());
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Lista de equipes VAZIA");
+		}
+		
+		
+		ModelAndView mv = new ModelAndView("chamados/cadastroUsuario");
+		
+		return mv;
+		
+	}
+	
+
+	@RequestMapping("/cadastrarUsuario")
+	public ModelAndView cadastrar(Model model, UsuarioLocal usuario) throws SQLException {
+		
+		daoLocal.cadastro(usuario);
+		
+		ModelAndView mv = new ModelAndView("chamados/ok");
+		return mv;
 	}
 	
 	@RequestMapping("/alterarPerfil")

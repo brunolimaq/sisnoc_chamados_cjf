@@ -130,11 +130,12 @@ public class UsuariosDao {
 //	}
 
 	
-	public void cadastro() throws SQLException {
+	public void cadastro(Usuario usuario) throws SQLException {
 
 	
-
-		String sql_cadastro = "INSERT INTO usuario (nomeUsuario, loginUsuario, senhaUsuario) VALUES ('Bruno Lima', 'bruno.queiroz1', '123123')";
+		
+		String sql_cadastro = "INSERT INTO usuario (idUsuario, nomeUsuario, loginUsuario, senhaUsuario, emailUsuario) VALUES (" + "'41' , '"+ usuario.getNome() + "','" +usuario.getNome() +"','"+ usuario.getSenhaUsuario() +"','b@b.comb')";
+		System.out.println(sql_cadastro);
 		String sql_cadastro_equipe = "INSERT INTO equipe (nomeEquipe) value('Equipe Aplicação')";
 		
 		PreparedStatement stmt = connection
