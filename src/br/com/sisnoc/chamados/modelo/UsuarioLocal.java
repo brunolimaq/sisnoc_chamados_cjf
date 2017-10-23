@@ -4,8 +4,12 @@ import java.util.List;
 
 public class UsuarioLocal {
 	
+	private Integer id;
 	private List<Integer> equipes;
 	private List<Integer> permissoes;
+	private List<String> permissoesNome;
+
+	private String permissoesVisualiar;
 	private Integer gerencia;
 	private String nome;
 	private String login;
@@ -71,6 +75,30 @@ public class UsuarioLocal {
 	}
 	public void setPermissoes(List<Integer> permissoes) {
 		this.permissoes = permissoes;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getPermissoesVisualiar() {
+		return permissoesVisualiar;
+	}
+
+	public void setPermissoesVisualiar(String permissoesVisualiar) {
+		this.permissoesVisualiar = permissoesVisualiar;
+	}
+
+	public List<String> getPermissoesNome() {
+		return permissoesNome;
+	}
+
+	public void setPermissoesNome(List<String> permissoesNome) {
+		this.permissoesNome = permissoesNome;
 	}
 	
 	

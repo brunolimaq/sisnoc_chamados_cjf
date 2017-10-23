@@ -96,11 +96,31 @@ public class UsuariosController {
 	public ModelAndView cadastrar(Model model, UsuarioLocal usuario) throws SQLException {
 		
 		daoLocal.cadastro(usuario);
-		
-		ModelAndView mv = new ModelAndView("chamados/ok");
+		model.addAttribute("mensagemSucesso", "Usuário cadastrado com sucesso!!");
+		model.addAttribute("listaUsuarios", daoLocal.listaUsuarios());
+		ModelAndView mv = new ModelAndView("chamados/listaUsuarios");
 		return mv;
 	}
 	
+	
+	@RequestMapping("/listaUsuarios")
+	public ModelAndView listaUsuarios(Model model, UsuarioLocal usuario) throws SQLException {
+		
+		model.addAttribute("listaUsuarios", daoLocal.listaUsuarios());
+		
+		ModelAndView mv = new ModelAndView("chamados/listaUsuarios");
+		return mv;
+	}
+	
+	
+	@RequestMapping("/visualizarUsuario")
+	public ModelAndView visualizarUsuario(Model model, UsuarioLocal usuario) throws SQLException {
+		
+		model.addAttribute("usuario", daoLocal.buscaUsuario(usuario.getId()));
+		
+		ModelAndView mv = new ModelAndView("chamados/visualizarUsuario");
+		return mv;
+	}
 	@RequestMapping("/alterarPerfil")
 	public String alterarPerfil (Model model, Usuario usuario, RedirectAttributes attributes) throws SQLException{
 		

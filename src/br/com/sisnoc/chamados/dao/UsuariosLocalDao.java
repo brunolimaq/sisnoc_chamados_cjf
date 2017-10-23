@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import javax.sql.DataSource;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
-
+import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.modelo.Usuario;
 import br.com.sisnoc.chamados.modelo.UsuarioLocal;
 
@@ -42,7 +43,64 @@ public class UsuariosLocalDao {
 	}
 	
 
+
 	
+	public List<UsuarioLocal> buscaUsuario(Integer id)throws SQLException {
+
+			ArrayList<UsuarioLocal> usuarioLocal = new ArrayList<UsuarioLocal>();
+			
+			String sql_login = "select "
+			+ "u.idUsuario, "
+			+ "u.nomeUsuario, "
+			+ "u.emailUsuario, " 
+			+" u.loginUsuario, "
+			+" u.senhaUsuario, "
+			+" u.emailUsuario, "
+			+" u.nomeUsuario, "
+			+" GROUP_CONCAT(distinctrow e.nomeEquipe) as equipe, " 
+			+" GROUP_CONCAT(distinctrow p.nomePermissao) as permissao, "
+			+" GROUP_CONCAT(distinctrow g.nomeGerencia) as gerencia "
+			+" from  "
+			+" usuario u " 
+			+" join usuario_equipe ue on ue.usuario_idUsuario = u.idUsuario "
+			+" join equipe e on ue.equipe_idequipe = e.idEquipe "
+			+" join usuario_permissao up on u.idUsuario = up.usuario_idUsuario "
+			+" join permissao p  on p.idPermissao = up.permissao_idPermissao "
+			+" join usuario_gerencia ug on u.idUsuario = ug.idUsuario "
+			+" join gerencia g  on g.idgerencia = ug.idgerencia "
+			+" where u.idUsuario = '"+id+"' ";
+		
+			UsuarioLocal usuario = new UsuarioLocal();
+		
+					PreparedStatement stmt = connection
+					.prepareStatement(sql_login);
+			ResultSet rs = stmt.executeQuery();
+	
+
+	while (rs.next()){
+		
+		usuario.setId(rs.getInt("idUsuario"));
+		usuario.setLogin(rs.getString("loginUsuario"));
+		usuario.setSenhaUsuario(rs.getString("senhaUsuario"));
+		usuario.setNome(rs.getString("nomeUsuario"));
+		usuario.setEmail(rs.getString("loginUsuario"));
+		usuario.setPermissoesVisualiar(rs.getString("permissao"));
+//		usuario.setPermissoesNome(rs.getString("permissao").split(","));
+		
+		System.out.println("Permissoes" + usuario.getPermissoesVisualiar());
+//		usuario.setGerencia(rs.getString("gerencia"));
+			
+	}
+	
+	
+	
+	stmt.close();
+		
+	
+		
+		return usuarioLocal;
+
+	}
 	public HashMap<String, Integer> buscaEquipes() throws SQLException {
 
 		
@@ -90,6 +148,35 @@ public class UsuariosLocalDao {
 
 	}
 	
+
+	public List<UsuarioLocal> listaUsuarios() throws SQLException {
+
+		
+		ArrayList<UsuarioLocal> lista = new ArrayList<UsuarioLocal>();
+		
+		String busca = "select * from usuario";
+		PreparedStatement stmt = connection
+				.prepareStatement(busca);
+		
+		ResultSet rs = stmt.executeQuery();		
+		while (rs.next()){
+
+			UsuarioLocal usuario = new UsuarioLocal();
+			
+			usuario.setId(rs.getInt("idUsuario"));
+			usuario.setNome(rs.getString("nomeUsuario"));
+			usuario.setEmail(rs.getString("emailUsuario"));
+			usuario.setLogin(rs.getString("loginUsuario"));
+
+			
+			lista.add(usuario);
+			
+		}
+		stmt.close();
+		System.out.println(lista);
+		return lista;
+
+	}
 	
 	
 
