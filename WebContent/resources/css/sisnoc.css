@@ -117,6 +117,21 @@ font-size: 12px;
     border-color: #008B8B;
 }
 
+.INDEFINIDO {
+background-color: #2e393d;
+color: #FFFFFF	;
+}
+
+.ERRO {
+background-color: #f44141;
+color: #000000	;
+}
+
+.OK {
+background-color: #42f48c;
+color: #000000	;
+}
+
 .painel_noc {
 color: #FFFFFF	;
 background-color: #48D1CC	;

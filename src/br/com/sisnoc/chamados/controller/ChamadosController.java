@@ -24,6 +24,8 @@ import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsxView;
 import br.com.sisnoc.chamados.dao.PainelChamadosDao;
 import br.com.sisnoc.chamados.dao.PainelPessoalRequisicoesDao;
 import br.com.sisnoc.chamados.dao.PainelSemSlaDao;
+import br.com.sisnoc.chamados.dao.PainelUrlDao;
+import br.com.sisnoc.chamados.dao.util.URLDAO;
 import br.com.sisnoc.chamados.modelo.Chamado;
 import br.com.sisnoc.chamados.modelo.Relatorios;
 import br.com.sisnoc.chamados.dao.PainelPessoalEquipeDao;
@@ -66,7 +68,19 @@ public class ChamadosController {
 	@Autowired
 	private PainelPessoalMetasDao metasDao;
 	
-	
+	@Autowired
+	@URLDAO
+	private PainelUrlDao daoUrls;
+
+	@RequestMapping("/url")
+	public String listaUrls(Model model) throws ParseException {
+		
+		model.addAttribute("UrlsProducao", daoUrls.listaStatusUrls("Produção"));
+		model.addAttribute("UrlsHomolocacao", daoUrls.listaStatusUrls("Homologação"));
+		model.addAttribute("UrlsDesenvolvimento", daoUrls.listaStatusUrls("Desenvolvimento"));
+		
+		return "chamados/monitorurl";
+	}
 	
 	@RequestMapping("/")
 	public ModelAndView principal(Model model) throws ParseException{

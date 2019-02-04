@@ -23,16 +23,17 @@
 	        <li><a href="/chamados/gmud">RDM</a></li>
 	        <li><a href="/chamados/ordemServicos">Ordens de Serviço</a></li>
 	        <li><a href="/chamados/problemas">Problemas</a></li>
-	        <li><a href="/chamados/vip">VIP</a></li>
+	        <li><a href="/chamados/url">URLs APPs</a></li>
+	       <%-- <li><a href="/chamados/vip">VIP</a></li> --%>
 	        <li><a href="/chamados/relatorios">Relatorios</a></li>
- 			<li class="dropdown">
+ 			<%--<li class="dropdown">
 	          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuários
 	          <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
 				<li ><a href="/chamados/listaUsuarios">Listar<span class="badge"></span></a></li>
 				<li ><a href="/chamados/cadastroUsuario">Cadastrar<span class="badge"></span></a></li>	
 			   </ul>
-	        </li>
+	        </li>--%>
 		        
 	        <li class="dropdown">
 	          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Equipes

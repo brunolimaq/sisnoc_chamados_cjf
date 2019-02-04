@@ -40,7 +40,7 @@
 	<bean id="datasourceSQL" class="org.apache.commons.dbcp.BasicDataSource" primary="true"  >
 		<qualifier value="datasourceSQL" />
 	    <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-	    <property name="url" value="jdbc:sqlserver://iguana:1433;databaseName=mdb"/>
+	    <property name="url" value="jdbc:sqlserver://codorna01;instanceName=cjfsqlsdm;databaseName=mdb"/>
 	    <property name="username" value="monitoracao"/>
 	    <property name="password" value="monitoracao"/>
 	</bean>
